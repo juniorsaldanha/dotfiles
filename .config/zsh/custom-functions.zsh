@@ -53,16 +53,16 @@ function remotedocker_deactive()
     unset DOCKER_HOST
 }
 
-function nsensorpc() {
+function sshauto() {
     if [ "$1" ];then
         ping=`ping -c 1 $1 | grep bytes | wc -l`
         if [ "$ping" -gt 1 ];then
-            sshpass -p $NESSPASSWORD ssh -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" ness@"$1"
+            sshpass -p "$3" ssh -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" "$2"@"$1"
         else
-            echo "PC-IOT Inacessivel, verifique a VPN, sua rede ou PC-IOT!"
+            echo "IP/FQDN: $1 not accessible"
         fi
     else
-        echo "Example of usage; ness ipOfHost"
+        echo "Example of usage; `sshauto ip user pass`"
     fi
 }
 
