@@ -151,21 +151,13 @@ function cppcheck(){
 
 #Aliases
 alias vs='code'
-# alias ll='ls -lahG'
+alias ll='ls -lahG'
 alias ls='exa --icons'
 alias bat='bat --style=auto'
+alias cat='bat --style=auto'
 alias rmf='rm -rf'
 alias follow="tail -f -n +1"
 alias o="open ."
 alias lg="lazygit"
 alias ld="lazydocker"
-alias lvim="/Users/umsaldanha/.local/bin/lvim"
-alias vim="nvim"
-
-# export GREP_OPTIONS='--color=auto'
-# export GREP_COLOR='5;35;5'
-
-# Setup pyenv
-# export PYENV_ROOT="$HOME/.pyenv"
-# command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-# eval "$(pyenv init -)"
+alias nv="nvim"
