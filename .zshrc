@@ -21,4 +21,17 @@ source ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # Custom functions
 source ~/.config/zsh/custom-functions.zsh
 
-. /usr/local/opt/asdf/libexec/asdf.sh
+# Check if homebrew is installed and install it if not
+if ! command -v brew &> /dev/null
+then
+  echo "Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+# Check if asdf is installed and load it or install it
+if [ -d /usr/local/opt/asdf ]; then
+  . /usr/local/opt/asdf/libexec/asdf.sh
+else
+  echo "Installing asdf..."
+  brew install asdf
+fi
