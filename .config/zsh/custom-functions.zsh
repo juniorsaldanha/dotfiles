@@ -151,10 +151,10 @@ function cppcheck(){
 
 #Aliases
 alias vs='code'
-alias ll='ls -lahG'
-alias ls='exa --icons'
-alias bat='bat --style=auto'
-alias cat='bat --style=auto'
+# alias ll='ls -lahG'
+# alias ls='exa --icons'
+# alias bat='bat --style=auto'
+# alias cat='bat --style=auto'
 alias rmf='rm -rf'
 alias follow="tail -f -n +1"
 alias o="open ."
