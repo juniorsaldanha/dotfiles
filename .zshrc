@@ -21,6 +21,10 @@ source ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # Custom functions
 source ~/.config/zsh/custom-functions.zsh
 
+# exports
+export EDITOR=nvim
+export VISUAL="$EDITOR"
+
 # Check if homebrew is installed and install it if not
 if ! command -v brew &> /dev/null
 then
