@@ -39,3 +39,5 @@ else
   echo "Installing asdf..."
   brew install asdf
 fi
+
+eval "$(zoxide init zsh)"

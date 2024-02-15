@@ -161,3 +161,4 @@ alias o="open ."
 alias lg="lazygit"
 alias ld="lazydocker"
 alias nv="nvim"
+alias cd='z'
