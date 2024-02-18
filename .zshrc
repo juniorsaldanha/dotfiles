@@ -25,6 +25,11 @@ source ~/.config/zsh/custom-functions.zsh
 export EDITOR=nvim
 export VISUAL="$EDITOR"
 
+# if file exists, source it
+if [ -f ~/.config/zsh/.zsh_exports ]; then
+  source ~/.config/zsh/.zsh_exports
+fi
+
 # Check if homebrew is installed and install it if not
 if ! command -v brew &> /dev/null
 then
