@@ -7,7 +7,7 @@ This is the dotfiles compatible and tested with MacOS, zsh, tmux, neovim > 0.9
 ## How-to
 
 - Clone this repository with the submodules to your home directory
-  - Use the following command to clone `git clone --recurse-submodules https://github.com/juniorsaldanha/dotfiles ~/dotfiles`
+  - Use the following command to clone `git clone --recurse-submodules git@github.com:juniorsaldanha/dotfiles.git ~/dotfiles`
 - Make sure that you have stow installed
   - To install it with brew run `brew install stow`
 - Change the directory to the repository cloned and run `stow .`
