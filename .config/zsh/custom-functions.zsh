@@ -6,7 +6,6 @@ function clean_nvim()
     rm -rf ~/.local/state/nvim/
 }
 
-
 function venv()
 {
     source venv/bin/activate
@@ -128,7 +127,7 @@ function ..()
     for i in `seq 1 $1`;
     do
         cd ../
-        exa --icons
+        ls -lah
     done;
 }
 
@@ -148,9 +147,7 @@ function cppcheck(){
     fi
 }
 
-
 #Aliases
-alias vs='code'
 # alias ll='ls -lahG'
 # alias ls='exa --icons'
 # alias bat='bat --style=auto'
@@ -161,4 +158,3 @@ alias o="open ."
 alias lg="lazygit"
 alias ld="lazydocker"
 alias nv="nvim"
-alias cd='z'
