@@ -25,3 +25,9 @@ keymap.set("n", "<C-w>j", "<cmd>horizontal resize -5<cr>", optsWithDesc("Decreas
 keymap.set("n", "<tab>", "<cmd>BufferLineCycleNext<cr>", optsWithDesc("Next buffer", true, true))
 keymap.set("n", "<S-tab>", "<cmd>BufferLineCyclePrev<cr>", optsWithDesc("Previous buffer", true, true))
 keymap.set("n", "te", "<cmd>tabedit<cr>", optsWithDesc("New tab", true, true))
+
+-- Move between windows
+keymap.set("n", "<C-h>", "<cmd>wincmd h<cr>", optsWithDesc("Move to the left window", true, true))
+keymap.set("n", "<C-j>", "<cmd>wincmd j<cr>", optsWithDesc("Move to the bottom window", true, true))
+keymap.set("n", "<C-k>", "<cmd>wincmd k<cr>", optsWithDesc("Move to the top window", true, true))
+keymap.set("n", "<C-l>", "<cmd>wincmd l<cr>", optsWithDesc("Move to the right window", true, true))
