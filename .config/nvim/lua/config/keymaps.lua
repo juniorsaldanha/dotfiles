@@ -8,8 +8,8 @@ local optsWithDesc = function(desc, noremap, silent)
 end
 
 keymap.set("i", "jk", "<esc>", optsWithDesc("Exit insert mode <ESC>", true, true))
-keymap.set("n", ";", ":", optsWithDesc("Enter command mode", true, true))
--- keymap.set("n", "<C-k>", "<cmd>noh<cr>", opts)
+-- keymap.set("n", ";", ":", optsWithDesc("Enter command mode", true, true))
+keymap.set("n", "<leader>k", "<cmd>noh<cr>", optsWithDesc("Clear search highlights", true, true))
 keymap.set("n", "<S-h>", "^", optsWithDesc("Go to first non-whitespace in the line", true, true))
 keymap.set("n", "<S-l>", "g_", optsWithDesc("Go to last non-whitespace in the line", true, true))
 
