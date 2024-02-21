@@ -43,10 +43,10 @@ fi
 
 # Source zsh file by OS
 if [[ $(uname) == "Darwin" ]]; then
-  echo "darwinnn"
+  echo "nice! It's Darwin"
   source ~/.config/zsh/darwin_zsh.zsh
 elif [[ $(uname) == "Linux" ]]; then
-  echo "linuxxx"
+  echo "hell yaeh! It's Linux!"
   source ~/.config/zsh/linux_debian.zsh
 fi
 

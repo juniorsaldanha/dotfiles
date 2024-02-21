@@ -10,15 +10,15 @@ shell = { program = "zsh", args = ["-l", "-c", "tmux a -t base || tmux new -s ba
 size = 10
 
 [font.bold]
-family = "Fira Code"
+family = "FiraMonoNerdFont"
 style = "bold"
 
 [font.italic]
-family = "Fira Code"
+family = "FiraMonoNerdFont"
 style = "italic"
 
 [font.normal]
-family = "Fira Code"
+family = "FiraMonoNerdFont"
 style = "regular"
 
 [scrolling]

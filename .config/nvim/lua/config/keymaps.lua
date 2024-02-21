@@ -16,10 +16,10 @@ keymap.set("n", "<S-l>", "g_", optsWithDesc("Go to last non-whitespace in the li
 -- keymap.set("n", "dw", "diw", optsWithDesc("Remove word under cursorline", true, true))
 
 -- Resize panels with j,k,l,h instead of <C-w>...
-keymap.set("n", "<C-w>l", "<cmd>vertical resize +5<cr>", optsWithDesc("Increase width", false, true))
-keymap.set("n", "<C-w>h", "<cmd>vertical resize -5<cr>", optsWithDesc("Decrease width", false, true))
-keymap.set("n", "<C-w>k", "<cmd>horizontal resize +5<cr>", optsWithDesc("Increase hight", false, true))
-keymap.set("n", "<C-w>j", "<cmd>horizontal resize -5<cr>", optsWithDesc("Decrease height", false, true))
+keymap.set("n", "<A-l>", "<cmd>vertical resize +5<cr>", optsWithDesc("Increase width", false, true))
+keymap.set("n", "<A-h>", "<cmd>vertical resize -5<cr>", optsWithDesc("Decrease width", false, true))
+keymap.set("n", "<A-k>", "<cmd>horizontal resize +5<cr>", optsWithDesc("Increase hight", false, true))
+keymap.set("n", "<A-j>", "<cmd>horizontal resize -5<cr>", optsWithDesc("Decrease height", false, true))
 
 keymap.set("n", "<tab>", "<cmd>BufferLineCycleNext<cr>", optsWithDesc("Next buffer", true, true))
 keymap.set("n", "<S-tab>", "<cmd>BufferLineCyclePrev<cr>", optsWithDesc("Previous buffer", true, true))
