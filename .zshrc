@@ -38,7 +38,7 @@ export VISUAL="$EDITOR"
 
 # source environment exports
 if [ -f ~/.config/zsh/.zsh_exports ]; then
-  source ~/.config/zsh/.zsh_exports
+  source ~/.config/zsh/.zsh_exports.zsh
 fi
 
 # Source zsh file by OS
