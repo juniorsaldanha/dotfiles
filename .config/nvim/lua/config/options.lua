@@ -18,3 +18,5 @@ vim.opt.wrap = false
 vim.o.completeopt = "menuone,noselect"
 vim.opt.shortmess:append("IWs")
 vim.opt.swapfile = false
+vim.opt.encoding = "utf-8"
+vim.opt.fileencoding = "utf-8"
