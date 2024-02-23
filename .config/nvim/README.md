@@ -1,6 +1,6 @@
-## This is my nvim setupf from scratch
+# This is my nvim setupf from scratch
 
-### List of itens to implement
+## List of itens to implement
 
 - [x] Keymaps
 - [x] Dashboard
