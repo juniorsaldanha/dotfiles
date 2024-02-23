@@ -1,0 +1,77 @@
+#!/bin/zsh
+# This script is used exclusively for Debian based linux
+
+if [ ! -f /etc/debian_version ]; then
+  echo "This script is used exclusively for Debian based linux"
+  exit 1
+fi
+
+export DEBIAN_FRONTEND=noninteractive
+export PATH=$PATH:$HOME/.cargo/bin
+
+alias python=python3
+
+# Install tap fonts and FiraCode Nerd Font only if it's not installed
+function install_font_nerd {
+  fonts_dir="${HOME}/.local/share/fonts"
+  if [ ! -d "${fonts_dir}" ]; then
+    echo "Creating dir for Fonts: $fonts_dir"
+    mkdir -p "${fonts_dir}"
+  fi
+
+  if [ ! -f "${fonts_dir}/FiraCode-Regular.ttf" ]; then
+    echo "Downloading FiraCode Nerd Font"
+    version=5.2
+    zip=Fira_Code_v${version}.zip
+    curl --fail --location --show-error https://github.com/tonsky/FiraCode/releases/download/${version}/${zip} --output ${zip}
+    unzip -o -q -d ${fonts_dir} ${zip}
+    rm ${zip}
+    fc-cache -f
+    echo "FiraCode Nerd Font installed"
+  fi
+}
+
+install_font_nerd()
+
+if [ -f $HOME/.asdf/asdf.sh ]; then
+  . $HOME/.asdf/asdf.sh
+else
+  echo "asdf not found, installing... `sudo apt-get install asdf`"
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0
+  . $HOME/.asdf/asdf.sh
+fi
+
+if ! command -v nvim &> /dev/null; then
+  echo "nvim not found, installing..."
+  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+  chmod u+x nvim.appimage
+  sudo mv nvim.appimage /usr/bin/nvim
+fi
+
+if ! command -v ripgrep &> /dev/null; then
+  if ! command -v rg &> /dev/null; then
+    echo "ripgrep not found, installing..."
+    sudo apt-get install -yq ripgrep
+  fi
+fi
+
+if ! cmomand -v tmux &> /dev/null; then
+  echo "tmux not found, installing..."
+  sudo apt-get install -yq tmux
+fi
+
+if ! command -v fzf &> /dev/null; then
+  echo "fzf not found, installing..."
+  sudo apt-get install -yq fzf
+fi
+
+if ! command -v cargo &> /dev/null; then
+  echo "cargo not found, installing..."
+  sudo apt-get install -yq cargo
+fi
+
+if ! command -v zoxide &> /dev/null; then
+  cargo install zoxide --locked
+fi
+eval "$(zoxide init zsh)"
+

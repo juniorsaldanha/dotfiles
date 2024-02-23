@@ -1,0 +1,61 @@
+#!/bin/zsh
+# This script is exclusively for Darwin
+
+if [[ $(uname) != "Darwin" ]]; then
+  echo "This script is exclusively for Darwin"
+  exit 1
+fi
+
+if ! command -v zsh &> /dev/null; then
+  echo "Zsh not found, installing... `brew install zsh`"
+  brew install zsh
+fi
+
+if ! brew tap | grep -q homebrew/cask-fonts; then
+  echo "Tapping homebrew/cask-fonts... `brew tap homebrew/cask-fonts`"
+  brew tap homebrew/cask-fonts
+fi
+
+if ! brew list | grep -q font-fira-code; then
+  echo "Installing FiraCode Nerd Font... `brew install --cask font-fira-code`"
+  brew install --cask font-fira-code
+fi
+
+if [ -f /usr/local/opt/asdf/libexec/asdf.sh ]; then
+  . /usr/local/opt/asdf/libexec/asdf.sh
+else
+  echo "Installing asdf... `brew install asdf`"
+  brew install asdf
+fi
+
+if ! command -v brew &> /dev/null; then
+  echo "Installing Homebrew... `curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh`"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+if ! command -v nvim &> /dev/null; then
+  echo "Installing Neovim... `brew install neovim`"
+  brew install neovim
+fi
+
+if ! command -v rg &> /dev/null; then
+  echo "Installing ripgrep... `brew install ripgrep`"
+  brew install ripgrep
+fi
+
+if ! command -v tmux &> /dev/null; then
+  echo "Installing tmux... `brew install tmux`"
+  brew install tmux
+fi
+
+if ! command -v fzf &> /dev/null; then
+  echo "Installing fzf... `brew install fzf`"
+  brew install fzf
+fi
+
+if ! command -v zoxide &> /dev/null; then
+  echo "Installing zoxide... `brew install zoxide`"
+  brew install zoxide
+fi
+eval "$(zoxide init zsh)"
+

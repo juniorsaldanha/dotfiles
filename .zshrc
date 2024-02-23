@@ -5,18 +5,21 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# export PATH="/usr/local/opt/protobuf@21/bin:$PATH"
-#source ~/.powerlevel10k/powerlevel10k.zsh-theme
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 source ~/.config/zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.config/zsh/.p10k.zsh
 # POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 
 # Plugins
-source ~/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.config/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-source ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [ -f ~/.config/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh ]; then
+  source ~/.config/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+fi
+if [ -f ~/.config/zsh/plugins/zsh-completions/zsh-completions.plugin.zsh ]; then
+  source ~/.config/zsh/plugins/zsh-completions/zsh-completions.plugin.zsh
+fi
+if [ -f ~/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+  source ~/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
 
 # Custom functions
 source ~/.config/zsh/custom-functions.zsh
@@ -30,19 +33,22 @@ if [ -f ~/.config/zsh/.zsh_exports ]; then
   source ~/.config/zsh/.zsh_exports
 fi
 
-# Check if homebrew is installed and install it if not
-if ! command -v brew &> /dev/null
-then
-  echo "Installing Homebrew..."
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-fi
-
-# Check if asdf is installed and load it or install it
-if [ -d /usr/local/opt/asdf ]; then
-  . /usr/local/opt/asdf/libexec/asdf.sh
+if [[ $(uname) == "Darwin" ]]; then
+  echo "Setting up MacOS zshrc..."
+  source ~/.config/zsh/.zshrc_macos
+elif [[ "$(uname)" == "Linux" ]]; then
+  if [ -f /etc/debian_version ]; then
+    echo "Setting up Debian zshrc..."
+    source ~/.config/zsh/.zshrc_debian
+  elif [ -f /etc/arch-release ]; then
+    echo "Setting up Arch zshrc..."
+    source ~/.config/zsh/.zshrc_arch
+  else
+    echo "Unknown Linux distribution"
+    return 1
+  fi
 else
-  echo "Installing asdf..."
-  brew install asdf
+  echo "Unknown OS"
+  return 1
 fi
 
-eval "$(zoxide init zsh)"

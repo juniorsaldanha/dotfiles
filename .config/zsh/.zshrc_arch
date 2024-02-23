@@ -1,0 +1,70 @@
+#!/bin/zsh
+# This script is exclusively for Arch Linux based
+
+if [ -f /etc/os-release ]; then
+  . /etch/os-release
+  if [ "$ID" != "arch" ]; then
+    echo "This script is exclusively for Arch Linux based"
+    exit 1
+  fi
+fi
+
+# Enable AUR if not enabled
+if ! grep -q "\[archlinuxfr\]" /etc/pacman.conf; then
+  echo "[archlinuxfr]" >> /etc/pacman.conf
+fi
+
+# Install yay if not installed
+if ! command -v yay &> /dev/null; then
+  pacman -Syu --noconfirm yay
+fi
+
+# Install tap fonts and FiraCode Nerd Font only if it's not installed
+function install_font_nerd {
+  fonts_dir="${HOME}/.local/share/fonts"
+  if [ ! -d "${fonts_dir}" ]; then
+    echo "Creating dir for Fonts: $fonts_dir"
+    mkdir -p "${fonts_dir}"
+  fi
+
+  if [ ! -f "${fonts_dir}/FiraCode-Regular.ttf" ]; then
+    echo "Downloading FiraCode Nerd Font"
+    version=5.2
+    zip=Fira_Code_v${version}.zip
+    curl --fail --location --show-error https://github.com/tonsky/FiraCode/releases/download/${version}/${zip} --output ${zip}
+    unzip -o -q -d ${fonts_dir} ${zip}
+    rm ${zip}
+    fc-cache -f
+    echo "FiraCode Nerd Font installed"
+  fi
+}
+
+install_font_nerd()
+
+if [ -f $HOME/.asdf/asdf.sh ]; then
+  . $HOME/.asdf/asdf.sh
+else
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0
+  . $HOME/.asdf/asdf.sh
+fi
+
+if ! command -v nvim &> /dev/null; then
+  sudo yay -S --noconfirm neovim-nightly-bin
+fi
+
+if ! command -v tmux &> /dev/null; then
+  sudo yay -S --noconfirm tmux
+fi
+
+if ! command -v rg &> /dev/null; then
+  sudo yay -S --noconfirm ripgrep
+fi
+
+if ! commnad -v cargo &> /dev/null; then
+  sudo yay -S --noconfirm rust
+fi
+
+if ! command -v zoxide &> /dev/null; then
+  cargo install zoxide --locked
+fi
+eval "$(zoxide init zsh)"
