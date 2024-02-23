@@ -11,14 +11,16 @@ source ~/.config/zsh/.p10k.zsh
 # POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 
 # Plugins
-if [ -f ~/.config/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh ]; then
-  source ~/.config/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+if [ -f ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
-if [ -f ~/.config/zsh/plugins/zsh-completions/zsh-completions.plugin.zsh ]; then
-  source ~/.config/zsh/plugins/zsh-completions/zsh-completions.plugin.zsh
-fi
+
 if [ -f ~/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
   source ~/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
+
+if [ -f ~/.config/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh ]; then
+  source ~/.config/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 fi
 
 # Custom functions
