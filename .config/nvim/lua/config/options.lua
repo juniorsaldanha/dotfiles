@@ -10,3 +10,5 @@ vim.opt.filetype = "on"
 
 -- Set gui fonts
 vim.opt.guifont = "Fira Code:h12"
+
+vim.wo.relativenumber = true
