@@ -15,8 +15,8 @@ k.set("n", "<C-h>", "<C-w>h", { noremap = true, silent = true })
 k.set("n", "<C-l>", "<C-w>l", { noremap = true, silent = true })
 
 -- <C-j/k> to move to the windows to the up/down
-k.set("n", "<C-j>", "<C-w>j", { noremap = true, silent = true})
-k.set("n", "<C-k>", "<C-w>k", { noremap = true, silent = true})
+k.set("n", "<C-j>", "<C-w>j", { noremap = true, silent = true })
+k.set("n", "<C-k>", "<C-w>k", { noremap = true, silent = true })
 
 -- Move selected line / block of text in visual mode
 k.set("x", "K", ":move '<-2<CR>gv-gv", { noremap = true, silent = true })
