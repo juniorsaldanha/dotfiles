@@ -1,4 +1,5 @@
 # To debug load times, uncomment the following line and the last line of this file
+# and run `time zsh -i -c exit`
 # zmodload zsh/zprof
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
