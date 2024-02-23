@@ -1,3 +1,6 @@
+# To debug load times, uncomment the following line and the last line of this file
+# zmodload zsh/zprof
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -54,3 +57,4 @@ else
   return 1
 fi
 
+# zprof
