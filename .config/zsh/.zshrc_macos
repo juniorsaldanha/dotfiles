@@ -1,4 +1,4 @@
-#!/bin/zsh
+##!/bin/zsh
 # This script is exclusively for Darwin
 
 if [[ $(uname) != "Darwin" ]]; then
@@ -11,13 +11,9 @@ if ! command -v zsh &> /dev/null; then
   brew install zsh
 fi
 
-if ! brew tap | grep -q homebrew/cask-fonts; then
-  echo "Tapping homebrew/cask-fonts... `brew tap homebrew/cask-fonts`"
-  brew tap homebrew/cask-fonts
-fi
-
-if ! brew list | grep -q font-fira-code; then
+if ! brew list --cask | grep -q font-fira-code; then
   echo "Installing FiraCode Nerd Font... `brew install --cask font-fira-code`"
+  brew tap homebrew/cask-fonts
   brew install --cask font-fira-code
 fi
 
