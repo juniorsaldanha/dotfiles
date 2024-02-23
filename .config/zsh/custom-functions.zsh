@@ -183,3 +183,7 @@ alias lg="lazygit"
 alias ld="lazydocker"
 alias nv="nvim"
 alias cd='z'
+
+# Binding ctrl-r to history search backwards
+bindkey -v
+bindkey '^R' history-incremental-search-backward
