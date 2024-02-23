@@ -1,4 +1,4 @@
-##!/bin/zsh
+#!/bin/zsh
 # This script is exclusively for Darwin
 
 if [[ $(uname) != "Darwin" ]]; then
@@ -6,15 +6,14 @@ if [[ $(uname) != "Darwin" ]]; then
   exit 1
 fi
 
+if ! command -v brew &> /dev/null; then
+  echo "Installing Homebrew... `curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh`"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
 if ! command -v zsh &> /dev/null; then
   echo "Zsh not found, installing... `brew install zsh`"
   brew install zsh
-fi
-
-if ! brew list --cask | grep -q font-fira-code; then
-  echo "Installing FiraCode Nerd Font... `brew install --cask font-fira-code`"
-  brew tap homebrew/cask-fonts
-  brew install --cask font-fira-code
 fi
 
 if [ -f /usr/local/opt/asdf/libexec/asdf.sh ]; then
@@ -22,11 +21,6 @@ if [ -f /usr/local/opt/asdf/libexec/asdf.sh ]; then
 else
   echo "Installing asdf... `brew install asdf`"
   brew install asdf
-fi
-
-if ! command -v brew &> /dev/null; then
-  echo "Installing Homebrew... `curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh`"
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
 if ! command -v nvim &> /dev/null; then
@@ -55,3 +49,11 @@ if ! command -v zoxide &> /dev/null; then
 fi
 eval "$(zoxide init zsh)"
 
+function setup()
+{
+  if ! brew list --cask | grep -q font-fira-code; then
+    echo "Installing FiraCode Nerd Font... `brew install --cask font-fira-code`"
+    brew tap homebrew/cask-fonts
+    brew install --cask font-fira-code
+  fi
+}
