@@ -40,14 +40,11 @@ if [ -f ~/.config/zsh/.zsh_exports ]; then
 fi
 
 if [[ $(uname) == "Darwin" ]]; then
-  echo "Setting up MacOS zshrc..."
   source ~/.config/zsh/.zshrc_macos
 elif [[ "$(uname)" == "Linux" ]]; then
   if [ -f /etc/debian_version ]; then
-    echo "Setting up Debian zshrc..."
     source ~/.config/zsh/.zshrc_debian
   elif [ -f /etc/arch-release ]; then
-    echo "Setting up Arch zshrc..."
     source ~/.config/zsh/.zshrc_arch
   else
     echo "Unknown Linux distribution"
