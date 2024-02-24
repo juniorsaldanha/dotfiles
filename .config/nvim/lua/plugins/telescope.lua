@@ -16,7 +16,12 @@ return {
   keys = {
     {
       "<leader>ff",
-      "<cmd>lua require('telescope.builtin').find_files()<cr>",
+      "<cmd>lua require('telescope.builtin').find_files({ hidden = false })<cr>",
+      desc = "Find files",
+    },
+    {
+      "<leader>fF",
+      "<cmd>lua require('telescope.builtin').find_files({ hidden = true })<cr>",
       desc = "Find files",
     },
     {
@@ -33,12 +38,6 @@ return {
       "<leader>fh",
       "<cmd>lua require('telescope.builtin').help_tags()<cr>",
       desc = "Find help tags",
-    },
-  },
-  opts = {
-    defaults = {
-      prompt_position = "top",
-      sorting_strategy = "ascending",
     },
   },
   config = function()
