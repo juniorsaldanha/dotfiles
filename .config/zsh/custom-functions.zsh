@@ -32,13 +32,13 @@ function remotedocker_active()
     # [Service]
     # ExecStart=
     # ExecStart=/usr/bin/dockerd -H unix:// -H tcp://0.0.0.0:2375
-    
+
     # # Reload the systemd daemon.
     # sudo systemctl daemon-reload
-    
+
     # # Restart Docker.
     # sudo systemctl restart docker
-    
+
     if [ "$1" ];then
         export DOCKER_HOST=tcp://$1:2375
         echo "Connected to Docker Daemon on $1:2375"
@@ -106,6 +106,7 @@ function extract () {
     if [ -f $1 ] ; then
         case $1 in
             *.tar.bz2)   tar xvjf $1    ;;
+            *.tar.xz)    tar xf $1      ;;
             *.tar.gz)    tar xvzf $1    ;;
             *.bz2)       bunzip2 $1     ;;
             *.rar)       rar x $1       ;;
@@ -137,7 +138,7 @@ function biggest()
     if [ "$1" ];then
         du -h -d 1 "$1" | sort -h
     fi
-    
+
 }
 
 function cppcheck(){
