@@ -56,3 +56,10 @@ else
 fi
 
 # zprof
+
+# bun completions
+[ -s "/Users/umsaldanha/.bun/_bun" ] && source "/Users/umsaldanha/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
