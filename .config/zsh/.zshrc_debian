@@ -55,7 +55,6 @@ fi
 if ! command -v zoxide &> /dev/null; then
   cargo install zoxide --locked
 fi
-eval "$(zoxide init zsh)"
 
 if ! command -v alacritty &> /dev/null; then
   sudo apt install -yq cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3

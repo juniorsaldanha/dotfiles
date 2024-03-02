@@ -186,9 +186,10 @@ alias nv="nvim"
 alias nvs="nvims"
 
 
-# If z is installed, use it as cd
-if [ command -v z &> /dev/null ]; then
-    alias cd="z"
+# If zoxide is installed, use it as cd
+if ! [ ! command -v zoxide &> /dev/null ]; then
+  eval "$(zoxide init zsh)"
+  alias cd="z"
 fi
 
 # Binding ctrl-r to history search backwards
