@@ -1,3 +1,7 @@
+if true then
+  return {}
+end
+
 return {
   "nvim-tree/nvim-tree.lua",
   version = "1.0",
@@ -5,7 +9,7 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   config = function()
-    local nvim_tree_api = require("nvim-tree.api")
+    -- local nvim_tree_api = require("nvim-tree.api")
     local nvim_tree = require("nvim-tree")
     nvim_tree.setup({
       sort = {

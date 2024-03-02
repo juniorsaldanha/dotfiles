@@ -16,11 +16,31 @@ if ! command -v zsh &> /dev/null; then
   brew install zsh
 fi
 
-if [ -f /usr/local/opt/asdf/libexec/asdf.sh ]; then
-  . /usr/local/opt/asdf/libexec/asdf.sh
-else
+if ! command -v asdf &> /dev/null; then
   echo "Installing asdf... `brew install asdf`"
   brew install asdf
+
+  echo "Installing golang latest with asdf"
+  asdf plugin add golang
+  asdf install golang latest
+  asdf global golang latest
+
+  echo "Installing nodejs 20.11.1 with asdf"
+  asdf plugin add nodejs
+  asdf install nodejs 20.11.1
+  asdf global nodejs 20.11.1
+
+  echo "Installing golang latest with asdf `asdf plugin add golang`"
+  asdf plugin add python
+  asdf install python latest
+  asdf global python latest
+fi
+
+if [ -f /opt/homebrew/opt/asdf/libexec/asdf.sh ]; then
+  source /opt/homebrew/opt/asdf/libexec/asdf.sh
+else
+  echo "asdf.sh file not found, reinstall and/or debug asdf"
+  echo "file not found: /opt/homebrew/opt/asdf/libexec/asdf.sh"
 fi
 
 if ! command -v nvim &> /dev/null; then
@@ -49,11 +69,21 @@ if ! command -v zoxide &> /dev/null; then
 fi
 eval "$(zoxide init zsh)"
 
+if ! command -v btop &> /dev/null; then
+  echo "Installing btop... `brew install btop`"
+  brew install btop
+fi
+
+if ! command -v bun &> /dev/null; then
+  echo "Installing bun... `brew install oven-sh/bun/bun`"
+  brew install oven-sh/bun/bun
+fi
+
 function setup()
 {
-  if ! brew list --cask | grep -q font-fira-code; then
-    echo "Installing FiraCode Nerd Font... `brew install --cask font-fira-code`"
+  if ! brew list --cask | grep -q font-fira-code-nerd-font; then
+    echo "Installing FiraCode Nerd Font... `brew install --cask font-fira-code-nerd-font`"
     brew tap homebrew/cask-fonts
-    brew install --cask font-fira-code
+    brew install --cask font-fira-code-nerd-font
   fi
 }

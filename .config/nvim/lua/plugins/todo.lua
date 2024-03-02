@@ -1,7 +1,6 @@
--- WARNING: Add a keybinding to open the todo list
--- NOTE: Check all the opts for the todo-comments and configure it properly
 return {
   "folke/todo-comments.nvim",
+  lazy = false,
   dependencies = { "nvim-lua/plenary.nvim" },
   keys = {
     {
@@ -13,24 +12,53 @@ return {
       "<leader>ftf",
       "<cmd>TodoTelescope keywords=FIX,WARN,WARNING<cr>",
     },
-
-    -- vim.keymap.set("n", "]t", function()
-    --   require("todo-comments").jump_next()
-    -- end, { desc = "Next todo comment" })
-    --
-    -- vim.keymap.set("n", "[t", function()
-    --   require("todo-comments").jump_prev()
-    -- end, { desc = "Previous todo comment" })
-    --
-    -- -- You can also specify a list of valid jump keywords
-    --
-    -- vim.keymap.set("n", "]t", function()
-    --   require("todo-comments").jump_next({keywords = { "ERROR", "WARNING" }})
-    -- end, { desc = "Next error/warning todo comment" })
+    {
+      "<leader>ftd",
+      "<cmd>TodoTelescope keywords=TODO,HACK,NOTE<cr>",
+    },
+    {
+      "<leader>fti",
+      "<cmd>TodoTelescope keywords=INFO<cr>",
+    },
+    {
+      "<leader>ftc",
+      "<cmd>TodoTelescope keywords=FIXME,BUG,ERROR<cr>",
+    },
+    {
+      "]t",
+      function()
+        require("todo-comments").jump_next()
+      end
+    },
+    {
+      "[t",
+      function()
+        require("todo-comments").jump_prev()
+      end
+    },
+    {
+      "}t",
+      function()
+        require("todo-comments").jump_next({ keywords = { "ERROR", "WARNING" } })
+      end
+    },
+    {
+      "{t",
+      function()
+        require("todo-comments").jump_prev({ keywords = { "ERROR", "WARNING" } })
+      end
+    },
   },
   opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
+    search = {
+      command = "rg",
+      args = {
+        "--hidden",
+        "--smart-case",
+        "--vimgrep",
+        "--follow",
+        "--color=never",
+      },
+    },
   },
 }
