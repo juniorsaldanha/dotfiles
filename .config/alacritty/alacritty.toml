@@ -39,10 +39,7 @@ option_as_alt = "OnlyLeft"
 save_to_clipboard = true
 
 [cursor]
-style = { shape = "Block", blinking = "On" }
-
-[mouse]
-hide_when_typing = true
+style = { shape = "Block", blinking = "Off" }
 
 [terminal]
 osc52 = "CopyPaste"

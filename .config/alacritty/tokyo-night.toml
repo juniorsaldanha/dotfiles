@@ -27,3 +27,8 @@ blue    = '#7da6ff'
 magenta = '#bb9af7'
 cyan    = '#0db9d7'
 white   = '#acb0d0'
+
+# Cursor colors (custom by gh: @juniorsaldanha)
+[colors.vi_mode_cursor]
+text = '#1a1b26'
+cursor = '#f7768e'
