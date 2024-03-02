@@ -183,7 +183,13 @@ alias o="open ."
 alias lg="lazygit"
 alias ld="lazydocker"
 alias nv="nvim"
-alias cd='z'
+alias nvs="nvims"
+
+
+# If z is installed, use it as cd
+if [ command -v z &> /dev/null ]; then
+    alias cd="z"
+fi
 
 # Binding ctrl-r to history search backwards
 bindkey -v
