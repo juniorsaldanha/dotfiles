@@ -32,7 +32,7 @@ if ! command -v ripgrep &> /dev/null; then
   fi
 fi
 
-if ! cmomand -v tmux &> /dev/null; then
+if ! command -v tmux &> /dev/null; then
   echo "tmux not found, installing..."
   sudo apt-get install -yq tmux
 fi
