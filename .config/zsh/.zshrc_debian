@@ -42,6 +42,11 @@ if ! command -v fzf &> /dev/null; then
   sudo apt-get install -yq fzf
 fi
 
+if ! command -v cmake &> /dev/null; then
+  echo "cmake not found, installing..."
+  sudo apt-get install -yq cmake
+fi
+
 if ! command -v cargo &> /dev/null; then
   echo "cargo not found, installing..."
   sudo apt-get install -yq cargo
@@ -52,23 +57,33 @@ if ! command -v zoxide &> /dev/null; then
 fi
 eval "$(zoxide init zsh)"
 
-function setup() {
+if ! command -v alacritty &> /dev/null; then
+  sudo apt install -yq cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
+  cargo install alacritty --locked
+  sudo cp $HOME/.cargo/bin/alacritty /usr/local/bin/
+  sudo curl --fail --location --show-error https://github.com/alacritty/alacritty/blob/master/extra/logo/compat/alacritty-term.png?raw=true --output /usr/share/pixmaps/Alacritty.png
+  sudo curl --fail --location --show-error https://raw.githubusercontent.com/alacritty/alacritty/master/extra/logo/alacritty-term.svg --output /usr/share/pixmaps/Alacritty.svg
+  curl -o Alacritty.desktop https://raw.githubusercontent.com/alacritty/alacritty/master/extra/linux/Alacritty.desktop
+  sudo desktop-file-install Alacritty.desktop
+  sudo update-desktop-database
+  rm -rf Alacritty.desktop
+fi
+
+function setup(){
   fonts_dir="${HOME}/.local/share/fonts"
   if [ ! -d "${fonts_dir}" ]; then
     echo "Creating dir for Fonts: $fonts_dir"
     mkdir -p "${fonts_dir}"
   fi
 
-  if [ ! -f "${fonts_dir}/FiraCode-Regular.ttf" ]; then
+  if [ ! -f "${fonts_dir}/FiraCodeNerdFont-Regular.ttf" ]; then
     echo "Downloading FiraCode Nerd Font"
-    version=5.2
-    zip=Fira_Code_v${version}.zip
-    curl --fail --location --show-error https://github.com/tonsky/FiraCode/releases/download/${version}/${zip} --output ${zip}
+    url_firacodenerdfont="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/FiraCode.zip"
+    zip="FiraCode.zip"
+    curl --fail --location --show-error ${url_firacodenerdfont} --output ${zip}
     unzip -o -q -d ${fonts_dir} ${zip}
     rm ${zip}
     fc-cache -f
     echo "FiraCode Nerd Font installed"
   fi
 }
-
-

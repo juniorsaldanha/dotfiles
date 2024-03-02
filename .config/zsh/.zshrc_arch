@@ -37,8 +37,24 @@ if ! command -v rg &> /dev/null; then
   sudo yay -S --noconfirm ripgrep
 fi
 
+if ! command -v cmake &> /dev/null; then
+  sudo pacman -S --noconfirm cmake
+fi
+
 if ! commnad -v cargo &> /dev/null; then
   sudo yay -S --noconfirm rust
+fi
+
+if ! command -v alacritty &> /dev/null; then
+  pacman -S cmake freetype2 fontconfig pkg-config make libxcb libxkbcommon python
+  cargo install alacritty --locked
+  sudo cp $HOME/.cargo/bin/alacritty /usr/local/bin/
+  sudo curl --fail --location --show-error https://github.com/alacritty/alacritty/blob/master/extra/logo/compat/alacritty-term.png?raw=true --output /usr/share/pixmaps/Alacritty.png
+  sudo curl --fail --location --show-error https://raw.githubusercontent.com/alacritty/alacritty/master/extra/logo/alacritty-term.svg --output /usr/share/pixmaps/Alacritty.svg
+  curl -o Alacritty.desktop https://raw.githubusercontent.com/alacritty/alacritty/master/extra/linux/Alacritty.desktop
+  sudo desktop-file-install Alacritty.desktop
+  sudo update-desktop-database
+  rm -rf Alacritty.desktop
 fi
 
 if ! command -v zoxide &> /dev/null; then
@@ -53,11 +69,11 @@ function setup(){
     mkdir -p "${fonts_dir}"
   fi
 
-  if [ ! -f "${fonts_dir}/FiraCode-Regular.ttf" ]; then
+  if [ ! -f "${fonts_dir}/FiraCodeNerdFont-Regular.ttf" ]; then
     echo "Downloading FiraCode Nerd Font"
-    version=5.2
-    zip=Fira_Code_v${version}.zip
-    curl --fail --location --show-error https://github.com/tonsky/FiraCode/releases/download/${version}/${zip} --output ${zip}
+    url_firacodenerdfont="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/FiraCode.zip"
+    zip="FiraCode.zip"
+    curl --fail --location --show-error ${url_firacodenerdfont} --output ${zip}
     unzip -o -q -d ${fonts_dir} ${zip}
     rm ${zip}
     fc-cache -f
