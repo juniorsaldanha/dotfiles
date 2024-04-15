@@ -5,7 +5,7 @@ if not vim.loop.fs_stat(lazypath) then
     "clone",
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
+    "--branch=stable",
     lazypath,
   })
 end
@@ -13,21 +13,9 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   spec = {
-    { import = "plugins" }, -- import all plugins from path "plugins"
-    { import = "plugins.code" }, -- import code plugins (lsp, formatters, cmp)
+    { import = "plugins" },
+    --    { import = "plugins.code" },
   },
-  defaults = {
-    lazy = false,
-    version = false, -- always use the latest git commit
-  },
-  install = { colorscheme = { "tokyonight" } },
-  checker = { enabled = true }, -- automatically check for plugin updates
-  ui = {
-    size = {
-      width = 0.75,
-      height = 0.75,
-    },
-    border = "rounded",
-    title = "UmSaldanha",
-  },
+  change_detection = { notify = false },
+  checker = { enabled = true },
 })

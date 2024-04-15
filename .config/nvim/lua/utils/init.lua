@@ -1,20 +1,22 @@
 local M = {}
 
-function M.set_keymap(mode, key, action, opts)
-  local options = { noremap = true, silent = true }
-  if opts then
-    options = vim.tbl_extend('force', options, opts)
+M.require = function(file)
+  local status, _ = pcall(require, file)
+  if not status then
+    print("Error loading " .. file)
   end
-  vim.api.nvim_set_keymap(mode, key, action, options)
 end
 
-function M.set_keymaps(keymaps)
-  for _, keymap in ipairs(keymaps) do
-    if #keymap < 4 then
-      keymap[4] = nil
-    end
-    M.set_keymap(keymap[1], keymap[2], keymap[3], keymap[4])
+M.getWindows = function()
+  -- print(vim.inspect(vim.api.nvim_list_wins()))
+  local windows = vim.api.nvim_list_wins()
+  -- print all attributes of each window
+  for _, window in ipairs(windows) do
+    print(vim.inspect(vim.api.nvim_win_get_config(window)))
   end
 end
+
+-- Test
+-- vim.keymap.set("n", "<leader>ww", M.getWindows)
 
 return M

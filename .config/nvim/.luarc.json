@@ -1,5 +1,5 @@
 {
     "diagnostics.disable": [
-        "inject-field"
+        "different-requires"
     ]
 }

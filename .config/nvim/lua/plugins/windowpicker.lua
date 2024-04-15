@@ -7,12 +7,12 @@ return {
       hint = "floating-big-letter",
       selection_char = "ASF;LKJ",
       filter_rules = {
-        include_current_win = false,
+        include_current_win = true,
         autoselect_one = true,
         -- filter using buffer options
         bo = {
           -- if the file type is one of following, the window will be ignored
-          filetype = { "NvimTree", "notify" },
+          filetype = { "NvimTree", "Neotree", "notify" },
           -- if the buffer type is one of following, the window will be ignored
           buftype = { "terminal", "quickfix" },
         },

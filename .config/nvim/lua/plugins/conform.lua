@@ -47,8 +47,37 @@ return {
         sh = { "shfmt" },
         bash = { "shfmt" },
         zsh = { "shfmt" },
-        ["*"] = { "prettierd", "prettier" },
+        ["_"] = { "prettier" },
       },
+    })
+
+    local usercmd = vim.api.nvim_create_user_command
+
+    -- Disable autoformatting for a buffer or globally
+    usercmd("ConformDisable", function(args)
+      if args.bang then
+        -- FormatDisable! will disable formatting just for this buffer
+        vim.b.disable_autoformat = true
+      else
+        vim.g.disable_autoformat = true
+      end
+      vim.notify("Autoformatting disabled", vim.log.levels.INFO, {
+        title = "Conform",
+      })
+    end, {
+      desc = "Disable autoformat G or B",
+      bang = true,
+    })
+
+    -- Enable autoformatting for a buffer and globally
+    usercmd("ConformEnable", function()
+      vim.b.disable_autoformat = false
+      vim.g.disable_autoformat = false
+      vim.notify("Autoformatting enabled", vim.log.levels.INFO, {
+        title = "Conform",
+      })
+    end, {
+      desc = "Re-enable autoformat G and B",
     })
   end,
 }

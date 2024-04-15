@@ -4,15 +4,17 @@ return {
   priority = 1000,
   opts = {},
   config = function()
-    require("tokyonight").setup({
-      style = "moon",
+    local tokyo = require("tokyonight")
+    tokyo.setup({
+      style = "night",
       light_style = "day",
       terminal_colors = true,
+      transparent = false,
       on_colors = function(colors)
         colors.error = colors.red
         colors.hint = colors.orange
       end,
     })
-    vim.cmd("colorscheme tokyonight-night")
+    vim.cmd("colorscheme tokyonight")
   end,
 }
