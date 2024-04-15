@@ -67,3 +67,12 @@
     light = false
     side-by-side = true
     line-numbers = true
+
+; This here will set ionic health as the default path for the git config
+; This will garantee that commits will be made with the correct user and config
+[includeIf "gitdir:~/ionichealth/"]
+    path = ~/.config/git/ionichealth
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate

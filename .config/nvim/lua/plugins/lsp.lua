@@ -71,6 +71,23 @@ return {
             },
           })
         end,
+
+        ["gopls"] = function()
+          local lspconfig = require("lspconfig")
+          lspconfig.gopls.setup({
+            capabilities = capabilities,
+            settings = {
+              gopls = {
+                staticcheck = true,
+                completeUnimported = true,
+                usePlaceholders = true,
+                analyses = {
+                  unusedparams = true,
+                },
+              },
+            },
+          })
+        end,
       },
     })
 
