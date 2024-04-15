@@ -1,79 +1,79 @@
-local augroup = vim.api.nvim_create_augroup -- Create/get autocommand group
-local autocmd = vim.api.nvim_create_autocmd -- Create autocommand
-local usercmd = vim.api.nvim_create_user_command -- Create user command
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+-- local usercmd = vim.api.nvim_create_user_command
 
--- Highlight when yaking text
--- Test it with `yiw`, `yaw` or `yap` in normal mode
--- see `:h TextYankPost`
+local SaldanhaGroup = augroup("Saldanha", {})
+local YankGroup = augroup("YankHighlight", {})
 
--- vim.api.nvim_create_autocmd()
-
+-- Highlight on yank
 autocmd("TextYankPost", {
-  group = augroup("YankHighlight", { clear = true }),
-  callback = function()
-    vim.highlight.on_yank({ timeout = "400" })
-  end,
+    group = YankGroup,
+    callback = function()
+        vim.highlight.on_yank({ timeout = "150" })
+    end,
 })
 
 -- Remove whitespace on save
-autocmd("BufWritePre", {
-  pattern = "",
-  command = ":%s/\\s\\+$//e",
+autocmd({ "BufWritePre" }, {
+    group = SaldanhaGroup,
+    pattern = "*",
+    command = [[%s/\s\+$//e]],
 })
 
 -- Don't auto commenting new lines
-autocmd("BufEnter", {
-  pattern = "",
-  command = "set fo-=c fo-=r fo-=o",
+autocmd({ "BufEnter" }, {
+    group = SaldanhaGroup,
+    pattern = "",
+    command = "set fo-=c fo-=r fo-=o",
 })
 
 -- Resize splits if window got resized
 -- see `:h VimResized`
 autocmd("VimResized", {
-  group = augroup("ResizeSplits", { clear = true }),
-  callback = function()
-    local current_tab = vim.fn.tabpagenr()
-    vim.cmd("tabdo wincmd =")
-    vim.cmd("tabnext " .. current_tab)
-  end,
+    group = SaldanhaGroup,
+    callback = function()
+        local current_tab = vim.fn.tabpagenr()
+        vim.cmd("tabdo wincmd =")
+        vim.cmd("tabnext " .. current_tab)
+    end,
 })
 
--- Auto create dir when saving a file, in case some intermediate directory does not exist
--- see `:h BufWritePre`
-autocmd({ "BufWritePre" }, {
-  group = augroup("auto_create_dir", { clear = true }),
-  callback = function(event)
-    if event.match:match("^%w%w+://") then
-      return
-    end
-    local file = vim.loop.fs_realpath(event.match) or event.match
-    vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
-  end,
-})
-
--- Disable autoformatting for a buffer or globally
-usercmd("ConformDisable", function(args)
-  if args.bang then
-    -- FormatDisable! will disable formatting just for this buffer
-    vim.b.disable_autoformat = true
-  else
-    vim.g.disable_autoformat = true
-  end
-  vim.notify("Autoformatting disabled", vim.log.levels.INFO, {
-    title = "Conform",
-  })
-end, {
-  desc = "Disable autoformat G or B",
-  bang = true,
-})
-
--- Enable autoformatting for a buffer and globally
-usercmd("ConformEnable", function()
-  vim.b.disable_autoformat = false
-  vim.g.disable_autoformat = false
-  vim.notify("Autoformatting enabled", vim.log.levels.INFO, {
-    title = "Conform",
-  })
-end, {
-  desc = "Re-enable autoformat G and B",
+-- LSP keybindings
+-- see `:h lsp`
+autocmd("LspAttach", {
+    group = SaldanhaGroup,
+    callback = function(e)
+        local opts = function(desc)
+            return { desc = desc, noremap = true, silent = true, buffer = e.buf }
+        end
+        vim.keymap.set("n", "gd", function()
+            vim.lsp.buf.definition()
+        end, opts("[LSP] Go to definition"))
+        vim.keymap.set("n", "K", function()
+            vim.lsp.buf.hover()
+        end, opts("[LSP] Hover"))
+        vim.keymap.set("n", "<leader>ca", function()
+            vim.lsp.buf.code_action()
+        end, opts("[LSP] Code action"))
+        vim.keymap.set("n", "<leader>cR", function()
+            vim.lsp.buf.references()
+        end, opts("[LSP] References"))
+        vim.keymap.set("n", "<leader>cD", function()
+            vim.diagnostic.open_float()
+        end, opts("[LSP] Diagnostics"))
+        vim.keymap.set("n", "<leader>cr", function()
+            vim.lsp.buf.rename()
+        end, opts("[LSP] Rename"))
+        vim.keymap.set("n", "[d", function()
+            vim.diagnostic.goto_next()
+        end, opts("[LSP] Next diagnostic"))
+        vim.keymap.set("n", "]d", function()
+            vim.diagnostic.goto_prev()
+        end, opts("[LSP] Previous diagnostic"))
+        vim.keymap.set("i", "<C-h>", function()
+            vim.lsp.buf.signature_help()
+        end, opts("[LSP] Signature help"))
+        -- TODO: Check it out thi workspace thing
+        -- vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts("[LSP] Workspace symbols"))
+    end,
 })

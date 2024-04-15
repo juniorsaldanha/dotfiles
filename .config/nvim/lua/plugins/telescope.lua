@@ -1,6 +1,6 @@
 return {
   "nvim-telescope/telescope.nvim",
-  version = false,
+  tag = "0.1.6",
   lazy = false,
   dependencies = {
     "nvim-lua/plenary.nvim",
@@ -12,112 +12,52 @@ return {
         require("telescope").load_extension("fzf")
       end,
     },
+    "s1n7ax/nvim-window-picker",
   },
-  keys = {
-    {
-      "<leader>ff",
-      "<cmd>lua require('telescope.builtin').find_files({ hidden = false })<cr>",
-      desc = "[F]ind [f]iles (no hidden)",
-    },
-    {
-      "<leader>fF",
-      "<cmd>lua require('telescope.builtin').find_files({ hidden = true })<cr>",
-      desc = "[F]ind [F]iles (hidden)",
-    },
-    {
-      "<leader>fg",
-      "<cmd>lua require('telescope.builtin').live_grep()<cr>",
-      desc = "[F]ind using [G]rep",
-    },
-    {
-      "<leader>fb",
-      "<cmd>lua require('telescope.builtin').buffers()<cr>",
-      desc = "[F]ind [B]uffers",
-    },
-    {
-      "<leader><leader>",
-      "<cmd>lua require('telescope.builtin').buffers()<cr>",
-      desc = "Find Buffer",
-    },
-    {
-      "<leader>fh",
-      "<cmd>lua require('telescope.builtin').help_tags()<cr>",
-      desc = "[F]ind [H]elp Tags",
-    },
-    {
-      "<leader>fk",
-      "<cmd>lua require('telescope.builtin').keymaps()<cr>",
-      desc = "[F]ind [K]eymaps",
-    },
-    {
-      "<leader>ds",
-      "<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>",
-      desc = "[D]ocument [S]ymbols",
-    },
-    {
-      "<leader>fS",
-      "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>",
-      desc = "[W]orkspace [S]ymbols",
-    },
-    {
-      "<leader>gs",
-      "<cmd>lua require('telescope.builtin').git_status()<cr>",
-      desc = "[G]it [S]tatus",
-    },
-    {
-      "<leader>gS",
-      "<cmd>lua require('telescope.builtin').git_stash()<cr>",
-      desc = "[G]it [S]tash",
-    },
-    {
-      "<leader>gc",
-      "<cmd>lua require('telescope.builtin').git_commits()<cr>",
-      desc = "[G]it [C]ommits",
-    },
-    {
-      "<leader>gb",
-      "<cmd>lua require('telescope.builtin').git_branches()<cr>",
-      desc = "[G]it [B]ranches",
-    },
-    {
-      "<leader>gac",
-      "<cmd>lua require('telescope.builtin').actions.git_checkout()<cr>",
-      desc = "[G]it [A]ctions [C]heckout",
-    },
-    {
-      "<leader>gas",
-      "<cmd>lua require('telescope.builtin').actions.git_apply_stash()<cr>",
-      desc = "[G]it [A]ctions [S]tash",
-    },
-    {
-      "<leader>gaB",
-      "<cmd>lua require('telescope.builtin').actions.git_create_branch()<cr>",
-      desc = "[G]it [A]ctions [B]ranch",
-    },
-    {
-      "<leader>gasb",
-      "<cmd>lua require('telescope.builtin').actions.git_switch_branch()<cr>",
-      desc = "[G]it [A]ctions [S]witch [B]ranch",
-    },
-    {
-      "<leader>garb",
-      "<cmd>lua require('telescope.builtin').actions.git_rename_branch()<cr>",
-      desc = "[G]it [A]ctions [R]ename [B]ranch",
-    },
-    {
-      "<leader>sh",
-      "<cmd>lua require('telescope.builtin').help_tags()<cr>",
-      desc = "[S]earch [H]elp",
-    },
 
+  opts = {
+    defaults = {
+      -- TODO: Develop a way to delete buffer from the telescope buffer list <leader><leader> keymap
+      -- mapping = {
+      --     n = {
+      --         ["<C-d>"] = require("telescope.actions").delete_buffer,
+      --     },
+      --     i = {
+      --         ["<C-h>"] = "which_key",
+      --         ["<C-d>"] = require("telescope.actions").delete_buffer,
+      --     },
+      -- },
+      get_selection_window = function()
+        local win_id = require("window-picker").pick_window()
+        if win_id then
+          return win_id
+        else
+          return 0
+        end
+      end,
+    },
   },
-  config = function()
-    require("telescope").setup({
-      pickers = {
-        live_grep = {
-          additional_args = { "--hidden" },
-        },
-      },
-    })
+
+  config = function(opts)
+    local telescope = require("telescope")
+    telescope.setup(opts)
+
+    local map = vim.keymap.set
+    local builtin = require("telescope.builtin")
+    map("n", "<leader>fk", builtin.keymaps, { desc = "[F]ind [K]eymaps" })
+    map("n", "<leader>ff", builtin.find_files, { desc = "[F]ind [f]iles (no hidden)" })
+    map("n", "<leader>fF", builtin.find_files, { desc = "[F]ind [F]iles (hidden)" })
+    map("n", "<leader>fg", builtin.live_grep, { desc = "[F]ind using [G]rep" })
+    map("n", "<leader>fb", builtin.buffers, { desc = "[F]ind [B]uffers" })
+    map("n", "<leader><leader>", builtin.buffers, { desc = "Find Buffer" })
+    map("n", "<leader>fh", builtin.help_tags, { desc = "[F]ind [H]elp Tags" })
+    map("n", "<leader>ds", builtin.lsp_document_symbols, { desc = "[D]ocument [S]ymbols" })
+    map("n", "<leader>fS", builtin.lsp_workspace_symbols, { desc = "[W]orkspace [S]ymbols" })
+    map("n", "<leader>gs", builtin.git_status, { desc = "[G]it [S]tatus" })
+    map("n", "<leader>gS", builtin.git_stash, { desc = "[G]it [S]tash" })
+    map("n", "<leader>gc", builtin.git_commits, { desc = "[G]it [C]ommits" })
+    map("n", "<leader>gC", builtin.git_bcommits, { desc = "[G]it [B]ranch [C]ommits" })
+    map("n", "<leader>gb", builtin.git_branches, { desc = "[G]it [B]ranches" })
+    map("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
   end,
 }
