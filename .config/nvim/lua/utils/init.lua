@@ -1,22 +1,13 @@
 local M = {}
 
-M.require = function(file)
-  local status, _ = pcall(require, file)
-  if not status then
-    print("Error loading " .. file)
-  end
-end
+-- Deprecated functions
+M.getWindows = require("util").GetWindows
+M.require = require("util").require
 
-M.getWindows = function()
-  -- print(vim.inspect(vim.api.nvim_list_wins()))
-  local windows = vim.api.nvim_list_wins()
-  -- print all attributes of each window
-  for _, window in ipairs(windows) do
-    print(vim.inspect(vim.api.nvim_win_get_config(window)))
-  end
-end
+-- Utility
+M.util = require("util")
 
--- Test
--- vim.keymap.set("n", "<leader>ww", M.getWindows)
+-- Configuration
+M.config = require("config")
 
 return M

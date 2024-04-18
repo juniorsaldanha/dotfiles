@@ -6,7 +6,8 @@ return {
     defaults = {
       mode = { "n", "v" },
       ["<leader>b"] = { name = "[B]uffer" },
-      ["<leader>c"] = { name = "[C]ode" },
+      -- ["<leader>c"] = { name = "[C]ode" },
+      ["<leader>l"] = { name = "[L]SP", _ = "which_key_ignore" },
       ["<leader>d"] = { name = "[D]ocument", _ = "which_key_ignore" },
       ["<leader>f"] = { name = "[F]ind" },
       ["<leader>n"] = { name = "[N]oice" },

@@ -48,7 +48,16 @@ M.check = function()
   vim.health.info("[[NOTE: Not every warning is a 'must-fix' in `:checkhealth`]]")
 
   local uv = vim.uv or vim.loop
-  vim.health.info("System Information: " .. vim.inspect(uv.os_uname()))
+  local os = uv.os_uname()
+  vim.health.info(
+    string.format(
+      "System Information: \n\tOS: %s\n\tRelease: %s\n\tVersion: %s\n\tArch: %s\n",
+      os.sysname,
+      os.release,
+      os.version,
+      os.machine
+    )
+  )
 
   M.check_version()
   M.check_external_reqs()

@@ -2,81 +2,81 @@
 # This script is exclusively for Arch Linux based
 
 if [ -f /etc/os-release ]; then
-  . /etch/os-release
-  if [ "$ID" != "arch" ]; then
-    echo "This script is exclusively for Arch Linux based"
-    exit 1
-  fi
+	. /etch/os-release
+	if [ "$ID" != "arch" ]; then
+		echo "This script is exclusively for Arch Linux based"
+		exit 1
+	fi
 fi
 
 # Enable AUR if not enabled
 if ! grep -q "\[archlinuxfr\]" /etc/pacman.conf; then
-  echo "[archlinuxfr]" >> /etc/pacman.conf
+	echo "[archlinuxfr]" >>/etc/pacman.conf
 fi
 
-if ! command -v yay &> /dev/null; then
-  pacman -Syu --noconfirm yay
+if ! command -v yay &>/dev/null; then
+	pacman -Syu --noconfirm yay
 fi
 
 if [ -f $HOME/.asdf/asdf.sh ]; then
-  . $HOME/.asdf/asdf.sh
+	. $HOME/.asdf/asdf.sh
 else
-  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0
-  . $HOME/.asdf/asdf.sh
+	git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0
+	. $HOME/.asdf/asdf.sh
 fi
 
-if ! command -v nvim &> /dev/null; then
-  sudo yay -S --noconfirm neovim-nightly-bin
+if ! command -v nvim &>/dev/null; then
+	sudo yay -S --noconfirm neovim-nightly-bin
 fi
 
-if ! command -v tmux &> /dev/null; then
-  sudo yay -S --noconfirm tmux
+if ! command -v tmux &>/dev/null; then
+	sudo yay -S --noconfirm tmux
 fi
 
-if ! command -v rg &> /dev/null; then
-  sudo yay -S --noconfirm ripgrep
+if ! command -v rg &>/dev/null; then
+	sudo yay -S --noconfirm ripgrep
 fi
 
-if ! command -v cmake &> /dev/null; then
-  sudo pacman -S --noconfirm cmake
+if ! command -v cmake &>/dev/null; then
+	sudo pacman -S --noconfirm cmake
 fi
 
-if ! commnad -v cargo &> /dev/null; then
-  sudo yay -S --noconfirm rust
+if ! commnad -v cargo &>/dev/null; then
+	sudo yay -S --noconfirm rust
 fi
 
-if ! command -v alacritty &> /dev/null; then
-  pacman -S cmake freetype2 fontconfig pkg-config make libxcb libxkbcommon python
-  cargo install alacritty --locked
-  sudo cp $HOME/.cargo/bin/alacritty /usr/local/bin/
-  sudo curl --fail --location --show-error https://github.com/alacritty/alacritty/blob/master/extra/logo/compat/alacritty-term.png?raw=true --output /usr/share/pixmaps/Alacritty.png
-  sudo curl --fail --location --show-error https://raw.githubusercontent.com/alacritty/alacritty/master/extra/logo/alacritty-term.svg --output /usr/share/pixmaps/Alacritty.svg
-  curl -o Alacritty.desktop https://raw.githubusercontent.com/alacritty/alacritty/master/extra/linux/Alacritty.desktop
-  sudo desktop-file-install Alacritty.desktop
-  sudo update-desktop-database
-  rm -rf Alacritty.desktop
+if ! command -v alacritty &>/dev/null; then
+	pacman -S cmake freetype2 fontconfig pkg-config make libxcb libxkbcommon python
+	cargo install alacritty --locked
+	sudo cp $HOME/.cargo/bin/alacritty /usr/local/bin/
+	sudo curl --fail --location --show-error https://github.com/alacritty/alacritty/blob/master/extra/logo/compat/alacritty-term.png?raw=true --output /usr/share/pixmaps/Alacritty.png
+	sudo curl --fail --location --show-error https://raw.githubusercontent.com/alacritty/alacritty/master/extra/logo/alacritty-term.svg --output /usr/share/pixmaps/Alacritty.svg
+	curl -o Alacritty.desktop https://raw.githubusercontent.com/alacritty/alacritty/master/extra/linux/Alacritty.desktop
+	sudo desktop-file-install Alacritty.desktop
+	sudo update-desktop-database
+	rm -rf Alacritty.desktop
 fi
 
-if ! command -v zoxide &> /dev/null; then
-  cargo install zoxide --locked
+if ! command -v zoxide &>/dev/null; then
+	cargo install zoxide --locked
 fi
 eval "$(zoxide init zsh)"
 
-function setup(){
-  fonts_dir="${HOME}/.local/share/fonts"
-  if [ ! -d "${fonts_dir}" ]; then
-    echo "Creating dir for Fonts: $fonts_dir"
-    mkdir -p "${fonts_dir}"
-  fi
+function setup() {
+	fonts_dir="${HOME}/.local/share/fonts"
+	if [ ! -d "${fonts_dir}" ]; then
+		echo "Creating dir for Fonts: $fonts_dir"
+		mkdir -p "${fonts_dir}"
+	fi
 
-  if [ ! -f "${fonts_dir}/FiraCodeNerdFont-Regular.ttf" ]; then
-    echo "Downloading FiraCode Nerd Font"
-    url_firacodenerdfont="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/FiraCode.zip"
-    zip="FiraCode.zip"
-    curl --fail --location --show-error ${url_firacodenerdfont} --output ${zip}
-    unzip -o -q -d ${fonts_dir} ${zip}
-    rm ${zip}
-    fc-cache -f
-    echo "FiraCode Nerd Font installed"
-  fi
+	if [ ! -f "${fonts_dir}/FiraCodeNerdFont-Regular.ttf" ]; then
+		echo "Downloading FiraCode Nerd Font"
+		url_firacodenerdfont="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/FiraCode.zip"
+		zip="FiraCode.zip"
+		curl --fail --location --show-error ${url_firacodenerdfont} --output ${zip}
+		unzip -o -q -d ${fonts_dir} ${zip}
+		rm ${zip}
+		fc-cache -f
+		echo "FiraCode Nerd Font installed"
+	fi
 }

@@ -2,88 +2,101 @@
 # This script is exclusively for Darwin
 
 if [[ $(uname) != "Darwin" ]]; then
-  echo "This script is exclusively for Darwin"
-  exit 1
+	echo "This script is exclusively for Darwin"
+	exit 1
 fi
 
-if ! command -v brew &> /dev/null; then
-  echo "Installing Homebrew... `curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh`"
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+if ! command -v brew &>/dev/null; then
+	echo "Installing Homebrew... $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-if ! command -v zsh &> /dev/null; then
-  echo "Zsh not found, installing... `brew install zsh`"
-  brew install zsh
+if ! command -v zsh &>/dev/null; then
+	echo "Zsh not found, installing... $(brew install zsh)"
+	brew install zsh
 fi
 
-if ! command -v asdf &> /dev/null; then
-  echo "Installing asdf... `brew install asdf`"
-  brew install asdf
+if ! command -v asdf &>/dev/null; then
+	echo "Installing asdf... $(brew install asdf)"
+	brew install asdf
 
-  echo "Installing golang latest with asdf"
-  asdf plugin add golang
-  asdf install golang latest
-  asdf global golang latest
+	echo "Installing golang latest with asdf"
+	asdf plugin add golang
+	asdf install golang latest
+	asdf global golang latest
 
-  echo "Installing nodejs 20.11.1 with asdf"
-  asdf plugin add nodejs
-  asdf install nodejs 20.11.1
-  asdf global nodejs 20.11.1
+	echo "Installing nodejs 20.11.1 with asdf"
+	asdf plugin add nodejs
+	asdf install nodejs 20.11.1
+	asdf global nodejs 20.11.1
 
-  echo "Installing golang latest with asdf `asdf plugin add golang`"
-  asdf plugin add python
-  asdf install python latest
-  asdf global python latest
+	echo "Installing golang latest with asdf $(asdf plugin add golang)"
+	asdf plugin add python
+	asdf install python latest
+	asdf global python latest
 fi
 
 if [ -f /opt/homebrew/opt/asdf/libexec/asdf.sh ]; then
-  source /opt/homebrew/opt/asdf/libexec/asdf.sh
+	source /opt/homebrew/opt/asdf/libexec/asdf.sh
 else
-  echo "asdf.sh file not found, reinstall and/or debug asdf"
-  echo "file not found: /opt/homebrew/opt/asdf/libexec/asdf.sh"
+	echo "asdf.sh file not found, reinstall and/or debug asdf"
+	echo "file not found: /opt/homebrew/opt/asdf/libexec/asdf.sh"
 fi
 
-if ! command -v nvim &> /dev/null; then
-  echo "Installing Neovim... `brew install neovim`"
-  brew install neovim
+if ! command -v nvim &>/dev/null; then
+	echo "Installing Neovim... $(brew install neovim)"
+	brew install neovim
 fi
 
-if ! command -v rg &> /dev/null; then
-  echo "Installing ripgrep... `brew install ripgrep`"
-  brew install ripgrep
+if ! command -v rg &>/dev/null; then
+	echo "Installing ripgrep... $(brew install ripgrep)"
+	brew install ripgrep
 fi
 
-if ! command -v tmux &> /dev/null; then
-  echo "Installing tmux... `brew install tmux`"
-  brew install tmux
+if ! command -v tmux &>/dev/null; then
+	echo "Installing tmux... $(brew install tmux)"
+	brew install tmux
 fi
 
-if ! command -v fzf &> /dev/null; then
-  echo "Installing fzf... `brew install fzf`"
-  brew install fzf
+if ! command -v fzf &>/dev/null; then
+	echo "Installing fzf... $(brew install fzf)"
+	brew install fzf
 fi
 
-if ! command -v zoxide &> /dev/null; then
-  echo "Installing zoxide... `brew install zoxide`"
-  brew install zoxide
-fi
-eval "$(zoxide init zsh)"
-
-if ! command -v btop &> /dev/null; then
-  echo "Installing btop... `brew install btop`"
-  brew install btop
+if ! command -v fd &>/dev/null; then
+	echo "Installing fd... $(brew install fd)"
+	brew install fd
 fi
 
-if ! command -v bun &> /dev/null; then
-  echo "Installing bun... `brew install oven-sh/bun/bun`"
-  brew install oven-sh/bun/bun
+if ! command -v fuck &>/dev/null; then
+	echo "Installing thefuck... $(brew install thefuck)"
+	brew install thefuck
 fi
 
-function setup()
-{
-  if ! brew list --cask | grep -q font-fira-code-nerd-font; then
-    echo "Installing FiraCode Nerd Font... `brew install --cask font-fira-code-nerd-font`"
-    brew tap homebrew/cask-fonts
-    brew install --cask font-fira-code-nerd-font
-  fi
+if ! command -v zoxide &>/dev/null; then
+	echo "Installing zoxide... $(brew install zoxide)"
+	brew install zoxide
+fi
+
+if ! command -v eza &>/dev/null; then
+	echo "Installing eza... $(brew install eza)"
+	brew install eza
+fi
+
+if ! command -v btop &>/dev/null; then
+	echo "Installing btop... $(brew install btop)"
+	brew install btop
+fi
+
+if ! command -v bun &>/dev/null; then
+	echo "Installing bun... $(brew install oven-sh/bun/bun)"
+	brew install oven-sh/bun/bun
+fi
+
+function setup() {
+	if ! brew list --cask | grep -q font-fira-code-nerd-font; then
+		echo "Installing FiraCode Nerd Font... $(brew install --cask font-fira-code-nerd-font)"
+		brew tap homebrew/cask-fonts
+		brew install --cask font-fira-code-nerd-font
+	fi
 }

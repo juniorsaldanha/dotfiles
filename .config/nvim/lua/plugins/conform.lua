@@ -1,3 +1,27 @@
+local config = require("utils.config")
+local M = {}
+
+-- Needs to implement a custom data for the buffer and global variable to maintain the state
+M.format_on_save_toggle = function(opts)
+  if opts.fargs[1] == "buffer" then
+    -- Buffer
+    vim.b.disable_autoformat = config.Get_format_on_save(config)
+  elseif opts.fargs[1] == "global" or opts.fargs[1] == nil then
+    -- Global
+    vim.g.disable_autoformat = config.Get_format_on_save(config)
+    vim.b.disable_autoformat = config.Get_format_on_save(config)
+  end
+
+  vim.notify(
+    "Autoformatting "
+      .. (not M.format_on_save and "Enabled" or "Disabled")
+      .. (opts.fargs[1] == "buffer" and " on this Buffer" or " Globally"),
+    vim.log.levels.INFO,
+    { title = "Autoformatting Toggle" }
+  )
+  config.Toggle_format_on_save(config)
+end
+
 return {
   "stevearc/conform.nvim",
   event = { "BufWritePre" },
@@ -9,19 +33,13 @@ return {
         require("conform").format({ async = true, lsp_fallback = true })
       end,
       mode = "",
-      desc = "Format buffer",
+      desc = "Format buffer with Conform",
     },
     {
-      "<leader>ce",
-      "<cmd>ConformEnable<CR>",
+      "<leader>ct",
+      "<cmd>FormatOnSaveToggle<cr>",
       mode = "",
-      desc = "Enable autoformat",
-    },
-    {
-      "<leader>cd",
-      "<cmd>ConformDisable<CR>",
-      mode = "",
-      desc = "Disable autoformat",
+      desc = "Toggle autoformat on save",
     },
   },
   config = function()
@@ -56,31 +74,9 @@ return {
 
     local usercmd = vim.api.nvim_create_user_command
 
-    -- Disable autoformatting for a buffer or globally
-    usercmd("ConformDisable", function(args)
-      if args.bang then
-        -- FormatDisable! will disable formatting just for this buffer
-        vim.b.disable_autoformat = true
-      else
-        vim.g.disable_autoformat = true
-      end
-      vim.notify("Autoformatting disabled", vim.log.levels.INFO, {
-        title = "Conform",
-      })
-    end, {
-      desc = "Disable autoformat G or B",
-      bang = true,
-    })
-
-    -- Enable autoformatting for a buffer and globally
-    usercmd("ConformEnable", function()
-      vim.b.disable_autoformat = false
-      vim.g.disable_autoformat = false
-      vim.notify("Autoformatting enabled", vim.log.levels.INFO, {
-        title = "Conform",
-      })
-    end, {
-      desc = "Re-enable autoformat G and B",
+    usercmd("FormatOnSaveToggle", M.format_on_save_toggle, {
+      desc = "Toggle autoformat on save",
+      nargs = "?",
     })
   end,
 }

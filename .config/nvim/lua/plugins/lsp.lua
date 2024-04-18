@@ -11,6 +11,7 @@ return {
     "L3MON4D3/LuaSnip",
     "saadparwaiz1/cmp_luasnip",
     "j-hui/fidget.nvim",
+    { "folke/neodev.nvim", opts = {} },
   },
 
   config = function()
@@ -23,6 +24,8 @@ return {
       cmp_lsp.default_capabilities()
     )
 
+    -- Neodev must be setup before LSP
+    require("neodev").setup({})
     require("fidget").setup({})
     require("mason").setup()
     require("mason-lspconfig").setup({
@@ -50,13 +53,9 @@ return {
             capabilities = capabilities,
             settings = {
               Lua = {
-                runtime = { version = "Lua 5.1" },
-                workspace = {
-                  library = {
-                    [vim.fn.expand("$VIMRUNTIME/*")] = true,
-                    [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                    [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-                  },
+                completion = {
+                  callSnippet = "Replace",
+                  enable = true,
                 },
                 diagnostics = {
                   globals = {
@@ -135,7 +134,7 @@ return {
         ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
         ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
         ["<enter>"] = cmp.mapping.confirm({ select = true }),
-        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-space>"] = cmp.mapping.complete(),
       }),
       sources = cmp.config.sources({
         { name = "nvim_lsp" },

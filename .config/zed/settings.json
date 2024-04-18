@@ -1,0 +1,55 @@
+{
+  "theme": "One Dark",
+  "vim_mode": true,
+  "ui_font_family": "FiraCode Nerd Font",
+  "ui_font_size": 14,
+  "cursor_blink": false,
+  "relative_line_numbers": true,
+  "scrollbar": {
+    "show": "never"
+  },
+  "buffer_font_family": "FiraCode Nerd Font",
+  "buffer_font_size": 14,
+  "buffer_line_height": {
+    "custom": 1.3
+  },
+  "terminal": {
+    "font_size": 14,
+    "font_family": "FiraCode Nerd Font",
+    "line_height": {
+      "custom": 1.1
+    }
+  },
+  "lsp": {
+    "gopls": {
+      "initialization_options": {
+        "gofumpt": true,
+        "usePlaceholders": true,
+        "staticcheck": true,
+        "codelenses": {
+          "gc_details": true,
+          "generate": true,
+          "test": true,
+          "tidy": true,
+          "upgrade_dependency": true,
+          "vendor": true
+        },
+        "analysis": {
+          "completeUnimported": true,
+          "staticcheck": true,
+          "unusedParams": true,
+          "unusedWrite": true
+        },
+        "hints": {
+          "assignVariableType": true,
+          "compositeLiteralFields": true,
+          "compositeliteralTypes": true,
+          "constantValue": true,
+          "functionTypeParameters": true,
+          "parameterName": true,
+          "rangeVariableTypes": true
+        }
+      }
+    }
+  }
+}

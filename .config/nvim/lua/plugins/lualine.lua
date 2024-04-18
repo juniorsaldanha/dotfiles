@@ -11,7 +11,28 @@ return {
       },
       sections = {
         lualine_a = { "mode" },
-        lualine_b = { "branch", "diff", { "diagnostics", sources = { "nvim_lsp" } }, "git" },
+        lualine_b = {
+          "branch",
+          {
+            "diff",
+            colored = true,
+            symbols = {
+              added = " ",
+              modified = " ",
+              removed = " ",
+            },
+            diff_color = {
+              added = { fg = "#a9b665" },
+              modified = { fg = "#e0af68" },
+              removed = { fg = "#ea6962" },
+            },
+          },
+          {
+            "diagnostics",
+            sources = { "nvim_lsp" },
+          },
+          "git",
+        },
         lualine_c = {
           {
             "filename",
@@ -24,11 +45,11 @@ return {
             },
           },
         },
+
         lualine_x = { { "filetype", colored = true } },
         lualine_y = { "progress" },
         lualine_z = { "location" },
       },
-      extensions = { "nvim-tree" },
     })
   end,
 }
