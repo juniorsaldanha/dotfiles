@@ -1,8 +1,9 @@
 return {
   "stevearc/oil.nvim",
+  version = "*",
   opts = {
     columns = {
-      -- "icon",
+      "icon",
       -- "permissions",
       -- "size",
       -- "mtime",

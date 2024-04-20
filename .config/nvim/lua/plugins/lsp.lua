@@ -11,7 +11,7 @@ return {
     "L3MON4D3/LuaSnip",
     "saadparwaiz1/cmp_luasnip",
     "j-hui/fidget.nvim",
-    { "folke/neodev.nvim", opts = {} },
+    "folke/neodev.nvim",
   },
 
   config = function()
@@ -25,8 +25,10 @@ return {
     )
 
     -- Neodev must be setup before LSP
-    require("neodev").setup({})
-    require("fidget").setup({})
+    require("neodev").setup({
+      library = { plugins = { "nvim-dap-ui" }, types = true },
+    })
+    require("fidget").setup()
     require("mason").setup()
     require("mason-lspconfig").setup({
       ensure_installed = {

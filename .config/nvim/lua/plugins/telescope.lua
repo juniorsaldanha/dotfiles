@@ -60,17 +60,17 @@ return {
     telescope.setup(opts)
 
     local map = vim.keymap.set
+    map("n", "<leader><leader>", builtin.buffers, { desc = "Find Buffer" })
     map("n", "<leader>ff", builtin.find_files, { desc = "[F]ind [f]iles" })
     map("n", "<leader>fF", function()
       builtin.find_files({ hidden = true })
-    end, { desc = "[F]ind [F]iles (hidden)" })
+    end, { desc = "[F]ind [F]iles (hidden files)" })
     map("n", "<leader>fg", builtin.live_grep, { desc = "[F]ind using [G]rep" })
+    map("n", "<leader>fG", function()
+      builtin.live_grep({ hidden = true })
+    end, { desc = "[F]ind using [G]rep (hidden files)" })
     map("n", "<leader>fr", builtin.oldfiles, { desc = "[F]ind [R]ecent Files" })
-    map("n", "<leader>fb", builtin.buffers, { desc = "[F]ind [B]uffers" })
-    map("n", "<leader><leader>", builtin.buffers, { desc = "Find Buffer" })
-    map("n", "<leader>fh", builtin.help_tags, { desc = "[F]ind [H]elp Tags" })
-    map("n", "<leader>ds", builtin.lsp_document_symbols, { desc = "[D]ocument [S]ymbols" })
-    map("n", "<leader>ws", builtin.lsp_workspace_symbols, { desc = "[W]orkspace [S]ymbols" })
+    map("n", "<leader>ft", builtin.help_tags, { desc = "[F]ind Help [T]ags" })
     map("n", "<leader>gs", builtin.git_status, { desc = "[G]it [S]tatus" })
     map("n", "<leader>gS", builtin.git_stash, { desc = "[G]it [S]tash" })
     map("n", "<leader>gc", builtin.git_commits, { desc = "[G]it [C]ommits" })
@@ -78,9 +78,16 @@ return {
     map("n", "<leader>gb", builtin.git_branches, { desc = "[G]it [B]ranches" })
     map("n", "<leader>sk", builtin.keymaps, { desc = "[S]search [K]eymaps" })
     map("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
-    map("n", "<leader>xq", builtin.quickfix, { desc = "Find Quickfix" })
-    map("n", "<leader>xl", builtin.loclist, { desc = "Find Loclist" })
-    map("n", "<leader>xr", builtin.lsp_references, { desc = "Find References" })
-    map("n", "<leader>xd", builtin.diagnostics, { desc = "Find Diagnostics" })
+    map("n", "<leader>fds", builtin.lsp_document_symbols, { desc = "[F]ind [D]ocument [S]ymbols" })
+    map(
+      "n",
+      "<leader>fws",
+      builtin.lsp_workspace_symbols,
+      { desc = "[F]ind [W]orkspace [S]ymbols" }
+    )
+    map("n", "<leader>xq", builtin.quickfix, { desc = "[X] Find [Q]uickfix" })
+    map("n", "<leader>xl", builtin.loclist, { desc = "[X] Find [L]oclist" })
+    map("n", "<leader>xr", builtin.lsp_references, { desc = "[X] Find [R]eferences" })
+    map("n", "<leader>xd", builtin.diagnostics, { desc = "[X] Find [D]iagnostics" })
   end,
 }

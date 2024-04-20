@@ -8,11 +8,11 @@ return {
   lazy = false,
   opts = {
     position = "bottom",
-    mode = "lsp_workspace_diagnostics",
+    mode = "workspace_diagnostics",
     height = 10,
     icons = true,
     auto_close = true, -- Auto close the trouble list when it's empty
-    auto_open = true, -- Auto open the trouble list when you have a warning or error
+    auto_open = false, -- Auto open the trouble list when you have a warning or error
   },
   keys = {
     { "<leader>tt", "<cmd>TroubleToggle<cr>", opts("[T]rouble [T]oggle") },
