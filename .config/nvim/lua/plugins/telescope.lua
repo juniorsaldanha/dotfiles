@@ -78,12 +78,17 @@ return {
     map("n", "<leader>gb", builtin.git_branches, { desc = "[G]it [B]ranches" })
     map("n", "<leader>sk", builtin.keymaps, { desc = "[S]search [K]eymaps" })
     map("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
-    map("n", "<leader>fds", builtin.lsp_document_symbols, { desc = "[F]ind [D]ocument [S]ymbols" })
+    map("n", "<leader>fd", builtin.lsp_document_symbols, { desc = "[F]ind [D]ocument Symbols" })
+    map("n", "<leader>fw", function()
+      vim.ui.input({ prompt = "Search Symbol on Workspace: " }, function(query)
+        builtin.lsp_workspace_symbols({ query = query })
+      end)
+    end, { desc = "[F]ind [W]orkspace Symbols" })
     map(
       "n",
-      "<leader>fws",
-      builtin.lsp_workspace_symbols,
-      { desc = "[F]ind [W]orkspace [S]ymbols" }
+      "<leader>fW",
+      builtin.lsp_dynamic_workspace_symbols,
+      { desc = "[F]ind [W]orkspace Symbols (dynamic)" }
     )
     map("n", "<leader>xq", builtin.quickfix, { desc = "[X] Find [Q]uickfix" })
     map("n", "<leader>xl", builtin.loclist, { desc = "[X] Find [L]oclist" })
