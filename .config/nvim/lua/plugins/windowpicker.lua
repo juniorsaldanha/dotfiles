@@ -12,9 +12,30 @@ return {
         -- filter using buffer options
         bo = {
           -- if the file type is one of following, the window will be ignored
-          filetype = { "NvimTree", "Neotree", "notify" },
+          filetype = {
+            "NvimTree",
+            "Neotree",
+            "notify",
+            "Trouble",
+            "Noice",
+            "Term",
+            "fzf",
+            "fugitive",
+            "git",
+            "lspinfo",
+            "TelescopePrompt",
+          },
           -- if the buffer type is one of following, the window will be ignored
-          buftype = { "terminal", "quickfix" },
+          buftype = {
+            "terminal",
+            "quickfix",
+            "Trouble",
+            "Noice",
+            "Term",
+            "fzf",
+            "notify",
+            "nofile",
+          },
         },
       },
     })
