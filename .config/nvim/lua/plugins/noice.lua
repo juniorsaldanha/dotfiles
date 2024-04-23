@@ -5,10 +5,10 @@ return {
     "MunifTanjim/nui.nvim",
     "rcarriga/nvim-notify",
   },
-  opts = {},
   keys = {
-    { "<leader>nc", "<cmd>Noice dismiss<cr>", { noremap = true, silent = true } },
-    { "<leader>nt", "<cmd>NoiceTelescope<cr>", { noremap = true, silent = true } },
+    { "<leader>nc", "<cmd>Noice dismiss<cr>", desc = "[N]oice [D]ismiss" },
+    { "<leader>nh", "<cmd>Noice history<cr>", desc = "[N]oice [H]istory" },
+    { "<leader>nt", "<cmd>NoiceTelescope<cr>", desc = "[N]oice [T]elescope" },
   },
   config = function()
     require("noice").setup({
@@ -34,6 +34,14 @@ return {
             event = "msg_show",
             kind = "",
             find = "Pick window",
+          },
+          opts = { skip = true },
+        },
+        {
+          filter = {
+            event = "msg_show",
+            kind = "",
+            find = "lazy/lazygit.nvim/lua/lazygit.lua",
           },
           opts = { skip = true },
         },

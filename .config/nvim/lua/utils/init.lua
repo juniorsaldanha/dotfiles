@@ -1,11 +1,11 @@
 -- Utility
-local M = require("util")
+local M = require("utils.util")
 
 -- Deprecated functions
-M.getWindows = require("util").GetWindows
-M.require = require("util").require
+M.getWindows = require("utils.util").GetWindows
+M.require = require("utils.util").require
 
 -- Configuration
-M.config = require("config")
+M.config = require("utils.config")
 
 return M

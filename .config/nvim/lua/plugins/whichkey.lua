@@ -9,6 +9,7 @@ return {
       ["<leader>c"] = { name = "[C]onform" },
       ["<leader>l"] = { name = "[L]SP", _ = "which_key_ignore" },
       ["<leader>d"] = { name = "[D]AP", _ = "which_key_ignore" },
+      ["<leader>ds"] = { name = "[D]AP [S]teps", _ = "which_key_ignore" },
       ["<leader>dg"] = { name = "[D]AP [G]olang Test", _ = "which_key_ignore" },
       ["<leader>f"] = { name = "[F]ind" },
       ["<leader>n"] = { name = "[N]oice" },

@@ -12,7 +12,7 @@ return {
     end
     map("n", "<leader>ha", function()
       harpoon:list():add()
-    end, opts("Add buffer to harpoon list"))
+    end, opts("[H]arpoon [A]dd buffer to list"))
     map("n", "<c-e>", function()
       harpoon.ui:toggle_quick_menu(harpoon:list())
     end)

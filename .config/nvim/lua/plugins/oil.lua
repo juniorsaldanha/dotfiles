@@ -4,18 +4,9 @@ return {
   opts = {
     columns = {
       "icon",
-      -- "permissions",
-      -- "size",
-      -- "mtime",
     },
   },
   keys = {
-    {
-      "<leader>o",
-      function()
-        vim.cmd("Oil")
-      end,
-      { desc = "Toggle Oil", nowait = true, noremap = true },
-    },
+    { "<leader>o", "<cmd>Oil<cr>", desc = "Toggle Oil" },
   },
 }

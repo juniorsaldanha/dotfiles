@@ -5,6 +5,7 @@ return {
     local picker = require("window-picker")
     picker.setup({
       hint = "floating-big-letter",
+      show_prompt = false,
       selection_char = "ASF;LKJ",
       filter_rules = {
         include_current_win = true,
@@ -13,28 +14,22 @@ return {
         bo = {
           -- if the file type is one of following, the window will be ignored
           filetype = {
-            "NvimTree",
-            "Neotree",
-            "notify",
             "Trouble",
-            "Noice",
-            "Term",
-            "fzf",
-            "fugitive",
-            "git",
-            "lspinfo",
+            "notify",
+            "noice",
+            "nofile",
+            "TelescopeResults",
             "TelescopePrompt",
+            "oil",
+            "lazygit",
           },
           -- if the buffer type is one of following, the window will be ignored
           buftype = {
             "terminal",
             "quickfix",
-            "Trouble",
-            "Noice",
-            "Term",
-            "fzf",
-            "notify",
             "nofile",
+            "prompt",
+            "acwrite",
           },
         },
       },

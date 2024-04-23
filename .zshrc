@@ -70,11 +70,10 @@ elif [[ "$(uname)" == "Linux" ]]; then
 		return 1
 	fi
 else
-	echo "Unknown OS"
+	echo "Unknown OS detected"
+    echo "Please add the configuration for your OS in ~/.config/zsh/.zshrc_{os}"
 	return 1
 fi
-
-# zprof
 
 # bun completions
 [ -s "/Users/umsaldanha/.bun/_bun" ] && source "/Users/umsaldanha/.bun/_bun"
@@ -82,4 +81,8 @@ fi
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# go path
 export PATH="$(go env GOPATH)/bin:$PATH"
+
+# zprof

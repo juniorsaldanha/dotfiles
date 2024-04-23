@@ -21,8 +21,6 @@ return {
               options.enabled = true
               options.plugins = true
               vim.notify_once("Neodev ENABLED", vim.log.levels.WARN, { title = "neodev.nvim" })
-            else
-              vim.notify_once("Neodev DISABLED", vim.log.levels.WARN, { title = "neodev.nvim" })
             end
           end,
         })
@@ -55,7 +53,7 @@ return {
         "bashls",
       },
       handlers = {
-        function(server_name) -- default handler (optional)
+        function(server_name)
           require("lspconfig")[server_name].setup({
             capabilities = capabilities,
           })
@@ -118,6 +116,7 @@ return {
                   unusedwrite = true,
                   useany = true,
                 },
+                experimentalPostfixCompletions = true,
                 usePlaceholders = false,
                 completeUnimported = true,
                 staticcheck = true,

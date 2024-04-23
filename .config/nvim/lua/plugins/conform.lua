@@ -5,10 +5,12 @@ local M = {}
 M.format_on_save_toggle = function(opts)
   if opts.fargs[1] == "buffer" then
     -- Buffer
+    ---@diagnostic disable-next-line: inject-field
     vim.b.disable_autoformat = config.Get_format_on_save(config)
   elseif opts.fargs[1] == "global" or opts.fargs[1] == nil then
     -- Global
     vim.g.disable_autoformat = config.Get_format_on_save(config)
+    ---@diagnostic disable-next-line: inject-field
     vim.b.disable_autoformat = config.Get_format_on_save(config)
   end
 
@@ -32,14 +34,12 @@ return {
       function()
         require("conform").format({ async = true, lsp_fallback = true })
       end,
-      mode = "",
-      desc = "Format buffer with Conform",
+      desc = "[F]ormat with Conform",
     },
     {
       "<leader>ct",
       "<cmd>FormatOnSaveToggle<cr>",
-      mode = "",
-      desc = "Toggle autoformat on save",
+      desc = "[T]oggle Format On Save",
     },
   },
   config = function()
