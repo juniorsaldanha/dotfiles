@@ -93,6 +93,11 @@ if ! command -v bun &>/dev/null; then
 	brew install oven-sh/bun/bun
 fi
 
+function start_iphone() {
+	echo "Opening iPhone 15 Pro pika"
+	open -a Simulator
+}
+
 function setup() {
 	if ! brew list --cask | grep -q font-fira-code-nerd-font; then
 		echo "Installing FiraCode Nerd Font... $(brew install --cask font-fira-code-nerd-font)"
