@@ -33,6 +33,7 @@ padding = { x = 5, y = 5 }
 decorations = "none"
 decorations_theme_variant = "dark"
 startup_mode = "Fullscreen"
+# startup_mode = "Maximized"
 option_as_alt = "OnlyLeft"
 
 [selection]
