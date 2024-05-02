@@ -17,6 +17,7 @@ return {
       ["<leader>h"] = { name = "[H]arpoon" },
       ["<leader>g"] = { name = "[G]it" },
       ["<leader>ga"] = { name = "[G]it-[A]ctions" },
+      ["<leader>gf"] = { name = "[G]it-[F]ugitive" },
       ["<leader>s"] = { name = "[S]earch" },
       ["<leader>t"] = { name = "[T]odo" },
       ["<leader>o"] = { name = "[O]il" },
