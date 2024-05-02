@@ -6,22 +6,22 @@ M.format_on_save_toggle = function(opts)
   if opts.fargs[1] == "buffer" then
     -- Buffer
     ---@diagnostic disable-next-line: inject-field
-    vim.b.disable_autoformat = config.Get_format_on_save(config)
+    vim.b.disable_autoformat = config.Get_format_on_save()
   elseif opts.fargs[1] == "global" or opts.fargs[1] == nil then
     -- Global
-    vim.g.disable_autoformat = config.Get_format_on_save(config)
+    vim.g.disable_autoformat = config.Get_format_on_save()
     ---@diagnostic disable-next-line: inject-field
-    vim.b.disable_autoformat = config.Get_format_on_save(config)
+    vim.b.disable_autoformat = config.Get_format_on_save()
   end
 
   vim.notify(
     "Autoformatting "
-      .. (not M.format_on_save and "Enabled" or "Disabled")
-      .. (opts.fargs[1] == "buffer" and " on this Buffer" or " Globally"),
+    .. (config.Get_format_on_save() and "Enabled" or "Disabled")
+    .. (opts.fargs[1] == "buffer" and " on this Buffer" or " Globally"),
     vim.log.levels.INFO,
     { title = "Autoformatting Toggle" }
   )
-  config.Toggle_format_on_save(config)
+  config.Toggle_format_on_save()
 end
 
 return {
