@@ -16,7 +16,7 @@ M.format_on_save_toggle = function(opts)
 
   vim.notify(
     "Autoformatting "
-    .. (config.Get_format_on_save() and "Enabled" or "Disabled")
+    .. (not config.Get_format_on_save() and "Enabled" or "Disabled")
     .. (opts.fargs[1] == "buffer" and " on this Buffer" or " Globally"),
     vim.log.levels.INFO,
     { title = "Autoformatting Toggle" }
