@@ -6,7 +6,9 @@ local M = {}
 M.require = function(file)
   local status, _ = pcall(require, file)
   if not status then
-    print("Error loading " .. file)
+    vim.notify("Error loading file: " .. file, vim.log.levels.WARN, {
+      title = "Utils Error Loading File",
+    })
   end
 end
 
