@@ -18,8 +18,5 @@ map("n", "<leader>bp", "<cmd>bp<cr>", opts("[B]uffer [P]revious Buffer"))
 map("n", "<leader>bd", "<cmd>bd<cr>", opts("[B]uffer [D]elete Buffer"))
 map("n", "<leader>ba", "<cmd>bufdo bd<cr>", opts("[B]uffer Delete [A]ll Buffers"))
 
--- LazyGit
-map("n", "<leader>gl", "<cmd>LazyGit<CR>", opts("[G]it [L]azyGit"))
-
 -- Search and Replace on whole buffer
 map("n", "<leader>sr", ":%s//g<left><left>", opts("[S]earch and [R]eplace"))

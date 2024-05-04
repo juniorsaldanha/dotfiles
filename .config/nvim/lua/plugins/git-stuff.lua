@@ -1,24 +1,24 @@
+local map = vim.keymap.set
+local opts = function(desc)
+  return { noremap = true, silent = true, desc = desc }
+end
+
 return {
   {
     "kdheepak/lazygit.nvim",
-    cmd = {
-      "LazyGit",
-      "LazyGitConfig",
-    },
     dependencies = {
       "nvim-telescope/telescope.nvim",
       "nvim-lua/plenary.nvim",
     },
+    config = function()
+      map("n", "<leader>gl", "<cmd>LazyGit<CR>", opts("[G]it [L]azyGit"))
+    end
   },
   {
     "tpope/vim-fugitive",
     config = function()
       vim.g.fugitive_no_maps = 1
       local prefix = "[F]ugitive "
-      local map = vim.keymap.set
-      local opts = function(desc)
-        return { noremap = true, silent = true, desc = desc }
-      end
       map("n", "<leader>gfa", "<cmd>Git add %<cr>", opts(prefix .. "Add"))
       map("n", "<leader>gfA", "<cmd>Git add .<cr>", opts(prefix .. "Add all"))
       map("n", "<leader>gfc", "<cmd>Git commit<cr>", opts(prefix .. "Commit"))
