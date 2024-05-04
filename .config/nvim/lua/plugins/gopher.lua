@@ -11,6 +11,7 @@ return {
   config = function()
     require("gopher").setup({
       commands = {
+        dlv = "dlv",
         go = "go",
         gomodifytags = "gomodifytags",
         gotests = "gotests",
