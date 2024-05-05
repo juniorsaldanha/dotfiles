@@ -1,22 +1,16 @@
-# All custom functions that me (@umsaldanha) personally use on my zsh terminal on MacOS
-
 function clean_nvim() {
 	rm -rf ~/.local/share/nvim/
 	rm -rf ~/.local/state/nvim/
 }
 
-function venv() {
-	source venv/bin/activate
-}
-
 function disabledevverification() {
 	sudo spctl --master-disable
-	echo "Developer verification Disabled"
+	echo "Developer verification Disabled - Darwin Only"
 }
 
 function enabledevverification() {
 	sudo spctl --master-enable
-	echo "Developer verification Enabled"
+	echo "Developer verification Enabled - Darwin Only"
 }
 
 function remotedocker_active() {
@@ -66,6 +60,7 @@ function sshauto() {
 # wine64 ~/Documents/winbox64.exe > /dev/null 2>&1 &
 # }
 
+# I need to find a new transfer service to replace transfer.sh as it is not working anymore
 function transfer() {
 	if [ $# -eq 0 ]; then
 		echo "No arguments specified.\nUsage:\n transfer <file|directory>\n ... | transfer <file_name>" >&2
@@ -135,14 +130,9 @@ function cppcheck() {
 	fi
 }
 
-alias nvlazy="NVIM_APPNAME=nvim_lazy nvim"
-alias nvkick="NVIM_APPNAME=nvim_kickstart nvim"
-alias nvchad="NVIM_APPNAME=nvim_nvchad nvim"
-
 function nvims() {
-	#items=("default" "kickstart" "LazyVim" "NvChad" "AstroNvim")
 	items=("default" "nvim_lazy" "nvim_kickstart" "nvim_nvchad")
-	config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
+	config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
 	if [[ -z $config ]]; then
 		echo "Nothing selected"
 		return 0
@@ -160,58 +150,3 @@ function nvim_docker() {
     cd ~/ && nvim
     '
 }
-
-bindkey -s ^a "nvims\n"
-
-#Aliases
-alias vs='code'
-# alias ll='ls -lahG'
-# alias ls='exa --icons'
-# alias bat='bat --style=auto'
-# alias cat='bat --style=auto'
-alias rmf='rm -rf'
-alias follow="tail -f -n +1"
-alias o="open ."
-alias lg="lazygit"
-alias ld="lazydocker"
-alias nv="nvim"
-alias nvs="nvims"
-
-if command -v zoxide &>/dev/null; then
-	eval "$(zoxide init zsh)"
-	alias cd="z"
-fi
-
-if command -v eza &>/dev/null; then
-	alias ls="eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions"
-fi
-
-if command -v fzf &>/dev/null; then
-	eval "$(fzf --zsh)"
-	if command -v fd &>/dev/null; then
-		export FZF_DEFAULT_COMMAND='fd --hidden --strip-cwd-prefix --exclude .git'
-		export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-		export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
-
-		_fzf_compgen_path() {
-			fd --hidden --exclude .git . "$1"
-		}
-
-		_fzf_compgen_dir() {
-			fd --type=d --hidden --exclude .git . "$1"
-		}
-	fi
-fi
-
-if command -v fuck &>/dev/null; then
-	eval $(thefuck --alias)
-	eval $(thefuck --alias fk)
-fi
-
-if command -v zoxide &>/dev/null; then
-	eval "$(zoxide init zsh)"
-fi
-
-# Binding ctrl-r to history search backwards
-bindkey -v
-bindkey '^R' history-incremental-search-backward
