@@ -2,6 +2,13 @@
     name=Junior Saldanha
     email=umsaldanha@gmail.com
     useConfigOnly=true
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPnWgjkG9d5Ow5r7rgCt/HjqTeoce4FCqKBGvH2/MD+I
+[commit]
+	gpgsign = true
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 [core]
     editor = nvim
     pager = delta
@@ -68,11 +75,12 @@
     side-by-side = true
     line-numbers = true
 
-; This here will set ionic health as the default path for the git config
-; This will garantee that commits will be made with the correct user and config
-[includeIf "gitdir:~/ionichealth/"]
-    path = ~/.config/git/ionichealth
 [column]
 	ui = auto
 [branch]
 	sort = -committerdate
+
+; This here will set ionic health as the default path for the git config
+; This will garantee that commits will be made with the correct user and config
+[includeIf "gitdir:~/ionichealth/"]
+    path = ~/.config/git/ionichealth
