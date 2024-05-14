@@ -150,3 +150,14 @@ function nvim_docker() {
     cd ~/ && nvim
     '
 }
+
+function start_http_server() {
+    if [ "$1" ]; then
+        if [ -d "$1" ]; then
+            cd "$1" || return
+        fi
+        python3 -m http.server
+    else
+        echo "Example of usage; start_http_server /path/to/directorya or start_http_server for current dir"
+    fi
+}
