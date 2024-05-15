@@ -56,7 +56,7 @@
     sc = stash clear
     fixup = commit --fixup
     # use patient diff
-    diff = diff --patience
+    diff = diff --patience -u --color=always
     # to undo add
     unstage = reset HEAD --
     # nice log
