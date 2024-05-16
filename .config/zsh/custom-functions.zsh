@@ -161,3 +161,12 @@ function start_http_server() {
         echo "Example of usage; start_http_server /path/to/directorya or start_http_server for current dir"
     fi
 }
+
+function nvim_browser_remote() {
+    # nvim oil-ssh://[username@]hostname[:port]/[path]
+    if [ "$1" ]; then
+        nvim "oil-ssh://$1"
+    else
+        echo "Example of usage; nvim_browser_remote username@hostname:/path/to/file"
+    fi
+}
