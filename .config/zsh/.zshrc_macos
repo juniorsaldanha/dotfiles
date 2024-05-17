@@ -30,10 +30,16 @@ if ! command -v asdf &>/dev/null; then
 	asdf install nodejs 20.11.1
 	asdf global nodejs 20.11.1
 
-	echo "Installing golang latest with asdf $(asdf plugin add golang)"
+	echo "Installing golang latest with asdf"
 	asdf plugin add python
 	asdf install python latest
 	asdf global python latest
+
+    echo "Installing rust latest with asdf"
+    asdf plugin add rust
+    asdf install rust latest
+    asdf global rust latest
+
 fi
 
 if [ -f /opt/homebrew/opt/asdf/libexec/asdf.sh ]; then
@@ -91,6 +97,13 @@ fi
 if ! command -v bun &>/dev/null; then
 	echo "Installing bun... $(brew install oven-sh/bun/bun)"
 	brew install oven-sh/bun/bun
+fi
+
+if ! command -v yabai &>/dev/null; then
+    echo "Installing yabai... $(brew install koekeishiya/formulae/yabai)"
+    echo "PS: ** DON'T FORGET TO ALLOW ACCESSIBILITY `YABAI` **"
+    brew install koekeishiya/formulae/yabai
+    yabai --install-service
 fi
 
 function start_iphone() {
