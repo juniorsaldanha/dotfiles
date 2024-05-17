@@ -3,32 +3,39 @@
     email=umsaldanha@gmail.com
     useConfigOnly=true
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPnWgjkG9d5Ow5r7rgCt/HjqTeoce4FCqKBGvH2/MD+I
+
 [commit]
 	gpgsign = true
+
 [gpg]
 	format = ssh
+
 [gpg "ssh"]
 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+
 [core]
     editor = nvim
     pager = delta
     whitespace = -trailing-space,-space-before-tab,-indent-with-non-tab
     autocrlf = input
     excludesfile = ~/.config/git/ignore
+
 [color]
     ui = auto
+
 [init]
     defaultBranch = main
+
 [alias]
     a = add
     c = commit
     d = diff
     f = commit --fixup
-    g = pull # get
+    g = pull
     p = push
     s = switch
     r = restore
-    u = fetch # update
+    u = fetch --all --force
     st = status -sb
     aa = add -A
     ai = add --interactive
@@ -37,6 +44,7 @@
     ca = commit --amend
     cp = cherry-pick
     cpc = cherry-pick --continue
+    co = checkout -B
     ds = diff --staged
     dt = difftool
     nb = switch -c
@@ -77,6 +85,7 @@
 
 [column]
 	ui = auto
+
 [branch]
 	sort = -committerdate
 
@@ -84,3 +93,4 @@
 ; This will garantee that commits will be made with the correct user and config
 [includeIf "gitdir:~/ionichealth/"]
     path = ~/.config/git/ionichealth
+
