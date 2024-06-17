@@ -2,20 +2,18 @@
 # This script is exclusively for Arch Linux based
 
 if [ -f /etc/os-release ]; then
-	. /etch/os-release
+	. /etc/os-release
 	if [ "$ID" != "arch" ]; then
 		echo "This script is exclusively for Arch Linux based"
-		exit 1
+        return
 	fi
 fi
 
-# Enable AUR if not enabled
-if ! grep -q "\[archlinuxfr\]" /etc/pacman.conf; then
-	echo "[archlinuxfr]" >>/etc/pacman.conf
-fi
-
 if ! command -v yay &>/dev/null; then
-	pacman -Syu --noconfirm yay
+    sudo pacman -Syu --needed base-devel git
+    git clone https://aur.archlinux.org/yay.git &&\
+        cd yay && makepkg -si && cd .. && rm -rf yay
+    echo "Installed yay on you arch linux"
 fi
 
 if [ -f $HOME/.asdf/asdf.sh ]; then
@@ -26,41 +24,38 @@ else
 fi
 
 if ! command -v nvim &>/dev/null; then
-	sudo yay -S --noconfirm neovim-nightly-bin
+    sudo pacman -Sy neovim
 fi
 
 if ! command -v tmux &>/dev/null; then
-	sudo yay -S --noconfirm tmux
+    sudo pacman -Sy tmux
 fi
 
 if ! command -v rg &>/dev/null; then
-	sudo yay -S --noconfirm ripgrep
+    sudo pacman -Sy ripgrep
 fi
 
 if ! command -v cmake &>/dev/null; then
-	sudo pacman -S --noconfirm cmake
+    sudo pacman -Sy cmake
 fi
 
-if ! commnad -v cargo &>/dev/null; then
-	sudo yay -S --noconfirm rust
+if ! command -v cargo &>/dev/null; then
+    sudo pacman -Sy cargo
 fi
+export PATH=$PATH:~/.cargo/bin/
 
 if ! command -v alacritty &>/dev/null; then
-	pacman -S cmake freetype2 fontconfig pkg-config make libxcb libxkbcommon python
-	cargo install alacritty --locked
-	sudo cp $HOME/.cargo/bin/alacritty /usr/local/bin/
-	sudo curl --fail --location --show-error https://github.com/alacritty/alacritty/blob/master/extra/logo/compat/alacritty-term.png?raw=true --output /usr/share/pixmaps/Alacritty.png
-	sudo curl --fail --location --show-error https://raw.githubusercontent.com/alacritty/alacritty/master/extra/logo/alacritty-term.svg --output /usr/share/pixmaps/Alacritty.svg
-	curl -o Alacritty.desktop https://raw.githubusercontent.com/alacritty/alacritty/master/extra/linux/Alacritty.desktop
-	sudo desktop-file-install Alacritty.desktop
-	sudo update-desktop-database
-	rm -rf Alacritty.desktop
+    sudo pacman -Sy alacritty
 fi
 
 if ! command -v zoxide &>/dev/null; then
-	cargo install zoxide --locked
+	cargo install zoxide
 fi
 eval "$(zoxide init zsh)"
+
+if ! command -v lazygit &>/dev/null; then
+    sudo pacman -Sy lazygit
+fi
 
 function setup() {
 	fonts_dir="${HOME}/.local/share/fonts"

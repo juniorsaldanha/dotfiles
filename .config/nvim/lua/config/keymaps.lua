@@ -18,5 +18,11 @@ map("n", "<leader>bp", "<cmd>bp<cr>", opts("[B]uffer [P]revious Buffer"))
 map("n", "<leader>bd", "<cmd>bd<cr>", opts("[B]uffer [D]elete Buffer"))
 map("n", "<leader>ba", "<cmd>bufdo bd<cr>", opts("[B]uffer Delete [A]ll Buffers"))
 
+-- CTRL-hjkl
+map("n", "<c-h>", "<c-w><c-h>")
+map("n", "<c-l>", "<c-w><c-l>")
+map("n", "<c-j>", "<c-w><c-j>")
+map("n", "<c-k>", "<c-w><c-k>")
+
 -- Search and Replace on whole buffer
 map("n", "<leader>sr", ":%s//g<left><left>", opts("[S]earch and [R]eplace"))

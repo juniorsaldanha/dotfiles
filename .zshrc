@@ -29,9 +29,9 @@ fi
 
 # Aliases
 if [ -f ~/.config/zsh/aliases.zsh ]; then
-    source ~/.config/zsh/aliases.zsh
+   source ~/.config/zsh/aliases.zsh
 else
-    echo "Aliases file not found"
+   echo "Aliases file not found"
 fi
 
 # if file exists, source it
@@ -45,7 +45,7 @@ elif [[ "$(uname)" == "Linux" ]]; then
 	if [ -f /etc/debian_version ]; then
 		source ~/.config/zsh/.zshrc_debian
 	elif [ -f /etc/arch-release ]; then
-		source ~/.config/zsh/.zshrc_arch
+        source ~/.config/zsh/.zshrc_arch
 	else
 		echo "Unknown Linux distribution"
 		return 1
@@ -58,9 +58,9 @@ fi
 
 # bun
 if [ -d "$HOME/.bun" ]; then
-    [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-    export BUN_INSTALL="$HOME/.bun"
-    export PATH="$BUN_INSTALL/bin:$PATH"
+   [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+   export BUN_INSTALL="$HOME/.bun"
+   export PATH="$BUN_INSTALL/bin:$PATH"
 fi
 
 # go path
@@ -69,6 +69,6 @@ if [ -d "/usr/local/go" ]; then
 fi
 
 # zprof
-if [[ -n $ZSH_VERSION ]]; then
-    export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-fi
+#if [[ -n $ZSH_VERSION ]]; then
+#    export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+#fi
