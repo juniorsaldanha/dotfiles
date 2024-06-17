@@ -30,7 +30,7 @@ return {
   },
 
   config = function(opts)
-    local trouble = require("trouble.providers.telescope")
+    local trouble = require("trouble.sources.telescope")
     local windowspicker = require("window-picker")
     local telescope = require("telescope")
     local actions = require("telescope.actions")
@@ -40,10 +40,10 @@ return {
       defaults = {
         mappings = {
           i = {
-            ["<c-t>"] = trouble.open_with_trouble,
+            ["<c-t>"] = trouble.open,
           },
           n = {
-            ["<c-t>"] = trouble.open_with_trouble,
+            ["<c-t>"] = trouble.open,
           },
         },
         get_selection_window = function()
