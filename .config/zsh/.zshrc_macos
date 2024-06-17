@@ -103,7 +103,14 @@ if ! command -v yabai &>/dev/null; then
     echo "Installing yabai... $(brew install koekeishiya/formulae/yabai)"
     echo "PS: ** DON'T FORGET TO ALLOW ACCESSIBILITY `YABAI` **"
     brew install koekeishiya/formulae/yabai
-    yabai --install-service
+    yabai --start-service
+fi
+
+if ! command -v skhd &>/dev/null; then
+    echo "Installing skhd... $(brew install koekeishiya/formulae/skhd)"
+    echo "PS: ** DON'T FORGET TO ALLOW ACCESSIBILITY `SKHD` **"
+    brew install koekeishiya/formulae/skhd
+    skhd --start-service
 fi
 
 function start_iphone() {
