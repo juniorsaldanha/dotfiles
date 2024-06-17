@@ -66,6 +66,7 @@ return {
           "gofumpt",
           "goimports-reviser",
         },
+        cpp = { "clang-format" },
         python = { "black" },
         javascript = { "prettier" },
         json = { "prettier" },

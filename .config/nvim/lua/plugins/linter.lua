@@ -13,6 +13,7 @@ return {
       go = { "golangcilint", },
       zsh = { "zsh" },
       sh = { "shellcheck" },
+      dockerfile = { "hadolint" },
     },
     ---@type table<string,table>
     linters = {},
