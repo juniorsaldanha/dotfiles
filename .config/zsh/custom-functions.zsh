@@ -111,7 +111,6 @@ function extract() {
 function ..() {
 	for i in $(seq 1 $1); do
 		cd ../
-		exa --icons
 	done
 }
 

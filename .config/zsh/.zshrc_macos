@@ -124,4 +124,10 @@ function setup() {
 		brew tap homebrew/cask-fonts
 		brew install --cask font-fira-code-nerd-font
 	fi
+
+    if ! brew list --cask | grep -q font-terminess-ttf-nerd-font; then
+        echo "Installing Terminus Nerd Font... $(brew install --cask font-terminess-ttf-nerd-font)"
+        brew tap homebrew/cask-fonts
+        brew install --cask font-terminess-nerd-font
+    fi
 }
