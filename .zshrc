@@ -64,7 +64,7 @@ if [ -d "$HOME/.bun" ]; then
 fi
 
 # go path
-if [ -d "/usr/local/go" ]; then
+if [ -d $(which go) ]; then
     export PATH="$(go env GOPATH)/bin:$PATH"
 fi
 
