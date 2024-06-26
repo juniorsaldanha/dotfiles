@@ -83,7 +83,7 @@ return {
       builtin.live_grep({ hidden = true })
     end, { desc = "[F]ind using [G]rep (hidden files)" })
     map("n", "<leader>fr", builtin.oldfiles, { desc = "[F]ind [R]ecent Files" })
-    map("n", "<leader>ft", builtin.help_tags, { desc = "[F]ind Help [T]ags" })
+    map("n", "<leader>fT", builtin.help_tags, { desc = "[F]ind Help [T]ags" })
     map("n", "<leader>gs", builtin.git_status, { desc = "[G]it [S]tatus" })
     map("n", "<leader>gS", builtin.git_stash, { desc = "[G]it [S]tash" })
     map("n", "<leader>gc", builtin.git_commits, { desc = "[G]it [C]ommits" })
