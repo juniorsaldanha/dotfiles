@@ -63,8 +63,8 @@ if [ -d "$HOME/.bun" ]; then
     export PATH="$BUN_INSTALL/bin:$PATH"
 fi
 
-# go path
-if [ -d $(which go) ]; then
+# Check if go is installed using which
+if which go &> /dev/null; then
     export PATH="$(go env GOPATH)/bin:$PATH"
 fi
 

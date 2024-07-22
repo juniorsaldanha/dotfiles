@@ -51,6 +51,7 @@ return {
         "jsonls",
         "yamlls",
         "bashls",
+        "zls",
       },
       handlers = {
         function(server_name)

@@ -29,6 +29,7 @@
 [alias]
     a = add
     c = commit
+    C = checkout
     d = diff
     f = commit --fixup
     g = pull
