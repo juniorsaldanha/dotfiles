@@ -169,3 +169,17 @@ function nvim_browser_remote() {
         echo "Example of usage; nvim_browser_remote username@hostname:/path/to/file"
     fi
 }
+
+function upgrade_asdf() {
+    plugin=$1
+    asdf plugin update $plugin
+    asdf install $plugin latest
+    asdf global $plugin latest
+    newVersion=$(asdf current $plugin | awk '{print $2}')
+
+    echo "Upgraded $plugin to latest version: $newVersion"
+}
+
+function upgrade_go_asdf(){
+    upgrade_asdf golang
+}
