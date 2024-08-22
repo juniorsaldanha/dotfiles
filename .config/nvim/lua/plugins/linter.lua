@@ -10,7 +10,7 @@ return {
     events = { "BufWritePost", "BufReadPost", "InsertLeave" },
     linters_by_ft = {
       lua = { "luacheck" },
-      go = { "golangcilint", },
+      -- go = { "golangcilint", },
       zsh = { "zsh" },
       sh = { "shellcheck" },
       dockerfile = { "hadolint" },
