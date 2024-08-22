@@ -50,7 +50,7 @@ return {
     require("conform").setup({
       format_on_save = function()
         if vim.b.disable_autoformat then
-          return false
+          return
         end
         return {
           async = true,
