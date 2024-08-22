@@ -2,34 +2,40 @@ return {
   "folke/which-key.nvim",
   event = "VeryLazy",
   opts = {
+    preset = "modern",
     plugins = { spelling = true },
-    defaults = {
-      mode = { "n", "v" },
-      ["<leader>b"] = { name = "[B]uffer" },
-      ["<leader>c"] = { name = "[C]onform" },
-      ["<leader>l"] = { name = "[L]SP", _ = "which_key_ignore" },
-      ["<leader>d"] = { name = "[D]AP", _ = "which_key_ignore" },
-      ["<leader>ds"] = { name = "[D]AP [S]teps", _ = "which_key_ignore" },
-      ["<leader>dg"] = { name = "[D]AP [G]olang Test", _ = "which_key_ignore" },
-      ["<leader>f"] = { name = "[F]ind" },
-      ["<leader>n"] = { name = "[N]oice" },
-      ["<leader>ft"] = { name = "[T]odo" },
-      ["<leader>h"] = { name = "[H]arpoon" },
-      ["<leader>g"] = { name = "[G]it" },
-      ["<leader>ga"] = { name = "[G]it-[A]ctions" },
-      ["<leader>gf"] = { name = "[G]it-[F]ugitive" },
-      ["<leader>s"] = { name = "[S]earch" },
-      ["<leader>t"] = { name = "[T]odo" },
-      ["<leader>o"] = { name = "[O]il" },
-      ["<leader>u"] = { _ = "which_key_ignore" },
-      ["<leader>x"] = { name = "[X] Diagnostics" },
-      ["<leader>z"] = { name = "[Z] Zen" },
+    spec = {
+      {
+        --     mode = { "n", "v" },
+        { "<leader>b",   group = "[B]uffer" },
+        { "<leader>c",   group = "[C]onform" },
+        { "<leader>d",   group = "[D]AP" },
+        { "<leader>d_",  hidden = true },
+        { "<leader>dg",  group = "[D]AP [G]olang Test" },
+        { "<leader>dg_", hidden = true },
+        { "<leader>ds",  group = "[D]AP [S]teps" },
+        { "<leader>ds_", hidden = true },
+        { "<leader>f",   group = "[F]ind" },
+        { "<leader>ft",  group = "[T]odo" },
+        { "<leader>g",   group = "[G]it" },
+        { "<leader>ga",  group = "[G]it-[A]ctions" },
+        { "<leader>gf",  group = "[G]it-[F]ugitive" },
+        { "<leader>h",   group = "[H]arpoon" },
+        { "<leader>l",   group = "[L]SP" },
+        { "<leader>l_",  hidden = true },
+        { "<leader>n",   group = "[N]oice" },
+        { "<leader>o",   group = "[O]il" },
+        { "<leader>s",   group = "[S]earch" },
+        { "<leader>t",   group = "[T]odo" },
+        { "<leader>u_",  hidden = true },
+        { "<leader>x",   group = "[X] Diagnostics" },
+        { "<leader>z",   group = "[Z] Zen" },
+      },
     },
   },
+
   config = function(_, opts)
     local wk = require("which-key")
-    -- local presets = require("which-key.plugins.presets")
     wk.setup(opts)
-    wk.register(opts.defaults)
   end,
 }
