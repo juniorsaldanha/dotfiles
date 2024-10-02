@@ -90,7 +90,7 @@ return {
             capabilities = capabilities,
             settings = {
               gopls = {
-                buildFlags = { "-tags=integration" },
+                -- buildFlags = { "-tags=integration" },
                 gofumpt = true,
                 codelenses = {
                   gc_details = false,
