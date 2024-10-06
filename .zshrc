@@ -52,7 +52,8 @@ elif [[ "$(uname)" == "Linux" ]]; then
 	fi
 else
 	echo "Unknown OS detected"
-    echo "Please add the configuration for your OS in ~/.config/zsh/.zshrc_{os}"
+	echo "Please add the configuration for your OS in ~/.config/zsh/.zshrc_{os}"
+	sleep 5
 	return 1
 fi
 

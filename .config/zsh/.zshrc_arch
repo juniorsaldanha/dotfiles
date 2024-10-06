@@ -2,59 +2,79 @@
 # This script is exclusively for Arch Linux based
 
 if [ -f /etc/os-release ]; then
-	. /etch/os-release
-	if [ "$ID" != "arch" ]; then
+	. /etc/os-release
+    if [[ "$ID" != *"arch"* ]]; then
 		echo "This script is exclusively for Arch Linux based"
-		exit 1
+        sleep 5
+        return 1
 	fi
 fi
 
-# Enable AUR if not enabled
-if ! grep -q "\[archlinuxfr\]" /etc/pacman.conf; then
-	echo "[archlinuxfr]" >>/etc/pacman.conf
-fi
+# if ! command -v yay &>/dev/null; then
+# 	sudo pacman -Syu --noconfirm yay
+# fi
 
-if ! command -v yay &>/dev/null; then
-	pacman -Syu --noconfirm yay
+if [ ! -f $HOME/.asdf/asdf.sh ]; then
+    echo "Cloning /Installing ASDF on your home"
+	git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0
+	. $HOME/.asdf/asdf.sh
+	echo "Installing golang latest with asdf"
+	asdf plugin add golang
+	asdf install golang latest
+	asdf global golang latest
+
+	echo "Installing nodejs 20.11.1 with asdf"
+	asdf plugin add nodejs
+	asdf install nodejs 20.11.1
+	asdf global nodejs 20.11.1
+
+	echo "Installing golang latest with asdf"
+	asdf plugin add python
+	asdf install python latest
+	asdf global python latest
+
+    echo "Installing rust latest with asdf"
+    asdf plugin add rust
+    asdf install rust latest
+    asdf global rust latest
 fi
 
 if [ -f $HOME/.asdf/asdf.sh ]; then
 	. $HOME/.asdf/asdf.sh
-else
-	git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0
-	. $HOME/.asdf/asdf.sh
+fi
+
+if ! command -v fzf &>/dev/null; then
+    sudo pacman -S --noconfirm fzf
 fi
 
 if ! command -v nvim &>/dev/null; then
-	sudo yay -S --noconfirm neovim-nightly-bin
+	sudo pacman -S --noconfirm neovim
 fi
 
 if ! command -v tmux &>/dev/null; then
-	sudo yay -S --noconfirm tmux
+    sudo pacman -S --noconfirm tmux
 fi
 
 if ! command -v rg &>/dev/null; then
-	sudo yay -S --noconfirm ripgrep
+	sudo pacman -S --noconfirm ripgrep
 fi
 
 if ! command -v cmake &>/dev/null; then
 	sudo pacman -S --noconfirm cmake
 fi
 
-if ! commnad -v cargo &>/dev/null; then
-	sudo yay -S --noconfirm rust
-fi
+export PATH="$HOME/.cargo/bin:$PATH"
 
 if ! command -v alacritty &>/dev/null; then
-	pacman -S cmake freetype2 fontconfig pkg-config make libxcb libxkbcommon python
+	sudo pacman -S cmake freetype2 fontconfig pkg-config make libxcb libxkbcommon python
 	cargo install alacritty --locked
 	sudo cp $HOME/.cargo/bin/alacritty /usr/local/bin/
 	sudo curl --fail --location --show-error https://github.com/alacritty/alacritty/blob/master/extra/logo/compat/alacritty-term.png?raw=true --output /usr/share/pixmaps/Alacritty.png
 	sudo curl --fail --location --show-error https://raw.githubusercontent.com/alacritty/alacritty/master/extra/logo/alacritty-term.svg --output /usr/share/pixmaps/Alacritty.svg
-	curl -o Alacritty.desktop https://raw.githubusercontent.com/alacritty/alacritty/master/extra/linux/Alacritty.desktop
+	sudo curl -o Alacritty.desktop https://raw.githubusercontent.com/alacritty/alacritty/master/extra/linux/Alacritty.desktop
 	sudo desktop-file-install Alacritty.desktop
 	sudo update-desktop-database
-	rm -rf Alacritty.desktop
+	sudo rm -rf Alacritty.desktop
 fi
 
 if ! command -v zoxide &>/dev/null; then
@@ -73,10 +93,22 @@ function setup() {
 		echo "Downloading FiraCode Nerd Font"
 		url_firacodenerdfont="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/FiraCode.zip"
 		zip="FiraCode.zip"
-		curl --fail --location --show-error ${url_firacodenerdfont} --output ${zip}
-		unzip -o -q -d ${fonts_dir} ${zip}
-		rm ${zip}
-		fc-cache -f
+		sudo curl --fail --location --show-error ${url_firacodenerdfont} --output ${zip}
+		sudo unzip -o -q -d ${fonts_dir} ${zip}
+		sudo rm ${zip}
+		sudo fc-cache -f
 		echo "FiraCode Nerd Font installed"
 	fi
+
+	if [ ! -f "${fonts_dir}/TerminessNerdFont-Regular.ttf" ]; then
+        echo "Downloading Terminus Nerd Font"
+        url_terminusfont="https://github.com/ryanoasis/nerd-fonts/releases/download/v4.2.1/Terminus.zip"
+        zip_terminus="Terminus.zip"
+
+        sudo unzip -o -q -d ${fonts_dir} ${zip_terminus}
+        sudo rm ${zip_terminus}
+        sudo fc-cache -f
+        echo "Terminus Nert Font installed"
+    fi
+
 }

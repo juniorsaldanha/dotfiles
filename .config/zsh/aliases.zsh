@@ -15,14 +15,20 @@ alias nvchad="NVIM_APPNAME=nvim_nvchad nvim"
 if command -v zoxide &>/dev/null; then
 	eval "$(zoxide init zsh)"
 	alias cd="z"
+else
+    echo "zoxide not found, alias not being configured"
 fi
 
 if command -v eza &>/dev/null; then
 	alias ls="eza --color=always --long --git --icons=always"
+else
+    echo "eza not found, alias not being configured"
 fi
 
 if command -v bat &>/dev/null; then
     alias cat="bat"
+else
+    echo "bat not found, alias not being configured"
 fi
 
 if command -v fzf &>/dev/null; then
