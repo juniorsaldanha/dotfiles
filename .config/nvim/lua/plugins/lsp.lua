@@ -52,6 +52,7 @@ return {
         "yamlls",
         "bashls",
         "zls",
+        "texlab",
       },
       handlers = {
         function(server_name)
@@ -90,7 +91,7 @@ return {
             capabilities = capabilities,
             settings = {
               gopls = {
-                -- buildFlags = { "-tags=integration" },
+                buildFlags = { "-tags=integration" },
                 gofumpt = true,
                 codelenses = {
                   gc_details = false,
@@ -134,6 +135,22 @@ return {
             },
           })
         end,
+
+        ["yamlls"] = function()
+          local lspconfig = require("lspconfig")
+          lspconfig.yamlls.setup({
+            capabilities = capabilities,
+            settings = {
+              yaml = {
+                schemas = {
+                  ["https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json"] =
+                  "azure-pipelines.*",
+                },
+              },
+            },
+          })
+        end,
+
       },
     })
 
