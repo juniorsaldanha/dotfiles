@@ -1,8 +1,3 @@
-live_config_reload = true
-
-import = [
-  "~/.config/alacritty/tokyo-night.toml"
-]
 
 # If uncommented, this will be used as startup command, creating a new tmux session or attaching to an existing one
 # It will not allow to detach from the session, so the terminal will close when the tmux session is closed
@@ -43,7 +38,7 @@ blur = true
 padding = { x = 5, y = 5 }
 decorations = "Buttonless"
 decorations_theme_variant = "Dark"
-# startup_mode = "Fullscreen"
+startup_mode = "Fullscreen"
 # startup_mode = "Maximized"
 option_as_alt = "Both"
 
@@ -59,4 +54,11 @@ osc52 = "CopyPaste"
 [keyboard]
 bindings = [
   { key = "Slash", mods = "Control", chars = "\u001f" },
+]
+
+[general]
+live_config_reload = true
+
+import = [
+  "~/.config/alacritty/tokyo-night.toml"
 ]
