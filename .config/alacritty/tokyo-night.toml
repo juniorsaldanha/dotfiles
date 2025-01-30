@@ -30,5 +30,9 @@ white   = '#acb0d0'
 
 # Cursor colors (custom by gh: @juniorsaldanha)
 [colors.vi_mode_cursor]
-text = '#1a1b26'
-cursor = '#f7768e'
+cursor = "#ff0084" # Pink
+text = "CellForeground"
+
+[colors.cursor]
+cursor = "#ff0084" # Pink
+text = "CellForeground"
