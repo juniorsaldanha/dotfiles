@@ -1,5 +1,8 @@
 {
-  "theme": "One Dark",
+  "features": {
+    "edit_prediction_provider": "zed"
+  },
+  "theme": "Tokyo Night",
   "vim_mode": true,
   "ui_font_family": "FiraCode Nerd Font",
   "ui_font_size": 14,
@@ -33,12 +36,6 @@
           "tidy": true,
           "upgrade_dependency": true,
           "vendor": true
-        },
-        "analysis": {
-          "completeUnimported": true,
-          "staticcheck": true,
-          "unusedParams": true,
-          "unusedWrite": true
         },
         "hints": {
           "assignVariableType": true,

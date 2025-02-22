@@ -107,5 +107,10 @@ return {
     map("n", "<leader>xl", builtin.loclist, { desc = "[X] Find [L]oclist" })
     map("n", "<leader>xr", builtin.lsp_references, { desc = "[X] Find [R]eferences" })
     map("n", "<leader>xd", builtin.diagnostics, { desc = "[X] Find [D]iagnostics" })
+    map("n", "<leader>ne", function()
+      builtin.find_files {
+        cwd = vim.fn.stdpath("config"),
+      }
+    end, { desc = "[N]vim [E]ditor" })
   end,
 }

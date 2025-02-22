@@ -20,7 +20,12 @@ vim.opt.smarttab = true
 vim.opt.inccommand = "split"
 vim.opt.smartindent = true
 vim.opt.list = true
-vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+vim.opt.listchars = {
+  tab = "» ",
+  trail = "·",
+  nbsp = "␣",
+  -- eol = "↲"
+}
 vim.opt.signcolumn = "yes"
 vim.opt.updatetime = 50
 vim.opt.timeoutlen = 300

@@ -41,6 +41,7 @@ return {
     require("fidget").setup({})
     require("mason").setup()
     require("mason-lspconfig").setup({
+      automatic_installation = true,
       ensure_installed = {
         "lua_ls",
         "rust_analyzer",
@@ -145,6 +146,7 @@ return {
                 schemas = {
                   ["https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json"] =
                   "azure-pipelines.*",
+                  ["https://json.schemastore.org/github-workflow"] = ".github/workflows/*",
                 },
               },
             },

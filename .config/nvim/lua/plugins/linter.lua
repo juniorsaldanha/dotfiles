@@ -10,7 +10,8 @@ return {
     events = { "BufWritePost", "BufReadPost", "InsertLeave" },
     linters_by_ft = {
       lua = { "luacheck" },
-      -- go = { "golangcilint", },
+      go = { "golangcilint", },
+      -- go = { "sonarlint-language-server" },
       zsh = { "zsh" },
       sh = { "shellcheck" },
       dockerfile = { "hadolint" },
@@ -32,15 +33,47 @@ return {
     end
     lint.linters_by_ft = opts.linters_by_ft
 
-    lint.linters.golangcilint.args = {
-      "run",
-      "--out-format",
-      "json",
-      "--show-stats=false",
-      "--print-issued-lines=false",
-      "--print-linter-name=false",
-      "--timeout",
-      "5m",
+    -- lint.linters.golangcilint.args = {
+    --   "run",
+    --   "--out-format",
+    --   "json",
+    --   "--show-stats=false",
+    --   "--print-issued-lines=false",
+    --   "--print-linter-name=false",
+    --   "--timeout",
+    --   "5m",
+    -- }
+
+    lint.linters.sonarlint_language_server = {
+      cmd = "sonarlint-language-server",
+      stdin = true,
+      args = { "--stdio" },
+      stream = "stdout",
+      name = "sonarlint-language-server",
+      parser = function(output, _)
+        if output == "" then
+          return {}
+        end
+        local diagnostics = {}
+        for _, line in ipairs(vim.split(output, "\n")) do
+          local parts = vim.split(line, "\t")
+          if #parts == 4 then
+            local row = tonumber(parts[2]) - 1
+            local col = tonumber(parts[3]) - 1
+            local message = parts[4]
+            table.insert(diagnostics, {
+              source = "sonarlint",
+              range = {
+                ["start"] = { line = row, character = col },
+                ["end"] = { line = row, character = col },
+              },
+              message = message,
+              severity = 1,
+            })
+          end
+        end
+        return diagnostics
+      end,
     }
 
     function M.debounce(ms, fn)

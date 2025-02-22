@@ -1,6 +1,6 @@
 [user]
-    name=Junior Saldanha
-    email=umsaldanha@gmail.com
+	name = Junior Saldanha
+	email = umsaldanha@gmail.com
     useConfigOnly=true
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPnWgjkG9d5Ow5r7rgCt/HjqTeoce4FCqKBGvH2/MD+I
 
@@ -18,7 +18,7 @@
     pager = delta
     whitespace = -trailing-space,-space-before-tab,-indent-with-non-tab
     autocrlf = input
-    excludesfile = ~/.config/git/ignore
+	excludesfile = ~/.config/git/.gitignore_global
 
 [color]
     ui = auto
