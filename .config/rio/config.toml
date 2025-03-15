@@ -19,6 +19,7 @@
 #
 # Example:
 # theme = "dracula"
+theme = "tokyonight"
 
 # Padding-x
 #
