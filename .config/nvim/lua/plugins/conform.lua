@@ -16,8 +16,8 @@ M.format_on_save_toggle = function(opts)
 
   vim.notify(
     "Autoformatting "
-    .. (not config.Get_format_on_save() and "Enabled" or "Disabled")
-    .. (opts.fargs[1] == "buffer" and " on this Buffer" or " Globally"),
+      .. (not config.Get_format_on_save() and "Enabled" or "Disabled")
+      .. (opts.fargs[1] == "buffer" and " on this Buffer" or " Globally"),
     vim.log.levels.INFO,
     { title = "Autoformatting Toggle" }
   )
@@ -53,12 +53,11 @@ return {
           return
         end
         return {
-          async = true,
-          timeout_ms = 2000,
+          async = false,
+          timeout_ms = 3000,
           lsp_fallback = true,
         }
-      end
-      ,
+      end,
       formatters_by_ft = {
         lua = { "stylua" },
         go = {
