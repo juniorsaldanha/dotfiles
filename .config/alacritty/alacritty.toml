@@ -38,8 +38,8 @@ blur = true
 padding = { x = 5, y = 5 }
 decorations = "Buttonless"
 decorations_theme_variant = "Dark"
-startup_mode = "Fullscreen"
-# startup_mode = "Maximized"
+# startup_mode = "Fullscreen"
+startup_mode = "Maximized"
 option_as_alt = "Both"
 
 [selection]
