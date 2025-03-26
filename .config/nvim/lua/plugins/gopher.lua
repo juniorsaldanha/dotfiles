@@ -6,18 +6,6 @@ return {
   },
   ft = "go",
   build = function()
-    vim.cmd("GoInstallDeps")
-  end,
-  config = function()
-    require("gopher").setup({
-      commands = {
-        dlv = "dlv",
-        go = "go",
-        gomodifytags = "gomodifytags",
-        gotests = "gotests",
-        impl = "impl",
-        iferr = "iferr",
-      },
-    })
+    vim.cmd.GoInstallDeps()
   end,
 }

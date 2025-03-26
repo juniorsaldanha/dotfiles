@@ -31,12 +31,8 @@ return {
   config = function()
     local cmp = require("cmp")
     local cmp_lsp = require("cmp_nvim_lsp")
-    local capabilities = vim.tbl_deep_extend(
-      "force",
-      {},
-      vim.lsp.protocol.make_client_capabilities(),
-      cmp_lsp.default_capabilities()
-    )
+    local capabilities =
+      vim.tbl_deep_extend("force", {}, vim.lsp.protocol.make_client_capabilities(), cmp_lsp.default_capabilities())
 
     require("fidget").setup({})
     require("mason").setup()
@@ -114,6 +110,7 @@ return {
                   rangeVariableTypes = true,
                 },
                 analyses = {
+                  shadow = true,
                   fieldalignment = true,
                   nilness = true,
                   unusedparams = true,
@@ -144,15 +141,13 @@ return {
             settings = {
               yaml = {
                 schemas = {
-                  ["https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json"] =
-                  "azure-pipelines.*",
+                  ["https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json"] = "azure-pipelines.*",
                   ["https://json.schemastore.org/github-workflow"] = ".github/workflows/*",
                 },
               },
             },
           })
         end,
-
       },
     })
 

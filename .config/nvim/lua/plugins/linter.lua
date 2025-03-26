@@ -10,7 +10,7 @@ return {
     events = { "BufWritePost", "BufReadPost", "InsertLeave" },
     linters_by_ft = {
       lua = { "luacheck" },
-      go = { "golangcilint", },
+      go = { "golangcilint" },
       -- go = { "sonarlint-language-server" },
       zsh = { "zsh" },
       sh = { "shellcheck" },
@@ -33,16 +33,18 @@ return {
     end
     lint.linters_by_ft = opts.linters_by_ft
 
-    -- lint.linters.golangcilint.args = {
-    --   "run",
-    --   "--out-format",
-    --   "json",
-    --   "--show-stats=false",
-    --   "--print-issued-lines=false",
-    --   "--print-linter-name=false",
-    --   "--timeout",
-    --   "5m",
-    -- }
+    -- golangcilint v2 compatible, v1 is deprecated
+    lint.linters.golangcilint.args = {
+      "run",
+      "--output.json.path=stdout",
+      "--issues-exit-code=0",
+      "--show-stats=false",
+      "--output.text.print-issued-lines=false",
+      "--output.text.print-linter-name=false",
+      function()
+        return vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":h")
+      end,
+    }
 
     lint.linters.sonarlint_language_server = {
       cmd = "sonarlint-language-server",
@@ -117,8 +119,7 @@ return {
           -- vim.notify("Linter found: " .. name, vim.log.levels.INFO, { title = "nvim-lint" })
           -- vim.notify("Linter: " .. vim.inspect(linter), vim.log.levels.INFO, { title = "nvim-lint" })
         end
-        return linter
-            and not (type(linter) == "table" and linter.condition and not linter.condition(ctx))
+        return linter and not (type(linter) == "table" and linter.condition and not linter.condition(ctx))
       end, names)
 
       -- Run linters.
