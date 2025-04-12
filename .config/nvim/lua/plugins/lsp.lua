@@ -143,6 +143,7 @@ return {
                 schemas = {
                   ["https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json"] = "azure-pipelines.*",
                   ["https://json.schemastore.org/github-workflow"] = ".github/workflows/*",
+                  ["https://goreleaser.com/static/schema.json"] = ".goreleaser.yaml",
                 },
               },
             },

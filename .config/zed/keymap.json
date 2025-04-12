@@ -15,8 +15,10 @@
       "space p": "outline::Toggle",
       "g d": "editor::GoToDefinition",
       "g v d": "editor::GoToDefinitionSplit",
-      "g r": "editor::FindAllReferences",
-      "g i": "editor::GoToImplementation",
+      "g r": "editor::FindAllReferences", // DEPRECATED keybind, use 'space l R' instead
+      "space l R": "editor::FindAllReferences",
+      "g i": "editor::GoToImplementation", // DEPRECATED keybind, use 'space l i' instead
+      "space l i": "editor::GoToImplementation",
       "g c c": "editor::ToggleComments",
       "ctrl-h": "workspace::ActivatePaneLeft",
       "ctrl-l": "workspace::ActivatePaneRight",

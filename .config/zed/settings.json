@@ -1,10 +1,19 @@
 {
+  "assistant": {
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-4o"
+    },
+    "version": "2"
+  },
+  "icon_theme": "Zed (Default)",
   "features": {
     "edit_prediction_provider": "zed"
   },
   "theme": "Tokyo Night",
   "vim_mode": true,
   "ui_font_family": "FiraCode Nerd Font",
+  // "ui_font_family": "Terminess Nerd Font",
   "ui_font_size": 14,
   "cursor_blink": false,
   "relative_line_numbers": true,
@@ -12,6 +21,7 @@
     "show": "never"
   },
   "buffer_font_family": "FiraCode Nerd Font",
+  // "buffer_font_family": "Terminess Nerd Font",
   "buffer_font_size": 14,
   "buffer_line_height": {
     "custom": 1.3

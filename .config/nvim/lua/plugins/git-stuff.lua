@@ -5,14 +5,16 @@ end
 
 return {
   {
-    "kdheepak/lazygit.nvim",
+    "juniorsaldanha/lazygit.nvim",
+    lazy = false,
     dependencies = {
       "nvim-telescope/telescope.nvim",
       "nvim-lua/plenary.nvim",
     },
     config = function()
+      require("telescope").load_extension("lazygit")
       map("n", "<leader>gl", "<cmd>LazyGit<CR>", opts("[G]it [L]azyGit"))
-    end
+    end,
   },
   {
     "tpope/vim-fugitive",
@@ -33,12 +35,12 @@ return {
       map("n", "<leader>gff", "<cmd>Git fetch<cr>", opts(prefix .. "Fetch"))
       map("n", "<leader>gfF", "<cmd>Git fetch --all<cr>", opts(prefix .. "Fetch (all)"))
       map("n", "<leader>gft", "<cmd>Git stash<cr>", opts(prefix .. "Stash"))
-    end
+    end,
   },
   {
     "lewis6991/gitsigns.nvim",
     config = function()
       require("gitsigns").setup()
-    end
-  }
+    end,
+  },
 }

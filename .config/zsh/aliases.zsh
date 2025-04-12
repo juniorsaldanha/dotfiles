@@ -5,12 +5,8 @@ alias o="open ."
 alias lg="lazygit"
 alias ld="lazydocker"
 alias nv="nvim"
-alias n="nvim"
 alias nvs="nvims"
-
-alias nvlazy="NVIM_APPNAME=nvim_lazy nvim"
-alias nvkick="NVIM_APPNAME=nvim_kickstart nvim"
-alias nvchad="NVIM_APPNAME=nvim_nvchad nvim"
+alias nvmini="NVIM_APPNAME=nvim_minimal nvim"
 
 if command -v zoxide &>/dev/null; then
 	eval "$(zoxide init zsh)"

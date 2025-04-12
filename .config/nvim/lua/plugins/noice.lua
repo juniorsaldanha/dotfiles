@@ -41,7 +41,23 @@ return {
           filter = {
             event = "msg_show",
             kind = "",
-            find = "lazy/lazygit.nvim/lua/lazygit.lua",
+            find = "window",
+          },
+          opts = { skip = true },
+        },
+        {
+          filter = {
+            event = "msg_show",
+            kind = "",
+            find = "lazy",
+          },
+          opts = { skip = true },
+        },
+        {
+          filter = {
+            event = "msg_show",
+            kind = "nvim_win_close",
+            find = "",
           },
           opts = { skip = true },
         },

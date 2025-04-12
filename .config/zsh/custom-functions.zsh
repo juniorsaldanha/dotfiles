@@ -130,7 +130,7 @@ function cppcheck() {
 }
 
 function nvims() {
-	items=("default" "nvim_lazy" "nvim_kickstart" "nvim_nvchad" "nvim_mini")
+	items=("default" "nvim_minimal")
 	config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
 	if [[ -z $config ]]; then
 		echo "Nothing selected"
