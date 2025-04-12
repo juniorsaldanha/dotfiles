@@ -13,6 +13,12 @@ function enabledevverification() {
 	echo "Developer verification Enabled - Darwin Only"
 }
 
+function setup_python_symlink() {
+    sudo rm -rf /usr/local/bin/python
+    brew update && brew install python3
+    sudo ln -s /opt/homebrew/bin/python3 /usr/local/bin/python
+}
+
 function remotedocker_active() {
 	# The following line and options.conf is to setup access in Docker Host Daemon, dont forget to open port 2375 tcp on firewall
 	# sudo mkdir -p /etc/systemd/system/docker.service.d

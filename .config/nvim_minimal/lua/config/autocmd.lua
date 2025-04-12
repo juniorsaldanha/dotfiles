@@ -40,41 +40,41 @@ autocmd("LspAttach", {
       return { desc = desc, noremap = true, silent = true, buffer = e.buf }
     end
     local map = vim.keymap.set
-    local lspbuf = vim.lsp.buf
+    -- local lspbuf = vim.lsp.buf
     local lspdiag = vim.diagnostic
-    map("n", "gd", function()
-      lspbuf.definition()
-    end, opts("[LSP] Go to definition"))
-
-    map("n", "K", function()
-      lspbuf.hover()
-    end, opts("[LSP] Hover"))
-
-    map("n", "<leader>la", function()
-      lspbuf.code_action()
-    end, opts("[LSP] Code action"))
-
-    map("n", "<leader>lR", function()
-      lspbuf.references()
-    end, opts("[LSP] References"))
-
-    map("n", "<leader>lr", function()
-      lspbuf.rename()
-    end, opts("[LSP] Rename"))
-    map("n", "<leader>li", function()
-      lspbuf.implementation({})
-    end, opts("[LSP] Implementation"))
-    map("n", "<leader>lf", function()
-      lspbuf.format()
-    end, opts("[LSP] Format"))
-
-    map("i", "<C-h>", function()
-      lspbuf.signature_help()
-    end, opts("[LSP] Signature help"))
-
-    map("n", "<leader>ld", function()
-      lspdiag.open_float()
-    end, opts("[LSP] Diagnostics"))
+    -- map("n", "gd", function()
+    --   lspbuf.definition()
+    -- end, opts("[LSP] Go to definition"))
+    --
+    -- map("n", "K", function()
+    --   lspbuf.hover()
+    -- end, opts("[LSP] Hover"))
+    --
+    -- map("n", "<leader>la", function()
+    --   lspbuf.code_action()
+    -- end, opts("[LSP] Code action"))
+    --
+    -- map("n", "<leader>lR", function()
+    --   lspbuf.references()
+    -- end, opts("[LSP] References"))
+    --
+    -- map("n", "<leader>lr", function()
+    --   lspbuf.rename()
+    -- end, opts("[LSP] Rename"))
+    -- map("n", "<leader>li", function()
+    --   lspbuf.implementation({})
+    -- end, opts("[LSP] Implementation"))
+    -- map("n", "<leader>lf", function()
+    --   lspbuf.format()
+    -- end, opts("[LSP] Format"))
+    --
+    -- map("i", "<C-h>", function()
+    --   lspbuf.signature_help()
+    -- end, opts("[LSP] Signature help"))
+    --
+    -- map("n", "<leader>ld", function()
+    --   lspdiag.open_float()
+    -- end, opts("[LSP] Diagnostics"))
 
     map("n", "d[", function()
       lspdiag.goto_next()

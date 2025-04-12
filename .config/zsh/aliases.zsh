@@ -4,7 +4,7 @@ alias follow="tail -f -n +1"
 alias o="open ."
 alias lg="lazygit"
 alias ld="lazydocker"
-alias nv="nvim"
+alias nv="nvmini"
 alias nvs="nvims"
 alias nvmini="NVIM_APPNAME=nvim_minimal nvim"
 
