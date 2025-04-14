@@ -55,7 +55,8 @@ return {
         format_on_save = { timeout_ms = 500, lsp_format = "fallback" },
       })
       vim.diagnostic.config({ virtual_text = { current_line = true } })
-      vim.o.winborder = "single"
+      -- vim.o.winborder = "single"
+      vim.o.winborder = "rounded"
     end,
   },
 }
