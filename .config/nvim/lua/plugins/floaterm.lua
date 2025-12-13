@@ -1,5 +1,6 @@
 return {
-  dir = "~/gh/floaterm.nvim/",
+  -- dir = "~/gh/floaterm.nvim/",
+  "juniorsaldanha/floaterm.nvim",
   config = function()
     local floaterm = require("floaterm")
     floaterm.setup()

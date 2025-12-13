@@ -5,26 +5,18 @@
 ]]
 
 return {
-    "stevearc/oil.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    -- ========================================================================
-    -- KEYMAPS
-    -- ========================================================================
-    keys = {
-        { "-", "<cmd>Oil<CR>", desc = "Open parent directory" },
-        { "<leader>o", "<cmd>Oil --float<CR>", desc = "Open Oil (float)" },
+  "stevearc/oil.nvim",
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  -- ========================================================================
+  -- KEYMAPS
+  -- ========================================================================
+  keys = {
+    { "<leader>o", "<cmd>Oil<cr>", desc = "Toggle Oil" },
+  },
+  opts = {
+    columns = { "icon" },
+    view_options = {
+      show_hidden = true,
     },
-    opts = {
-        columns = { "icon" },
-        keymaps = {
-            ["<C-h>"] = false,
-            ["<C-l>"] = false,
-            ["<C-j>"] = false,
-            ["<C-k>"] = false,
-            ["<M-h>"] = "actions.select_split",
-        },
-        view_options = {
-            show_hidden = true,
-        },
-    },
+  },
 }
