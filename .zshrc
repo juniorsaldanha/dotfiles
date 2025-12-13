@@ -27,12 +27,6 @@ else
 	echo "Custom functions not found"
 fi
 
-# Aliases
-if [ -f ~/.config/zsh/aliases.zsh ]; then
-    source ~/.config/zsh/aliases.zsh
-else
-    echo "Aliases file not found"
-fi
 
 # if file exists, source it
 if [ -f ~/.config/zsh/.zsh_exports ]; then
@@ -56,6 +50,12 @@ else
 	return 1
 fi
 
+if [ -f ~/.env_vars.zsh ]; then
+    source ~/.env_vars.zsh
+else
+    echo "~/.env_vars.zsh file not found, and not sourced"
+fi
+
 # bun
 if [ -d "$HOME/.bun" ]; then
     [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
@@ -68,7 +68,28 @@ if which go &> /dev/null; then
     export PATH="$(go env GOPATH)/bin:$PATH"
 fi
 
+# Aliases
+if [ -f ~/.config/zsh/aliases.zsh ]; then
+    source ~/.config/zsh/aliases.zsh
+else
+    echo "Aliases file not found"
+fi
+
+export PATH="$HOME/.local/bin:$PATH"
+
+
 # zprof
 if [[ -n $ZSH_VERSION ]]; then
     export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 fi
+
+export STM32_PRG_PATH=/Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32CubeProgrammer.app/Contents/MacOs/bin
+# Created by `pipx` on 2025-08-22 19:14:54
+export PATH="$PATH:/Users/umsaldanha/.local/bin"
+
+# Set JAVA_HOME for Kotlin Language Server compatibility
+export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
+export PATH="$JAVA_HOME/bin:$PATH"
+
+# Added by Antigravity
+export PATH="/Users/umsaldanha/.antigravity/antigravity/bin:$PATH"
