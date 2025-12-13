@@ -25,6 +25,7 @@ vim.opt.colorcolumn = "80"
 vim.opt.signcolumn = "yes"
 vim.opt.cursorline = true
 vim.opt.scrolloff = 8
+vim.opt.winborder = "rounded"
 
 -- Files
 vim.opt.backup = false
@@ -42,9 +43,9 @@ vim.opt.fileencoding = "utf-8"
 -- Whitespace characters
 vim.opt.list = true
 vim.opt.listchars = {
-    tab = "» ",
-    trail = "·",
-    nbsp = "␣",
+  tab = "» ",
+  trail = "·",
+  nbsp = "␣",
 }
 
 -- Splits
