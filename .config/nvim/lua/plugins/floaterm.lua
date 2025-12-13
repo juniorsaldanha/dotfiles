@@ -19,7 +19,7 @@ return {
     floaterm.register_terminal("terminal1", "<leader>t1")
     floaterm.register_terminal("terminal2", "<leader>t2")
     floaterm.register_terminal("terminal3", "<leader>t3")
-    floaterm.register_app("lazygit", "<leader>gg", "lazygit")
+    floaterm.register_app("lazygit", "<leader>lg", "lazygit")
     floaterm.register_app("claude", "<leader>ai1", "claude", {
       width = 0.9,
       height = 0.9,
