@@ -63,42 +63,53 @@ return {
     },
     config = function()
       -- ============================================================
-      -- LSP KEYMAPS
+      -- LSP KEYMAPS (via LspAttach autocommand)
       -- Modify these keymaps to your preference
       -- ============================================================
-      local on_attach = function(client, bufnr)
-        local map = function(keys, func, desc, mode)
-          mode = mode or "n"
-          vim.keymap.set(mode, keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
-        end
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("lsp-attach-keymaps", { clear = true }),
+        callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          local bufnr = args.buf
 
-        -- Navigation
-        map("gd", vim.lsp.buf.definition, "Goto Definition")
-        map("gD", vim.lsp.buf.declaration, "Goto Declaration")
-        map("gr", vim.lsp.buf.references, "Goto References")
-        map("gI", vim.lsp.buf.implementation, "Goto Implementation")
-        map("gy", vim.lsp.buf.type_definition, "Goto Type Definition")
+          local map = function(keys, func, desc, mode)
+            mode = mode or "n"
+            vim.keymap.set(mode, keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
+          end
 
-        -- Documentation
-        map("K", vim.lsp.buf.hover, "Hover Documentation")
-        map("<C-k>", vim.lsp.buf.signature_help, "Signature Help", "i")
+          -- Navigation
+          map("gd", vim.lsp.buf.definition, "Goto Definition")
+          map("gD", vim.lsp.buf.declaration, "Goto Declaration")
+          map("gr", vim.lsp.buf.references, "Goto References")
+          map("gI", vim.lsp.buf.implementation, "Goto Implementation")
+          map("gy", vim.lsp.buf.type_definition, "Goto Type Definition")
 
-        -- Actions
-        map("<leader>ca", vim.lsp.buf.code_action, "Code Action", { "n", "v" })
-        map("<leader>cr", vim.lsp.buf.rename, "Rename Symbol")
+          -- Documentation
+          map("K", vim.lsp.buf.hover, "Hover Documentation")
+          map("<C-k>", vim.lsp.buf.signature_help, "Signature Help", "i")
 
-        -- Diagnostics
-        map("<leader>cd", vim.diagnostic.open_float, "Line Diagnostics")
-        map("]d", vim.diagnostic.goto_next, "Next Diagnostic")
-        map("[d", vim.diagnostic.goto_prev, "Previous Diagnostic")
+          -- Actions
+          map("<leader>ca", vim.lsp.buf.code_action, "Code Action", { "n", "v" })
+          map("<leader>cr", vim.lsp.buf.rename, "Rename Symbol")
 
-        -- Enable inlay hints if supported
-        if client.server_capabilities.inlayHintProvider then
-          map("<leader>ch", function()
-            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }))
-          end, "Toggle Inlay Hints")
-        end
-      end
+          -- Diagnostics
+          map("<leader>cd", vim.diagnostic.open_float, "Line Diagnostics")
+
+          map("]d", function()
+            vim.diagnostic.jump({ count = 1, float = true })
+          end, "Next Diagnostic")
+          map("[d", function()
+            vim.diagnostic.jump({ count = -1, float = true })
+          end, "Previous Diagnostic")
+
+          -- Enable inlay hints if supported
+          if client and client.server_capabilities.inlayHintProvider then
+            map("<leader>ch", function()
+              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }))
+            end, "Toggle Inlay Hints")
+          end
+        end,
+      })
 
       -- Diagnostic configuration
       vim.diagnostic.config({
@@ -106,7 +117,14 @@ return {
           spacing = 4,
           prefix = "●",
         },
-        signs = true,
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = "✗",
+            [vim.diagnostic.severity.WARN] = "⚠",
+            [vim.diagnostic.severity.HINT] = "󰌵",
+            [vim.diagnostic.severity.INFO] = "ℹ",
+          },
+        },
         underline = true,
         update_in_insert = false,
         severity_sort = true,
@@ -115,13 +133,6 @@ return {
           source = true,
         },
       })
-
-      -- Set diagnostic signs
-      local signs = { Error = " ", Warn = " ", Hint = "󰌵 ", Info = " " }
-      for type, icon in pairs(signs) do
-        local hl = "DiagnosticSign" .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-      end
 
       -- Default capabilities
       local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -182,13 +193,14 @@ return {
         yamlls = {},
       }
 
-      -- Setup all servers
-      local lspconfig = require("lspconfig")
+      -- Setup all servers using native vim.lsp.config (Neovim 0.11+)
       for server, config in pairs(servers) do
-        config.on_attach = on_attach
         config.capabilities = capabilities
-        lspconfig[server].setup(config)
+        vim.lsp.config(server, config)
       end
+
+      -- Enable all configured servers
+      vim.lsp.enable(vim.tbl_keys(servers))
     end,
   },
 }
