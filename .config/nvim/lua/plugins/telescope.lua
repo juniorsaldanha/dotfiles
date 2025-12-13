@@ -60,10 +60,10 @@ return {
       prompt_prefix = " ",
       selection_caret = " ",
       path_display = { "truncate" },
-      sorting_strategy = "ascending",
+      sorting_strategy = "descending", -- ascending (better for top) or descending (better for bottom)
       layout_config = {
         horizontal = {
-          prompt_position = "top",
+          prompt_position = "bottom", -- top or bottom
           preview_width = 0.55,
         },
         width = 0.87,
