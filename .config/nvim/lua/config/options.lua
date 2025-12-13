@@ -1,40 +1,56 @@
+-- Leader keys (must be set before lazy)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-vim.opt.relativenumber = true
+
+-- Line numbers
 vim.opt.number = true
-vim.opt.termguicolors = true
-vim.opt.clipboard = "unnamedplus"
-vim.opt.colorcolumn = "80"
-vim.opt.cursorline = true
+vim.opt.relativenumber = true
+
+-- Tabs and indentation
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.opt.smartindent = true
+
+-- Search
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.swapfile = false
+
+-- Appearance
+vim.opt.termguicolors = true
+vim.opt.colorcolumn = "80"
+vim.opt.signcolumn = "yes"
+vim.opt.cursorline = true
+vim.opt.scrolloff = 8
+
+-- Files
 vim.opt.backup = false
+vim.opt.swapfile = false
+vim.opt.undofile = true
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+
+-- Clipboard
+vim.opt.clipboard = "unnamedplus"
+
+-- Encoding
 vim.opt.encoding = "utf-8"
-vim.opt.fileencodings = "utf-8"
-vim.opt.fileformats = "unix"
-vim.opt.filetype = "on"
-vim.opt.guifont = "Fira Code:h12"
-vim.opt.expandtab = true
-vim.opt.smarttab = true
-vim.opt.inccommand = "split"
-vim.opt.smartindent = true
+vim.opt.fileencoding = "utf-8"
+
+-- Whitespace characters
 vim.opt.list = true
 vim.opt.listchars = {
-  tab = "» ",
-  trail = "·",
-  nbsp = "␣",
-  -- eol = "↲"
+    tab = "» ",
+    trail = "·",
+    nbsp = "␣",
 }
-vim.opt.signcolumn = "yes"
-vim.opt.updatetime = 50
+
+-- Splits
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+
+-- Update time
+vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
-vim.opt.undofile = true
-vim.opt.scrolloff = 10
-
-vim.o.tabstop = 4
-vim.o.softtabstop = 4
-vim.o.shiftwidth = 4
-
-vim.opt.hlsearch = true

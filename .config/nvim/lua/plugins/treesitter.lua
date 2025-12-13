@@ -1,35 +1,57 @@
--- Copied from ThePrimeagen lsp file
+--[[
+  Treesitter - Syntax highlighting and code understanding
+
+  LANGUAGES: Add/remove parsers in the `ensure_installed` table
+]]
+
 return {
-  "nvim-treesitter/nvim-treesitter",
-  build = ":TSUpdate",
-  config = function()
-    ---@diagnostic disable-next-line: missing-fields
-    require("nvim-treesitter.configs").setup({
-      ensure_installed = {
-        "vimdoc", "javascript", "typescript", "c", "lua", "rust",
-        "jsdoc", "bash",
-      },
-      sync_install = false,
-      auto_install = true,
-      indent = {
-        enable = true
-      },
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = { "markdown" },
-      },
-    })
-
-    local treesitter_parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-    ---@diagnostic disable-next-line: inject-field
-    treesitter_parser_config.templ = {
-      install_info = {
-        url = "https://github.com/vrischmann/tree-sitter-templ.git",
-        files = { "src/parser.c", "src/scanner.c" },
-        branch = "master",
-      },
-    }
-
-    vim.treesitter.language.register("templ", "templ")
-  end
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {
+        -- ====================================================================
+        -- PARSERS TO AUTO-INSTALL
+        -- Add or remove languages here
+        -- ====================================================================
+        ensure_installed = {
+            "bash",
+            "c",
+            "css",
+            "go",
+            "html",
+            "javascript",
+            "jsdoc",
+            "json",
+            "lua",
+            "luadoc",
+            "markdown",
+            "markdown_inline",
+            "python",
+            "rust",
+            "typescript",
+            "vim",
+            "vimdoc",
+            "yaml",
+        },
+        auto_install = true,
+        highlight = {
+            enable = true,
+            additional_vim_regex_highlighting = false,
+        },
+        indent = {
+            enable = true,
+        },
+        incremental_selection = {
+            enable = true,
+            keymaps = {
+                init_selection = "<C-space>",
+                node_incremental = "<C-space>",
+                scope_incremental = false,
+                node_decremental = "<bs>",
+            },
+        },
+    },
+    config = function(_, opts)
+        require("nvim-treesitter.configs").setup(opts)
+    end,
 }

@@ -1,189 +1,183 @@
+--[[
+  LSP Configuration
+  - mason.nvim: Package manager for LSP servers, linters, formatters
+  - mason-lspconfig: Bridge between mason and lspconfig
+  - nvim-lspconfig: LSP client configuration
+
+  KEYMAPS: Modify the `on_attach` function below to change LSP keymaps
+  SERVERS: Add/remove servers in the `servers` table below
+]]
+
 return {
-  "neovim/nvim-lspconfig",
-  dependencies = {
-    "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
-    "hrsh7th/cmp-nvim-lsp",
-    "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-path",
-    "hrsh7th/cmp-cmdline",
-    "hrsh7th/nvim-cmp",
-    "L3MON4D3/LuaSnip",
-    "saadparwaiz1/cmp_luasnip",
-    "j-hui/fidget.nvim",
+    -- Mason: Package manager for LSP servers
     {
-      "folke/neodev.nvim",
-      config = function()
-        require("neodev").setup({
-          library = { plugins = { "nvim-dap-ui" }, types = true },
-          override = function(root_dir, options)
-            if string.find(root_dir, "nvim") or string.find(root_dir, "lua") then
-              options.enabled = true
-              options.plugins = true
-              vim.notify_once("Neodev ENABLED", vim.log.levels.WARN, { title = "neodev.nvim" })
-            end
-          end,
-        })
-      end,
+        "mason-org/mason.nvim",
+        cmd = "Mason",
+        build = ":MasonUpdate",
+        opts = {
+            ui = {
+                border = "rounded",
+                icons = {
+                    package_installed = "✓",
+                    package_pending = "➜",
+                    package_uninstalled = "✗",
+                },
+            },
+        },
     },
-  },
 
-  config = function()
-    local cmp = require("cmp")
-    local cmp_lsp = require("cmp_nvim_lsp")
-    local capabilities =
-      vim.tbl_deep_extend("force", {}, vim.lsp.protocol.make_client_capabilities(), cmp_lsp.default_capabilities())
-
-    require("fidget").setup({})
-    require("mason").setup()
-    require("mason-lspconfig").setup({
-      automatic_installation = true,
-      ensure_installed = {
-        "lua_ls",
-        "rust_analyzer",
-        "gopls",
-        "clangd",
-        "dockerls",
-        "docker_compose_language_service",
-        "jsonls",
-        "yamlls",
-        "bashls",
-        "zls",
-        "texlab",
-      },
-      handlers = {
-        function(server_name)
-          require("lspconfig")[server_name].setup({
-            capabilities = capabilities,
-          })
-        end,
-
-        ["lua_ls"] = function()
-          local lspconfig = require("lspconfig")
-          lspconfig.lua_ls.setup({
-            capabilities = capabilities,
-            settings = {
-              Lua = {
-                completion = {
-                  callSnippet = "Replace",
-                  enable = true,
-                },
-                diagnostics = {
-                  globals = {
-                    "vim",
-                    "it",
-                    "describe",
-                    "before_each",
-                    "after_each",
-                  },
-                },
-              },
+    -- Mason-LSPConfig: Auto-install LSP servers
+    {
+        "mason-org/mason-lspconfig.nvim",
+        dependencies = { "mason-org/mason.nvim" },
+        opts = {
+            -- ============================================================
+            -- LSP SERVERS TO AUTO-INSTALL
+            -- Add or remove servers here
+            -- ============================================================
+            ensure_installed = {
+                "lua_ls",           -- Lua
+                "ts_ls",            -- TypeScript/JavaScript
+                "html",             -- HTML
+                "cssls",            -- CSS
+                "jsonls",           -- JSON
+                "pyright",          -- Python
+                "gopls",            -- Go
+                "rust_analyzer",    -- Rust
+                "bashls",           -- Bash
+                "yamlls",           -- YAML
             },
-          })
+            automatic_installation = true,
+        },
+    },
+
+    -- LSP Config
+    {
+        "neovim/nvim-lspconfig",
+        event = { "BufReadPre", "BufNewFile" },
+        dependencies = {
+            "mason-org/mason.nvim",
+            "mason-org/mason-lspconfig.nvim",
+            -- Useful status updates for LSP
+            { "j-hui/fidget.nvim", opts = {} },
+        },
+        config = function()
+            -- ============================================================
+            -- LSP KEYMAPS
+            -- Modify these keymaps to your preference
+            -- ============================================================
+            local on_attach = function(client, bufnr)
+                local map = function(keys, func, desc, mode)
+                    mode = mode or "n"
+                    vim.keymap.set(mode, keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
+                end
+
+                -- Navigation
+                map("gd", vim.lsp.buf.definition, "Goto Definition")
+                map("gD", vim.lsp.buf.declaration, "Goto Declaration")
+                map("gr", vim.lsp.buf.references, "Goto References")
+                map("gI", vim.lsp.buf.implementation, "Goto Implementation")
+                map("gy", vim.lsp.buf.type_definition, "Goto Type Definition")
+
+                -- Documentation
+                map("K", vim.lsp.buf.hover, "Hover Documentation")
+                map("<C-k>", vim.lsp.buf.signature_help, "Signature Help", "i")
+
+                -- Actions
+                map("<leader>ca", vim.lsp.buf.code_action, "Code Action", { "n", "v" })
+                map("<leader>cr", vim.lsp.buf.rename, "Rename Symbol")
+
+                -- Diagnostics
+                map("<leader>cd", vim.diagnostic.open_float, "Line Diagnostics")
+                map("]d", vim.diagnostic.goto_next, "Next Diagnostic")
+                map("[d", vim.diagnostic.goto_prev, "Previous Diagnostic")
+
+                -- Enable inlay hints if supported
+                if client.server_capabilities.inlayHintProvider then
+                    map("<leader>ch", function()
+                        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }))
+                    end, "Toggle Inlay Hints")
+                end
+            end
+
+            -- Diagnostic configuration
+            vim.diagnostic.config({
+                virtual_text = {
+                    spacing = 4,
+                    prefix = "●",
+                },
+                signs = true,
+                underline = true,
+                update_in_insert = false,
+                severity_sort = true,
+                float = {
+                    border = "rounded",
+                    source = true,
+                },
+            })
+
+            -- Set diagnostic signs
+            local signs = { Error = " ", Warn = " ", Hint = "󰌵 ", Info = " " }
+            for type, icon in pairs(signs) do
+                local hl = "DiagnosticSign" .. type
+                vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+            end
+
+            -- Default capabilities
+            local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+            -- Add cmp capabilities if available
+            local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+            if ok then
+                capabilities = vim.tbl_deep_extend("force", capabilities, cmp_nvim_lsp.default_capabilities())
+            end
+
+            -- ============================================================
+            -- SERVER CONFIGURATIONS
+            -- Add custom server settings here
+            -- ============================================================
+            local servers = {
+                lua_ls = {
+                    settings = {
+                        Lua = {
+                            workspace = { checkThirdParty = false },
+                            telemetry = { enable = false },
+                            hint = { enable = true },
+                        },
+                    },
+                },
+                ts_ls = {},
+                html = {},
+                cssls = {},
+                jsonls = {},
+                pyright = {},
+                gopls = {
+                    settings = {
+                        gopls = {
+                            hints = {
+                                assignVariableTypes = true,
+                                compositeLiteralFields = true,
+                                compositeLiteralTypes = true,
+                                constantValues = true,
+                                functionTypeParameters = true,
+                                parameterNames = true,
+                                rangeVariableTypes = true,
+                            },
+                        },
+                    },
+                },
+                rust_analyzer = {},
+                bashls = {},
+                yamlls = {},
+            }
+
+            -- Setup all servers
+            local lspconfig = require("lspconfig")
+            for server, config in pairs(servers) do
+                config.on_attach = on_attach
+                config.capabilities = capabilities
+                lspconfig[server].setup(config)
+            end
         end,
-
-        ["gopls"] = function()
-          local lspconfig = require("lspconfig")
-          lspconfig.gopls.setup({
-            capabilities = capabilities,
-            settings = {
-              gopls = {
-                buildFlags = { "-tags=integration" },
-                gofumpt = true,
-                codelenses = {
-                  gc_details = false,
-                  generate = true,
-                  regenerate_cgo = true,
-                  run_govulncheck = true,
-                  test = true,
-                  tidy = true,
-                  upgrade_dependency = true,
-                  vendor = true,
-                },
-                hints = {
-                  assignVariableTypes = true,
-                  compositeLiteralFields = true,
-                  compositeLiteralTypes = true,
-                  constantValues = true,
-                  functionTypeParameters = true,
-                  parameterNames = true,
-                  rangeVariableTypes = true,
-                },
-                analyses = {
-                  shadow = true,
-                  fieldalignment = true,
-                  nilness = true,
-                  unusedparams = true,
-                  unusedwrite = true,
-                  useany = true,
-                },
-                experimentalPostfixCompletions = true,
-                usePlaceholders = false,
-                completeUnimported = true,
-                staticcheck = true,
-                directoryFilters = {
-                  "-.git",
-                  "-.vscode",
-                  "-.idea",
-                  "-.vscode-test",
-                  "-node_modules",
-                },
-                semanticTokens = true,
-              },
-            },
-          })
-        end,
-
-        ["yamlls"] = function()
-          local lspconfig = require("lspconfig")
-          lspconfig.yamlls.setup({
-            capabilities = capabilities,
-            settings = {
-              yaml = {
-                schemas = {
-                  ["https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json"] = "azure-pipelines.*",
-                  ["https://json.schemastore.org/github-workflow"] = ".github/workflows/*",
-                  ["https://goreleaser.com/static/schema.json"] = ".goreleaser.yaml",
-                },
-              },
-            },
-          })
-        end,
-      },
-    })
-
-    local cmp_select = { behavior = cmp.SelectBehavior.Select }
-
-    cmp.setup({
-      snippet = {
-        expand = function(args)
-          require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
-        end,
-      },
-      mapping = cmp.mapping.preset.insert({
-        ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
-        ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
-        ["<enter>"] = cmp.mapping.confirm({ select = true }),
-        ["<C-space>"] = cmp.mapping.complete(),
-      }),
-      sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "luasnip" }, -- For luasnip users.
-      }, {
-        { name = "buffer" },
-      }),
-    })
-
-    vim.diagnostic.config({
-      -- update_in_insert = true,
-      float = {
-        focusable = false,
-        style = "minimal",
-        border = "rounded",
-        source = "always",
-        header = "",
-        prefix = "",
-      },
-    })
-  end,
+    },
 }
