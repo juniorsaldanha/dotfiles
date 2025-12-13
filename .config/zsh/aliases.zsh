@@ -2,16 +2,13 @@ alias ll='ls -lahG'
 alias rmf='rm -rf'
 alias follow="tail -f -n +1"
 alias o="open ."
+alias g="git"
 alias lg="lazygit"
 alias ld="lazydocker"
 alias nv="nvmini"
 alias nvs="nvims"
 alias nvmini="NVIM_APPNAME=nvim_minimal nvim"
 
-if command -v zoxide &>/dev/null; then
-	eval "$(zoxide init zsh)"
-	alias cd="z"
-fi
 
 if command -v eza &>/dev/null; then
 	alias ls="eza --color=always --long --git --icons=always"
@@ -43,10 +40,11 @@ if command -v thefuck &>/dev/null; then
 	eval $(thefuck --alias fk)
 fi
 
-if command -v zoxide &>/dev/null; then
-	eval "$(zoxide init zsh)"
-fi
-
 if command -v yazi &>/dev/null; then
     alias F="yazi"
+fi
+
+if command -v zoxide &>/dev/null; then
+	eval "$(zoxide init zsh)"
+	# alias cd="z"
 fi
