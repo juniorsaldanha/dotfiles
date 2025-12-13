@@ -62,8 +62,8 @@ return {
           -- follow latest release.
           version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
           -- install jsregexp (optional!).
-          build = "make install_jsregexp"
-        }
+          build = "make install_jsregexp",
+        },
       },
       {
         "stevearc/conform.nvim",
@@ -82,8 +82,8 @@ return {
       local luasnip = require("luasnip")
       local cmp = require("cmp")
       local cmp_lsp = require("cmp_nvim_lsp")
-      local capabilities = vim.tbl_deep_extend("force", {}, vim.lsp.protocol.make_client_capabilities(),
-        cmp_lsp.default_capabilities())
+      local capabilities =
+        vim.tbl_deep_extend("force", {}, vim.lsp.protocol.make_client_capabilities(), cmp_lsp.default_capabilities())
 
       cmp.setup({
         snippet = {
