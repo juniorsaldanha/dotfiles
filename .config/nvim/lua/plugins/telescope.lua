@@ -80,6 +80,14 @@ return {
           ["q"] = "close",
         },
       },
+      get_selection_window = function()
+        local win_id = require("window-picker").pick_window()
+        if win_id then
+          return win_id
+        else
+          return 0
+        end
+      end,
     },
     pickers = {
       buffers = {
