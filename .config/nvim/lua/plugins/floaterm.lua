@@ -33,6 +33,10 @@ return {
       width = 0.9,
       height = 0.9,
     })
+    floaterm.register_app("opencode", "<leader>ai4", "opencode", {
+      width = 0.9,
+      height = 0.9,
+    })
     floaterm.register_app("btop", "<leader>bt", "btop", {
       width = 0.9,
       height = 0.9,
