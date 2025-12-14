@@ -29,7 +29,11 @@ return {
       width = 0.9,
       height = 0.9,
     })
-    floaterm.register_app("btop", "<leader>tb", "btop", {
+    floaterm.register_app("gemini", "<leader>ai3", "gemini", {
+      width = 0.9,
+      height = 0.9,
+    })
+    floaterm.register_app("btop", "<leader>bt", "btop", {
       width = 0.9,
       height = 0.9,
     })
