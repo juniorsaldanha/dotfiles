@@ -7,7 +7,7 @@ local map = vim.keymap.set
 
 -- Helper for options
 local function opts(desc)
-    return { desc = desc, noremap = true, silent = true }
+  return { desc = desc, noremap = true, silent = true }
 end
 
 -- ============================================================================
