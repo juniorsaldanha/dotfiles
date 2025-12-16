@@ -190,7 +190,7 @@ backend = "Metal"
 family = "FiraCode Nerd Font"
 # family = "Terminess Nerd Font"
 # family = "cascadiamono"
-size = 14
+size = 12
 use-drawable-chars = true
 
 [fonts.regular]
