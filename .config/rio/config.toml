@@ -209,8 +209,8 @@ weight = 600
 style = "Italic"
 weight = 1200
 
-[fonts.emoji]
-family = "Apple Color Emoji"
+# [fonts.emoji]
+# family = "Apple Color Emoji"
 
 # Scroll
 #
