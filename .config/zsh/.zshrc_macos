@@ -136,3 +136,5 @@ function setup() {
         brew install --cask font-terminess-nerd-font
     fi
 }
+
+export DOTNET_ROOT="/opt/homebrew/opt/dotnet/libexec"
