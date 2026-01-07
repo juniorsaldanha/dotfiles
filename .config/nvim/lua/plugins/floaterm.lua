@@ -4,14 +4,8 @@ return {
   config = function()
     local floaterm = require("floaterm")
     floaterm.setup()
-
+    --
     floaterm.register_terminal("terminal_backslash", "<C-_>", {
-      width = 0.9,
-      height = 0.9,
-      -- border = { "╔", "═", "╗", "║", "╝", "═", "╚", "║" },
-      border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
-    })
-    floaterm.register_terminal("terminal_test", "<C-/>", {
       width = 0.9,
       height = 0.9,
       -- border = { "╔", "═", "╗", "║", "╝", "═", "╚", "║" },
