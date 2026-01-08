@@ -25,6 +25,19 @@ return {
       -- Add more linters as needed
     }
 
+    -- CUSTOM CONFIG FOR GOLANGCI-LINT
+    -- By default, nvim-lint runs on the specific file.
+    -- We override it to run on the directory of the current file.
+    local golangcilint = lint.linters.golangcilint
+    golangcilint.args = {
+      "run",
+      "--out-format",
+      "json",
+      "--show-stats=false",
+      "--print-issued-lines=false",
+      "--print-linter-name=false",
+    }
+
     -- Create autocommand to trigger linting
     local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
