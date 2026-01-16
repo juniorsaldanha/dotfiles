@@ -94,6 +94,7 @@ return {
 
           -- Diagnostics
           map("<leader>cd", vim.diagnostic.open_float, "Line Diagnostics")
+          map("<leader>cw", vim.diagnostic.setqflist, "Workspace Diagnostics")
 
           map("]d", function()
             vim.diagnostic.jump({ count = 1, float = true })
@@ -120,9 +121,9 @@ return {
         signs = {
           text = {
             [vim.diagnostic.severity.ERROR] = "✗",
-            [vim.diagnostic.severity.WARN] = "!",
+            [vim.diagnostic.severity.WARN] = "▲",
             [vim.diagnostic.severity.HINT] = "󰌵",
-            [vim.diagnostic.severity.INFO] = "I",
+            [vim.diagnostic.severity.INFO] = "󰋽",
           },
         },
         underline = true,

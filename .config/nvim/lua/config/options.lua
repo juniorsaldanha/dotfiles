@@ -23,7 +23,7 @@ vim.opt.smartcase = true
 vim.opt.termguicolors = true
 vim.opt.colorcolumn = "80"
 vim.opt.signcolumn = "yes"
-vim.opt.cursorline = true
+vim.opt.cursorline = false
 vim.opt.scrolloff = 8
 vim.opt.winborder = "rounded"
 
@@ -43,9 +43,9 @@ vim.opt.fileencoding = "utf-8"
 -- Whitespace characters
 vim.opt.list = true
 vim.opt.listchars = {
-  tab = "» ",
-  trail = "·",
-  nbsp = "␣",
+    tab = "» ",
+    trail = "·",
+    nbsp = "␣",
 }
 
 -- Splits
