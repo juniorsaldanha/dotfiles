@@ -34,3 +34,6 @@ Temporary Items
 btop.log
 github-copilot/
 stripe/
+.config/1Password/ssh
+.config/btop
+.config/filezilla
