@@ -36,16 +36,16 @@ return {
             -- Add or remove servers here
             -- ============================================================
             ensure_installed = {
-                "lua_ls", -- Lua
-                "ts_ls", -- TypeScript/JavaScript
-                "html",  -- HTML
-                "cssls", -- CSS
-                "jsonls", -- JSON
-                "pyright", -- Python
-                "gopls", -- Go
+                "lua_ls",        -- Lua
+                "ts_ls",         -- TypeScript/JavaScript
+                "html",          -- HTML
+                "cssls",         -- CSS
+                "jsonls",        -- JSON
+                "pyright",       -- Python
+                "gopls",         -- Go
                 "rust_analyzer", -- Rust
-                "bashls", -- Bash
-                "yamlls", -- YAML
+                "bashls",        -- Bash
+                "yamlls",        -- YAML
             },
             automatic_installation = true,
         },
