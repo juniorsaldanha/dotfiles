@@ -87,9 +87,5 @@ export STM32_PRG_PATH=/Applications/STMicroelectronics/STM32Cube/STM32CubeProgra
 # Created by `pipx` on 2025-08-22 19:14:54
 export PATH="$PATH:/Users/umsaldanha/.local/bin"
 
-# Set JAVA_HOME for Kotlin Language Server compatibility
-export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
-export PATH="$JAVA_HOME/bin:$PATH"
-
 # Added by Antigravity
 export PATH="/Users/umsaldanha/.antigravity/antigravity/bin:$PATH"
