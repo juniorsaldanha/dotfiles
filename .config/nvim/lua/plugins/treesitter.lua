@@ -37,7 +37,7 @@ return {
         auto_install = true,
         highlight = {
             enable = true,
-            additional_vim_regex_highlighting = false,
+            additional_vim_regex_highlighting = { "markdown" },
         },
         indent = {
             enable = true,
@@ -51,5 +51,8 @@ return {
                 node_decremental = "<bs>",
             },
         },
-    }
+    },
+    config = function(_, opts)
+        require("nvim-treesitter.configs").setup(opts)
+    end,
 }
