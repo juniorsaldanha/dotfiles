@@ -16,7 +16,11 @@ return {
         floaterm.register_terminal("terminal3", "<leader>t3")
         floaterm.register_app("lazygit", "<leader>lg", "lazygit")
         floaterm.add_keymap_hide("lazygit", "q")
-        floaterm.register_app("opencode", "<leader>ai", "opencode", {
+        floaterm.register_app("opencode", "<leader>aio", "opencode", {
+            width = 0.9,
+            height = 0.9,
+        })
+        floaterm.register_app("crush", "<leader>aic", "crush", {
             width = 0.9,
             height = 0.9,
         })
