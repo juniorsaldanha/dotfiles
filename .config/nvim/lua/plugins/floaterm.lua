@@ -20,7 +20,11 @@ return {
             width = 0.9,
             height = 0.9,
         })
-        floaterm.register_app("crush", "<leader>aic", "crush", {
+        floaterm.register_app("claude", "<leader>aic", "claude", {
+            width = 0.9,
+            height = 0.9,
+        })
+        floaterm.register_app("crush", "<leader>aih", "crush", {
             width = 0.9,
             height = 0.9,
         })
