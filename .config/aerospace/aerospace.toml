@@ -225,4 +225,8 @@ alt-shift-l = ['join-with right', 'mode main']
 # if.app-name-regex-substring = "Claude"
 # run = ['layout floating']
 
+alt-shift-g = ['layout floating tiling']
 
+[[on-window-detected]]
+if.app-name-regex-substring = '(?i)world of warcraft'
+run = ['layout floating', 'move-node-to-workspace 7']
