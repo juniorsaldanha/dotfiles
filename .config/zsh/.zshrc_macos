@@ -42,13 +42,6 @@ if ! command -v asdf &>/dev/null; then
 
 fi
 
-if [ -f /opt/homebrew/opt/asdf/libexec/asdf.sh ]; then
-	source /opt/homebrew/opt/asdf/libexec/asdf.sh
-else
-	echo "asdf.sh file not found, reinstall and/or debug asdf"
-	echo "file not found: /opt/homebrew/opt/asdf/libexec/asdf.sh"
-fi
-
 if ! command -v nvim &>/dev/null; then
 	echo "Installing Neovim... $(brew install neovim)"
 	brew install neovim
