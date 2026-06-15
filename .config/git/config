@@ -95,3 +95,6 @@
 [includeIf "gitdir:~/ionichealth/"]
     path = ~/.config/git/ionichealth
 
+[includeIf "gitdir:~/controlled/"]
+    path = ~/.config/git/controlled
+
