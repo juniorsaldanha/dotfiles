@@ -15,7 +15,7 @@ return {
         floaterm.register_terminal("terminal2", "<leader>t2")
         floaterm.register_terminal("terminal3", "<leader>t3")
         floaterm.register_app("lazygit", "<leader>lg", "lazygit")
-        floaterm.add_keymap_hide("lazygit", "q")
+        floaterm.add_keymap_hide("lazygit", "<C-q>")
         floaterm.register_app("opencode", "<leader>aio", "opencode", {
             width = 0.9,
             height = 0.9,
