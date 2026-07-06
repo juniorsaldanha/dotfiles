@@ -77,6 +77,8 @@ fi
 
 export PATH="$HOME/.local/bin:$PATH"
 
+# direnv load
+eval "$(direnv hook zsh)"
 
 # zprof
 if [[ -n $ZSH_VERSION ]]; then
