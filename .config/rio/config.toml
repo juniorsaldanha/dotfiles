@@ -134,6 +134,11 @@ program = "nvim"
 # blur = false
 # decorations = "enabled"
 
+[window]
+opacity = 0.5
+blur = true
+decorations = "Buttonless"
+
 # Renderer
 #
 # • Performance: Set WGPU rendering performance
