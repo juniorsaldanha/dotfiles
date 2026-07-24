@@ -37,3 +37,4 @@ stripe/
 .config/1Password/ssh
 .config/btop
 .config/filezilla
+/.config/1Password/telemetry-enabled
