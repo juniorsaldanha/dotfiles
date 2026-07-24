@@ -46,6 +46,7 @@ return {
                 "rust_analyzer", -- Rust
                 "bashls",        -- Bash
                 "yamlls",        -- YAML
+                "clangd",        -- C/C++/Arduino
             },
             automatic_installation = true,
         },
@@ -194,7 +195,14 @@ return {
                 rust_analyzer = {},
                 bashls = {},
                 yamlls = {},
+                clangd = {
+                    cmd = { "clangd", "--background-index", "--compile-commands-dir=." },
+                    filetypes = { "c", "cpp", "arduino" },
+                },
             }
+
+            -- PlatformIO/Arduino: .ino files aren't recognized by Neovim by default
+            vim.filetype.add({ extension = { ino = "arduino" } })
 
             -- Setup all servers using native vim.lsp.config (Neovim 0.11+)
             for server, config in pairs(servers) do
