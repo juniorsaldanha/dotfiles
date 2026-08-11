@@ -28,8 +28,14 @@ This is a personal Neovim configuration using lazy.nvim as the plugin manager.
 │       ├── floaterm.lua     # Floating terminal (local plugin)
 │       ├── tmux.lua         # Tmux navigation
 │       ├── persistence.lua  # Session management
-│       └── dashboard.lua    # Start screen
-├── ftplugin/                # Filetype-specific settings (empty)
+│       ├── dashboard.lua    # Start screen
+│       ├── markdown.lua     # Markdown preview
+│       ├── window-picker.lua # Window picker (used by Telescope)
+│       └── zen.lua          # Zen mode
+├── ftplugin/
+│   └── go.lua                # Go-specific settings + :GoTest command
+├── queries/
+│   └── markdown/injections.scm # Disables nested markdown code-block highlighting
 ├── .stylua.toml             # Lua formatter config
 ├── .luarc.json              # Lua LSP config
 └── lazy-lock.json           # Plugin version lock file
@@ -130,9 +136,9 @@ end
 |-----|------|--------|
 | `jk` | Insert | Exit insert mode |
 | `<Space>` | Normal | Leader key |
-| `-` | Normal | Open Oil file explorer |
-| `<C-_>` or `<C-/>` | Normal | Toggle floating terminal |
-| `<leader>gg` | Normal | Open lazygit |
+| `<leader>o` | Normal | Open Oil file explorer |
+| `<C-_>` | Normal | Toggle floating terminal |
+| `<leader>lg` | Normal | Open lazygit |
 | `<leader>ff` | Normal | Find files |
 | `<leader>fg` | Normal | Live grep |
 | `<leader><leader>` | Normal | Find buffers |
@@ -186,7 +192,7 @@ end
 
 2. **Plugin keymaps in keys = {}** - These are lazy-loaded; plugin won't load until keymap is pressed
 
-3. **floaterm.nvim is a local plugin** - Located at `~/gh/floaterm.nvim/`, not from a package manager
+3. **floaterm.nvim is a personal plugin** - Pulled from `juniorsaldanha/floaterm.nvim` on GitHub. A local `dir = "~/gh/floaterm.nvim/"` override is available (commented out) in `lua/plugins/floaterm.lua` for local development
 
 4. **Auto-format on save** - Enabled by default. Writes may feel slow if formatter is missing/slow
 
@@ -210,6 +216,7 @@ end
 | rust_analyzer | Rust |
 | bashls | Bash |
 | yamlls | YAML |
+| clangd | C/C++/Arduino |
 
 ## Testing Changes
 
@@ -229,3 +236,8 @@ External tools that should be installed:
 - `fd` - Used by Telescope find_files (optional but faster)
 - `stylua` - Lua formatter
 - `lazygit` - Git TUI (for floaterm integration)
+- `bun` - Required by markdown-preview.nvim's build step
+
+Most language-specific formatters and linters (`black`, `isort`, `prettierd`,
+`eslint_d`, `shfmt`, `golangci-lint`, etc. - see `conform.lua` and `lint.lua`)
+are installed automatically via Mason.
