@@ -204,6 +204,8 @@ end
 
 7. **Telescope C-j/C-k navigation** - Remapped from default C-n/C-p for selection navigation
 
+8. **vim-tmux-navigator uses normal-mode-only mappings** - `lua/plugins/tmux.lua` sets `tmux_navigator_no_mappings` and defines `<C-h/j/k/l>` itself instead of using the plugin's defaults, which also map terminal mode. That races with claudecode.nvim's `auto_insert` and leaks literal text like "TmuxNavigateLeft" into terminal buffers. Don't re-enable the plugin's default mappings.
+
 ## LSP Servers Configured
 
 | Server | Language |
