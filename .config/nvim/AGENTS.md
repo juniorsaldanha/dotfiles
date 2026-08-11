@@ -31,7 +31,8 @@ This is a personal Neovim configuration using lazy.nvim as the plugin manager.
 │       ├── dashboard.lua    # Start screen
 │       ├── markdown.lua     # Markdown preview
 │       ├── window-picker.lua # Window picker (used by Telescope)
-│       └── zen.lua          # Zen mode
+│       ├── zen.lua          # Zen mode
+│       └── claudecode.lua   # Claude Code IDE integration
 ├── ftplugin/
 │   └── go.lua                # Go-specific settings + :GoTest command
 ├── queries/
@@ -139,6 +140,7 @@ end
 | `<leader>o` | Normal | Open Oil file explorer |
 | `<C-_>` | Normal | Toggle floating terminal |
 | `<leader>lg` | Normal | Open lazygit |
+| `<leader>ac` | Normal | Toggle Claude Code (IDE integration) |
 | `<leader>ff` | Normal | Find files |
 | `<leader>fg` | Normal | Live grep |
 | `<leader><leader>` | Normal | Find buffers |
@@ -237,6 +239,7 @@ External tools that should be installed:
 - `stylua` - Lua formatter
 - `lazygit` - Git TUI (for floaterm integration)
 - `bun` - Required by markdown-preview.nvim's build step
+- `claude` - Claude Code CLI, required by claudecode.nvim and floaterm's `<leader>aic` launcher
 
 Most language-specific formatters and linters (`black`, `isort`, `prettierd`,
 `eslint_d`, `shfmt`, `golangci-lint`, etc. - see `conform.lua` and `lint.lua`)
