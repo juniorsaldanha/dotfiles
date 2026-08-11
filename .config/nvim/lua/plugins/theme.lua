@@ -23,9 +23,17 @@ return {
     config = function(_, opts)
         require("tokyonight").setup(opts)
         vim.cmd.colorscheme("tokyonight-night")
-        -- Transparent neovim
-        -- for _, grp in ipairs({ "Normal", "NormalNC", "NonText", "SignColumn", "EndOfBuffer" }) do
-        --     vim.api.nvim_set_hl(0, grp, { bg = "none" })
-        -- end
+
+        local transparent = false
+        vim.api.nvim_create_user_command("TransparentToggle", function()
+            transparent = not transparent
+            if transparent then
+                for _, grp in ipairs({ "Normal", "NormalNC", "NonText", "SignColumn", "EndOfBuffer" }) do
+                    vim.api.nvim_set_hl(0, grp, { bg = "none" })
+                end
+            else
+                vim.cmd.colorscheme("tokyonight-night")
+            end
+        end, {})
     end,
 }
