@@ -60,8 +60,8 @@ map("v", "K", ":m '<-2<CR>gv=gv", opts("Move selection up"))
 -- ============================================================================
 -- SEARCH AND REPLACE
 -- ============================================================================
-map("n", "<leader>sr", ":%s//g<Left><Left>", opts("Search and replace"))
-map("v", "<leader>sr", ":s//g<Left><Left>", opts("Search and replace in selection"))
+map("n", "<leader>sR", ":%s//g<Left><Left>", opts("Search and replace"))
+map("v", "<leader>sR", ":s//g<Left><Left>", opts("Search and replace in selection"))
 
 -- ============================================================================
 -- QUICKFIX
