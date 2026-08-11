@@ -2,6 +2,9 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Per-project .nvim.lua (prompts to trust on first load)
+vim.opt.exrc = true
+
 -- Line numbers
 vim.opt.number = true
 vim.opt.relativenumber = true
