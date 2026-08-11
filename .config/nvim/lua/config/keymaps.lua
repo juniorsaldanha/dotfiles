@@ -26,13 +26,8 @@ map("n", "<C-u>", "<C-u>zz", opts("Scroll up and center"))
 map("n", "n", "nzzzv", opts("Next search result and center"))
 map("n", "N", "Nzzzv", opts("Previous search result and center"))
 
--- ============================================================================
--- WINDOW NAVIGATION
--- ============================================================================
-map("n", "<C-h>", "<C-w>h", opts("Go to left window"))
-map("n", "<C-j>", "<C-w>j", opts("Go to lower window"))
-map("n", "<C-k>", "<C-w>k", opts("Go to upper window"))
-map("n", "<C-l>", "<C-w>l", opts("Go to right window"))
+-- WINDOW NAVIGATION: <C-h/j/k/l> is handled by vim-tmux-navigator (see plugins/tmux.lua),
+-- which does the same <C-w>h/j/k/l plus crossing into tmux panes.
 
 -- ============================================================================
 -- WINDOW RESIZE

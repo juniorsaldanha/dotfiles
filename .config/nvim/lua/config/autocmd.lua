@@ -13,11 +13,15 @@ autocmd("TextYankPost", {
     end,
 })
 
--- Remove trailing whitespace on save
+-- Remove trailing whitespace on save (skip markdown: trailing spaces are hard line breaks there)
 autocmd("BufWritePre", {
     group = augroup("trim_whitespace", { clear = true }),
     pattern = "*",
-    command = [[%s/\s\+$//e]],
+    callback = function()
+        if vim.bo.filetype ~= "markdown" then
+            vim.cmd([[%s/\s\+$//e]])
+        end
+    end,
 })
 
 -- Return to last edit position when opening files
