@@ -87,14 +87,19 @@ battery=(
 	script="$PLUGIN_DIR/battery.sh"
 )
 
+network=(
+	update_freq=30
+	script="$PLUGIN_DIR/network.sh"
+)
+
 cpu=(
-	update_freq=2
+	update_freq=1
 	icon=
 	script="$PLUGIN_DIR/cpu.sh"
 )
 
 gpu=(
-	update_freq=2
+	update_freq=1
 	icon=󰢮
 	script="$PLUGIN_DIR/gpu.sh"
 )
@@ -129,6 +134,12 @@ sketchybar \
 	--add item battery right \
 	--set battery "${battery[@]}" \
 	--subscribe battery system_woke power_source_change \
+	--add item volume right \
+	--set volume script="$PLUGIN_DIR/volume.sh" \
+	--subscribe volume volume_change \
+	--add item network right \
+	--set network "${network[@]}" \
+	--subscribe network wifi_change system_woke \
 	--add item cpu_usage right \
 	--set cpu_usage "${cpu[@]}" \
 	--add item gpu_usage right \

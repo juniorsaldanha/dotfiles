@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-PERCENTAGE=$(pmset -g batt | grep -o '[0-9]\+%' | cut -d% -f1)
+BATT="$(pmset -g batt)"
+PERCENTAGE=$(echo "$BATT" | grep -o '[0-9]\+%' | cut -d% -f1)
 
 if [[ -z "$PERCENTAGE" ]]; then
     exit 0
@@ -28,6 +29,10 @@ case ${PERCENTAGE} in
     ICON_COLOR="0xffd20f39"
     ;;
 esac
+
+if [[ "$BATT" == *"AC Power"* ]]; then
+    ICON="󰂄"
+fi
 
 sketchybar --set "$NAME" \
     icon="$ICON" \
