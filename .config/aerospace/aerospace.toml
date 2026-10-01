@@ -198,11 +198,6 @@ alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
 alt-shift-semicolon = 'mode service'
 
-# For togle Claude (show/hide or open)
-# ctrl-1 = "exec-and-forget aerospace-scratchpad show Claude || aerospace-scratchpad move Claude"
-# ctrl-backslash = "exec-and-forget source ~/.config/zsh/.zshrc_macos && aerospace-scratchpad show Claude || source ~/.config/zsh/.zshrc_macos aerospace-scratchpad move Claude"
-ctrl-backslash = "exec-and-forget /bin/zsh ~/.config/aerospace/toggle-claude.sh"
-
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]
@@ -221,12 +216,9 @@ alt-shift-l = ['join-with right', 'mode main']
 
 # By Junior Saldanha
 # Personal stuff
-# [[on-window-detected]]
-# if.app-name-regex-substring = "Claude"
-# run = ['layout floating']
 
 alt-shift-g = ['layout floating tiling']
 
-[[on-window-detected]]
-if.app-name-regex-substring = '(?i)world of warcraft'
-run = ['layout floating', 'move-node-to-workspace 7']
+# [[on-window-detected]]
+# if.app-name-regex-substring = '(?i)world of warcraft'
+# run = ['layout floating', 'move-node-to-workspace 7']
