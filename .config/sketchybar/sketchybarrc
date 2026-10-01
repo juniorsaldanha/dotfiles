@@ -93,6 +93,12 @@ cpu=(
 	script="$PLUGIN_DIR/cpu.sh"
 )
 
+gpu=(
+	update_freq=2
+	icon=󰢮
+	script="$PLUGIN_DIR/gpu.sh"
+)
+
 ram=(
 	update_freq=3
 	icon=
@@ -125,6 +131,8 @@ sketchybar \
 	--subscribe battery system_woke power_source_change \
 	--add item cpu_usage right \
 	--set cpu_usage "${cpu[@]}" \
+	--add item gpu_usage right \
+	--set gpu_usage "${gpu[@]}" \
 	--add item ram_usage right \
 	--set ram_usage "${ram[@]}" \
 	--add item disk_free right \

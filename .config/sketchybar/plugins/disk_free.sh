@@ -10,15 +10,12 @@ if [ ! -d "$mount_point" ]; then
 fi
 
 # df -k format: Filesystem 1K-blocks Used Available Capacity iused ifree %iused Mounted on
-# We want Capacity column (e.g. 99%) and convert to percent-free.
-# Capacity = used%, free% = 100 - used%
-used_pct_raw="$(/bin/df -k "$mount_point" | /usr/bin/awk 'NR==2 { gsub(/%/,"",$5); print $5 }')"
-if ! echo "$used_pct_raw" | grep -Eq '^[0-9]+$'; then
+# free% = Available / total, rounded (same as btop; df Capacity rounds used% up).
+free_pct="$(/bin/df -k "$mount_point" | /usr/bin/awk 'NR==2 && $2 > 0 { printf "%d", $4 * 100 / $2 + 0.5 }')"
+if ! echo "$free_pct" | grep -Eq '^[0-9]+$'; then
     sketchybar --set disk_free label="err"
     exit 0
 fi
-used_pct="$((used_pct_raw))"
-free_pct=$((100 - used_pct))
 
 if [ "$free_pct" -lt 0 ]; then free_pct=0; fi
 if [ "$free_pct" -gt 100 ]; then free_pct=100; fi

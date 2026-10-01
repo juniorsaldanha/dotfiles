@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # Minimal CPU usage plugin (overall CPU).
-# Uses the instantaneous aggregate CPU usage from `top`.
+# Uses `top` with 2 samples 1s apart; the first sample is invalid (no previous delta), so take the last.
 # NOTE: This yields 0-100% for overall machine utilization.
 
-cpu_line="$(top -l 1 -n 0 2>/dev/null | awk '/CPU usage/ { print; exit }')"
+cpu_line="$(top -l 2 -n 0 -s 1 2>/dev/null | awk '/CPU usage/ { line = $0 } END { print line }')"
 
 # Example: "CPU usage: 7.82% user, 6.85% sys, 85.31% idle"
 # Parse user+sys robustly by splitting on spaces/commas/%.
