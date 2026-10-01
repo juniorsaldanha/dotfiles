@@ -38,3 +38,6 @@ stripe/
 .config/btop
 .config/filezilla
 /.config/1Password/telemetry-enabled
+/.config/Autodesk
+/.config/cliamp
+/.config/uv
