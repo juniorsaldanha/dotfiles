@@ -91,3 +91,6 @@ export PATH="$PATH:/Users/umsaldanha/.local/bin"
 
 # Added by Antigravity
 export PATH="/Users/umsaldanha/.antigravity/antigravity/bin:$PATH"
+
+# opencode
+export PATH=/Users/umsaldanha/.opencode/bin:$PATH

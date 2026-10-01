@@ -131,3 +131,5 @@ function setup() {
 }
 
 export DOTNET_ROOT="/opt/homebrew/opt/dotnet/libexec"
+export ASDF_DATA_DIR="$HOME/.asdf"
+export PATH="$ASDF_DATA_DIR/shims:$PATH"
