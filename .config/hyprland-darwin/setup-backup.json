@@ -1,0 +1,24 @@
+{
+  "entries" : [
+    {
+      "domain" : "com.apple.spaces",
+      "key" : "spans-displays",
+      "previous" : true
+    },
+    {
+      "domain" : "com.apple.dock",
+      "key" : "expose-group-apps",
+      "previous" : true
+    },
+    {
+      "domain" : "NSGlobalDomain",
+      "key" : "NSAutomaticWindowAnimationsEnabled",
+      "previous" : false
+    },
+    {
+      "domain" : "NSGlobalDomain",
+      "key" : "_HIHideMenuBar",
+      "previous" : true
+    }
+  ]
+}
