@@ -18,7 +18,7 @@ persistent-workspaces = ["1", "2", "3", "4", "9"]
 
 # Hyprland: focus follows mouse
 [focus-follows-mouse]
-    enabled = true
+    enabled = false
 
 # Hyprland: alt + drag moves a window
 [mouse-drag]
@@ -126,4 +126,8 @@ persistent-workspaces = ["1", "2", "3", "4", "9"]
 
 [[on-window-detected]]
     if.app-id = 'com.apple.calculator'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-name-regex-substring = 'CleanMyMac'
     run = 'layout floating'
