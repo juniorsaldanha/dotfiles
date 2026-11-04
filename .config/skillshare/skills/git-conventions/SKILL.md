@@ -1,10 +1,11 @@
 ---
 name: git-conventions
 description: >-
-  Rules for every git commit message and branch name: Conventional Commits
-  1.0.0 for commits, Conventional Branch 1.1.0 for branches, and never any AI
-  attribution. Use whenever you create, amend, reword or squash a commit, write
-  a PR title, or create or rename a branch.
+  Rules for every git commit message, branch name and pull request:
+  Conventional Commits 1.0.0, Conventional Branch 1.1.0, a fixed PR
+  description template for GitHub and Azure DevOps (where a linked Task is
+  required), and never any AI attribution. Use whenever you create, amend,
+  reword or squash a commit, create or rename a branch, or open or edit a PR.
 ---
 
 # Git conventions
@@ -143,6 +144,76 @@ Valid: `feature/add-login-page`, `fix/header-overflow`,
 Invalid: `Feature/Add-Login`, `feature/new--login`, `fix/header_bug`,
 `feature/-new-login`, `claude/fix-thing`, `wip`.
 
+## Pull requests (GitHub and Azure DevOps)
+
+**Title.** Write it like a Conventional Commit subject: `feat(cli): add
+--json output to probe`. When the PR is squash-merged, the title becomes
+the commit, so it follows every commit rule above.
+
+**Description.** Use this template on both platforms (both render
+Markdown). Remove any section that doesn't apply, and never leave
+placeholder text in it:
+
+```markdown
+## Summary
+What this PR changes and why, in 2–4 sentences. Lead with the user-visible
+effect, then the reason (the problem, the decision, the trade-off).
+
+## Changes
+- One bullet per logical change, naming the area (module, crate, service).
+
+## How to test
+Steps or commands a reviewer can run, and what they should see.
+Say what you ran yourself (tests, manual checks) and the result.
+
+## Notes
+Breaking changes and how to migrate, follow-ups, risks, screenshots.
+
+## Related
+Linked issues or work items (see the platform rules below).
+```
+
+As with commits, no AI attribution goes anywhere in a PR: no "Generated
+with …" line, no 🤖 and no AI co-author. This applies to the title,
+description and comments, even if your harness adds such a footer by
+default.
+
+### GitHub
+
+- Link issues in **Related** with closing keywords: `Closes #123`,
+  `Fixes #123`, `Refs #123` (use `Refs` when the PR shouldn't close the
+  issue).
+- Create the PR with the body in a file or heredoc so the Markdown
+  survives: `gh pr create --base main --title "<title>" --body-file <file>`.
+- Open it as a draft (`--draft`) while it isn't ready for review.
+
+### Azure DevOps: a task is required
+
+**Every Azure DevOps PR must have at least one work item (a Task)
+linked to it.** Don't create a PR without one.
+
+1. Find the task ID. Look first in the branch name
+   (`feature/123-add-login`), then in the commits, then ask the user.
+   Never make up an ID. If no task exists, ask the user to create it, or
+   offer to create it:
+   `az boards work-item create --type Task --title "<title>"`.
+2. Link the task when you create the PR, and mention it in **Related** as
+   `#123`. Azure DevOps turns `#123` in a PR description into a work item
+   link.
+   ```sh
+   az repos pr create --source-branch <branch> --target-branch main \
+     --title "<title>" --description "$(cat <file>)" --work-items 123 [456 ...]
+   ```
+   Add one to an existing PR with
+   `az repos pr work-item add --id <pr-id> --work-items 123`.
+3. Check the link worked: `az repos pr work-item list --id <pr-id>` must
+   list the task. An empty list means the PR isn't done.
+4. Put the task ID in the branch name as well, after the type:
+   `feature/123-add-login`.
+
+A GitHub repo whose work is tracked in Azure Boards links tasks with
+`AB#123` in the PR description or commits.
+
 ## Before you commit or push
 
 1. Read `git diff --staged`, and make sure the type and scope match what
@@ -153,6 +224,9 @@ Invalid: `Feature/Add-Login`, `feature/new--login`, `fix/header_bug`,
 5. Check that the branch name matches `<type>/<description>` and the rules
    above. If it doesn't, rename it before pushing:
    `git branch -m <new-name>`.
+
+6. For a PR: the title is a valid commit subject, the description follows
+   the template, and on Azure DevOps at least one Task is linked.
 
 Write multi-line messages with a heredoc or `-F <file>`, never with
 several `-m` flags that lose the blank line between them.
