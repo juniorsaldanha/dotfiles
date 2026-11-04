@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/runkids/skillshare/main/schemas/config.schema.json
+
+sources:
+  skills: /Users/umsaldanha/.config/skillshare/skills
+  agents: /Users/umsaldanha/.config/skillshare/agents
+
+mode: merge
+
+targets:
+  claude:
+    skills:
+      path: /Users/umsaldanha/.claude/skills
+  copilot:
+    skills:
+      path: /Users/umsaldanha/.copilot/skills
+  crush:
+    skills:
+      path: /Users/umsaldanha/.config/crush/skills
+  cursor:
+    skills:
+      path: /Users/umsaldanha/.cursor/skills
+  gemini:
+    skills:
+      path: /Users/umsaldanha/.gemini/skills
+  hermes:
+    skills:
+      path: /Users/umsaldanha/.hermes/skills
+  openclaw:
+    skills:
+      path: /Users/umsaldanha/.openclaw/skills
+  opencode:
+    skills:
+      path: /Users/umsaldanha/.config/opencode/skills
+  trae:
+    skills:
+      path: /Users/umsaldanha/.trae/skills
+  universal:
+    skills:
+      path: /Users/umsaldanha/.agents/skills
+
+ignore:
+  - .DS_Store
+  - .git/
+  - __pycache__/
+
+audit:
+  block_threshold: CRITICAL
