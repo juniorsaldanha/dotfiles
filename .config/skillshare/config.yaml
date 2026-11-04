@@ -10,6 +10,9 @@ targets:
   claude:
     skills:
       path: /Users/umsaldanha/.claude/skills
+  claude-ionic:
+    agent: claude
+    config_dir: /Users/umsaldanha/.claude-ionic
   copilot:
     skills:
       path: /Users/umsaldanha/.copilot/skills
