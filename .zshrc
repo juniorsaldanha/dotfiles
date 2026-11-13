@@ -94,3 +94,9 @@ export PATH="/Users/umsaldanha/.antigravity/antigravity/bin:$PATH"
 
 # opencode
 export PATH=/Users/umsaldanha/.opencode/bin:$PATH
+
+# Tizen SDK
+export TIZEN_SDK_PATH="/Users/umsaldanha/tizen-sdk"
+# tools = sdb, tools/tizen-core = tz (so both are callable by name)
+export PATH="$TIZEN_SDK_PATH/bin:$TIZEN_SDK_PATH/tools:$TIZEN_SDK_PATH/tools/tizen-core:$PATH"
+

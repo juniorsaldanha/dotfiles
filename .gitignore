@@ -1,43 +1,41 @@
+# Ignore everything, then whitelist tracked paths
+/*
+!/.gitignore
+!/.gitmodules
+!/.zshrc
+!/LICENSE
+!/README.md
+!/wow/
+
+/.config/*
+!/.config/
+!/.config/.gitignore
+!/.config/AGENTS.md
+!/.config/aerospace/
+!/.config/alacritty/
+!/.config/alfred/
+!/.config/gh/
+!/.config/git/
+!/.config/hyprland-darwin/
+!/.config/iterm2/
+!/.config/kitty/
+!/.config/neofetch/
+!/.config/nvim/
+!/.config/nvim_minimal/
+!/.config/rio/
+!/.config/skillshare/
+!/.config/tmux/
+!/.config/zed/
+!/.config/zsh/
+
 ### macOS ###
-# General
 .DS_Store
 .AppleDouble
 .LSOverride
-
-# Icon must end with two \r
 Icon
-
-
-# Thumbnails
 ._*
-
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-.com.apple.timemachine.donotpresent
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
-
-### macOS Patch ###
-# iCloud generated files
 *.icloud
 
 btop.log
 github-copilot/
 stripe/
-.config/1Password/ssh
-.config/btop
-.config/filezilla
-/.config/1Password/telemetry-enabled
-/.config/Autodesk
-/.config/cliamp
-/.config/uv
