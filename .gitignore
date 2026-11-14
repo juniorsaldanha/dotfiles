@@ -14,7 +14,6 @@
 !/.config/aerospace/
 !/.config/alacritty/
 !/.config/alfred/
-!/.config/gh/
 !/.config/git/
 !/.config/hyprland-darwin/
 !/.config/iterm2/
@@ -39,3 +38,4 @@ Icon
 btop.log
 github-copilot/
 stripe/
+/.config/iterm2/cc-status
