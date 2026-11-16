@@ -189,3 +189,90 @@ function upgrade_asdf() {
 function upgrade_go_asdf(){
     upgrade_asdf golang
 }
+
+# Compress video(s) to HEVC, GPU (VideoToolbox) when available, else libx265.
+# Usage: compressvid [-f fps] [-n] [-s 25M] [-r 0|90|180|270] [-R 1080p] files...
+#   -f, --fps N       max fps (default 30, never upsamples)
+#   -n, --no-audio    drop audio
+#   -s, --split SIZE  split output into parts <= SIZE (e.g. 25M, 500K, 1.5G; base 1000)
+#   -r, --rotate DEG  rotate clockwise: 0 (default), 90, 180, 270
+#   -R, --res RES     max resolution: 4k, 2k, 1080p, 720p, 480p or a number (short side; never upscales)
+function compressvid() {
+	local fps=30 rotate=0 split= noaudio=0 max=0 res= f ext out r src size dur seg base p big
+	local -a files venc vf args aargs hw
+	while (( $# )); do
+		case $1 in
+			-f|--fps) fps=$2; shift 2 ;;
+			-n|--no-audio) noaudio=1; shift ;;
+			-s|--split) split=$2; shift 2 ;;
+			-r|--rotate) rotate=$2; shift 2 ;;
+			-R|--res) res=${2:l}; shift 2 ;;
+			-h|--help) print "Usage: compressvid [-f fps] [-n|--no-audio] [-s maxsize] [-r 0|90|180|270] [-R 4k|2k|1080p|720p|480p] files..."; return ;;
+			-*) print -u2 "Unknown option: $1"; return 1 ;;
+			*) files+=("$1"); shift ;;
+		esac
+	done
+	(( ${#files} )) || { compressvid -h; return 1 }
+	[[ $fps == <1-> ]] || { print -u2 "fps must be a positive integer"; return 1 }
+	[[ $rotate == (0|90|180|270) ]] || { print -u2 "rotate must be 0, 90, 180 or 270"; return 1 }
+	case $res in
+		''|<1->) ;;
+		4k) res=2160 ;;
+		2k) res=1440 ;;
+		<1->p) res=${res%p} ;;
+		*) print -u2 "res must be 4k, 2k, 1080p, 720p, 480p or a number"; return 1 ;;
+	esac
+	if [[ -n $split ]]; then
+		[[ $split =~ '^([0-9.]+)([KkMmGg]?)[Bb]?$' ]] || { print -u2 "Bad size: $split (use e.g. 25M)"; return 1 }
+		case ${(U)match[2]} in K) max=1e3 ;; M) max=1e6 ;; G) max=1e9 ;; *) max=1 ;; esac
+		max=$(printf %.0f $(( match[1] * max )))
+	fi
+
+	if ffmpeg -hide_banner -encoders 2>/dev/null | grep -q hevc_videotoolbox; then
+		venc=(-c:v hevc_videotoolbox -q:v 55) hw=(-hwaccel videotoolbox)
+	else
+		venc=(-c:v libx265 -crf 26 -preset medium)
+	fi
+	(( noaudio )) && aargs=(-an) || aargs=(-map '0:a:0?' -c:a aac -b:a 128k)
+
+	for f in $files; do
+		[[ -f $f ]] || { print -u2 "Skip (not a file): $f"; continue }
+		[[ ${f:t:r} == *_processed* ]] && { print "Skip (already processed): $f"; continue }
+		ext=${f:e}
+		[[ ${ext:l} == (mov|mp4|m4v|mkv) ]] || ext=mp4
+		out="${f:r}_processed.$ext"
+
+		vf=()
+		r=$(ffprobe -v error -select_streams v:0 -show_entries stream=avg_frame_rate -of csv=p=0 "$f")
+		[[ $r == <1->/<1-> ]] && src=$(( ${r%/*}.0 / ${r#*/} )) || src=999
+		(( src > fps )) && vf+=(fps=$fps)
+		# cap the short side at $res so portrait and landscape both work
+		[[ -n $res ]] && vf+=("scale='if(gte(iw,ih),-2,min($res,iw))':'if(gte(iw,ih),min($res,ih),-2)'")
+		case $rotate in 90) vf+=(transpose=1) ;; 180) vf+=(hflip,vflip) ;; 270) vf+=(transpose=2) ;; esac
+
+		args=(-hide_banner -loglevel error -stats -y $hw -i "$f" -map 0:v:0 $aargs $venc -tag:v hvc1
+			-force_key_frames 'expr:gte(t,n_forced*2)' -map_metadata 0 -movflags +faststart)
+		(( ${#vf} )) && args+=(-vf ${(j:,:)vf})
+		print "▶ $f → $out"
+		ffmpeg $args "$out" || { print -u2 "Failed: $f"; continue }
+
+		size=$(wc -c < "$out")
+		if (( max && size > max )); then
+			dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$out")
+			seg=$(( dur * max / size * 0.95 ))
+			base=${out:r}
+			while :; do
+				(( seg >= 1 )) || { print -u2 "Can't split under $split (keyframe gap too large)"; break }
+				rm -f ${base}_part*.$ext(N)
+				ffmpeg -hide_banner -loglevel error -i "$out" -map 0 -c copy -f segment \
+					-segment_time $seg -reset_timestamps 1 "${base}_part%02d.$ext" || break
+				big=0
+				for p in ${base}_part*.$ext(N); do (( $(wc -c < "$p") > max )) && big=1; done
+				(( big )) || { rm "$out"; break }
+				seg=$(( seg * 0.85 ))
+			done
+		fi
+		du -h "$f" ${base:+${base}_part*.$ext(N)} "$out"(N) 2>/dev/null
+		base=
+	done
+}
