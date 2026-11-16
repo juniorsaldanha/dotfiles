@@ -1,0 +1,177 @@
+#!/usr/bin/python3
+"""herdr-tasks: the task list of the Herdr space this terminal belongs to.
+
+  herdr-tasks ls                     list tasks (default)
+  herdr-tasks add <title...>         new to-do, prints its id
+  herdr-tasks start <id>             doing: attach to this agent, start the clock, record the branch
+  herdr-tasks done <id> [--pr URL]   done: stop the clock, record the PR (found with gh if not given)
+  herdr-tasks todo <id>              back to to-do: stop the clock, detach the agent
+  herdr-tasks pr <id> <url>          set the PR
+  herdr-tasks rm <id>                delete
+
+Options: --space <id or name> (default: this terminal's herdr.space label), --json.
+Store: ~/.config/herdr-app/tasks/<space>.json, shared with the Tasks panel.
+"""
+import fcntl, json, os, subprocess, sys, time, uuid
+
+HOME = os.environ.get("HERDR_APP_HOME") or os.path.expanduser("~/.config/herdr-app")
+DIR = os.path.join(HOME, "tasks")
+
+
+def sh(*args, cwd=None):
+    try:
+        r = subprocess.run(args, cwd=cwd, capture_output=True, text=True, timeout=15)
+        return r.stdout.strip() if r.returncode == 0 else ""
+    except Exception:
+        return ""
+
+
+def terminal(addr):
+    try:
+        return json.loads(sh("hc", "get", addr, "--json") or "{}")
+    except ValueError:
+        return {}
+
+
+def space_of(addr):
+    # Sub-agents carry no herdr labels: walk up to the agent that started them.
+    for _ in range(8):
+        if not addr:
+            return None
+        t = terminal(addr)
+        if (t.get("labels") or {}).get("herdr.space"):
+            return t["labels"]["herdr.space"]
+        addr = t.get("parent")
+    return None
+
+
+def resolve_space(arg):
+    # An id, or a space name (case-insensitive); names can repeat, so ambiguity is an error.
+    try:
+        spaces = json.loads(sh("herdr-app", "ls") or "{}").get("spaces", [])
+    except ValueError:
+        spaces = []
+    if not spaces or any(s["id"] == arg for s in spaces):
+        return arg
+    hits = [s for s in spaces if (s.get("name") or "").lower() == arg.lower()]
+    if len(hits) == 1:
+        return hits[0]["id"]
+    if not hits:
+        sys.exit(f"herdr-tasks: no space named {arg}; spaces: " + ", ".join(sorted({s['name'] for s in spaces})))
+    sys.exit(f"herdr-tasks: {len(hits)} spaces named {arg}; pass an id:\n" +
+             "\n".join(f"  {s['id']}  {s.get('folder') or ''}" for s in hits))
+
+
+def now():
+    return int(time.time() * 1000)
+
+
+def fmt(ms):
+    m = ms // 60000
+    return f"{m // 60}h{m % 60:02d}m" if m >= 60 else f"{m}m"
+
+
+def spent(t):
+    return t.get("spent_ms", 0) + (now() - t["started_at"] if t["status"] == "doing" and t.get("started_at") else 0)
+
+
+def stop_clock(t):
+    t["spent_ms"] = spent(t)
+    t["started_at"] = None
+
+
+def main(argv):
+    opts, args = {}, []
+    it = iter(argv)
+    for a in it:
+        if a in ("--space", "--pr"):
+            opts[a[2:]] = next(it, None)
+        elif a == "--json":
+            opts["json"] = True
+        elif a in ("-h", "--help"):
+            print(__doc__.strip())
+            return 0
+        else:
+            args.append(a)
+    cmd = args.pop(0) if args else "ls"
+    me = os.environ.get("HC_TERMINAL_ID")
+    space = opts.get("space") or os.environ.get("HERDR_SPACE")
+    space = resolve_space(space) if space else space_of(me)
+    if not space:
+        sys.exit("herdr-tasks: not in a Herdr space (no herdr.space label); pass --space <id>")
+
+    os.makedirs(DIR, exist_ok=True)
+    path = os.path.join(DIR, f"{space}.json")
+    # ponytail: flock serialises CLI writers; the panel writes compare-and-swap, so a rare race costs one panel edit.
+    with open(path + ".lock", "w") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        try:
+            with open(path) as f:
+                data = json.load(f)
+        except (FileNotFoundError, ValueError):
+            data = {"tasks": []}
+        tasks = data.setdefault("tasks", [])
+
+        def find(tid):
+            for t in tasks:
+                if t["id"] == tid or t["id"].startswith(tid):
+                    return t
+            sys.exit(f"herdr-tasks: no task {tid}")
+
+        out = None
+        if cmd == "ls":
+            if opts.get("json"):
+                print(json.dumps(tasks, indent=1))
+                return 0
+            for status in ("doing", "todo", "done"):
+                for t in (t for t in tasks if t["status"] == status):
+                    extra = " ".join(x for x in (t.get("agent") and f"@{t['agent']}", t.get("branch") and f"[{t['branch']}]",
+                                                 spent(t) and fmt(spent(t)), t.get("pr")) if x)
+                    print(f"{t['id']}  {status:5}  {t['title']}  {extra}".rstrip())
+            return 0
+        elif cmd == "add":
+            if not args:
+                sys.exit("herdr-tasks: add <title>")
+            out = {"id": uuid.uuid4().hex[:6], "title": " ".join(args), "status": "todo", "agent": None, "branch": None,
+                   "pr": None, "created_at": now(), "started_at": None, "done_at": None, "spent_ms": 0}
+            tasks.append(out)
+        elif cmd in ("start", "done", "todo", "pr", "rm"):
+            if not args:
+                sys.exit(f"herdr-tasks: {cmd} <id>")
+            t = find(args[0])
+            cwd = (terminal(me).get("cwd") if me else None) or os.getcwd()
+            if cmd == "start":
+                if not me:
+                    sys.exit("herdr-tasks: start must run inside the agent's terminal (no HC_TERMINAL_ID)")
+                if t["status"] != "doing":
+                    t["started_at"] = now()
+                t.update(status="doing", agent=me, done_at=None)
+                t["branch"] = sh("git", "branch", "--show-current", cwd=cwd) or t.get("branch")
+            elif cmd == "done":
+                if t["status"] == "doing":
+                    stop_clock(t)
+                t.update(status="done", done_at=now())
+                t["branch"] = t.get("branch") or sh("git", "branch", "--show-current", cwd=cwd) or None
+                t["pr"] = opts.get("pr") or t.get("pr") or (t["branch"] and sh("gh", "pr", "view", t["branch"], "--json", "url", "-q", ".url", cwd=cwd)) or None
+            elif cmd == "todo":
+                if t["status"] == "doing":
+                    stop_clock(t)
+                t.update(status="todo", agent=None, done_at=None)
+            elif cmd == "pr":
+                t["pr"] = args[1] if len(args) > 1 else sys.exit("herdr-tasks: pr <id> <url>")
+            elif cmd == "rm":
+                tasks.remove(t)
+            out = t
+        else:
+            sys.exit(f"herdr-tasks: unknown command {cmd}\n\n{__doc__.strip()}")
+
+        tmp = f"{path}.{os.getpid()}.tmp"
+        with open(tmp, "w") as f:
+            json.dump(data, f, indent=1)
+        os.replace(tmp, path)
+    print(json.dumps(out) if opts.get("json") else out["id"])
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

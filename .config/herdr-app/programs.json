@@ -1,0 +1,9 @@
+{
+  "programs": {
+    "claude-work": {
+      "name": "Claude Code - Work",
+      "icon": "icons/claude.svg",
+      "run": ["env", "CLAUDE_CONFIG_DIR=/Users/umsaldanha/.claude-work", "claude"]
+    }
+  }
+}

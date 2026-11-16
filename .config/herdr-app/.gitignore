@@ -1,0 +1,24 @@
+# Herdr rewrites its shipped layouts, mods, type files and state on every start:
+# track only what's ours.
+/*
+!/.gitignore
+!/settings.json
+!/keys.json
+!/programs.json
+
+!/layouts/
+/layouts/*
+!/layouts/herdr-skillshare.json
+!/layouts/herdr-skillshare.png
+!/layouts/herdr-tasks.json
+
+!/mods/
+/mods/*
+!/mods/agents-dashboard/
+!/mods/skillshare/
+!/mods/tasks/
+!/mods/tmux-prefix/
+
+# Written by Herdr into every mod
+gpui-kit.d.ts
+jsconfig.json
