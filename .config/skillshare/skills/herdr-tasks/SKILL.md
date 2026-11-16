@@ -27,5 +27,9 @@ Tasks panel. You keep it true. Only applies when `HC_TERMINAL_ID` is set.
    `herdr-tasks todo <id>`. This stops the clock and detaches you.
 5. A PR opened later: `herdr-tasks pr <id> <url>`.
 
+To work on another space's list (when asked), add `--space <name or id>`, e.g.
+`herdr-tasks --space openhmi add "Fix login"`. If two spaces share the name,
+the CLI lists their ids and folders: pick one with `--space <id>`.
+
 Ids may be shortened to a unique prefix. `herdr-tasks --help` lists all commands.
 Don't edit `~/.config/herdr-app/tasks/*.json` by hand; use the CLI.
