@@ -190,13 +190,7 @@ function upgrade_go_asdf(){
     upgrade_asdf golang
 }
 
-# Compress video(s) to HEVC, GPU (VideoToolbox) when available, else libx265.
-# Usage: compressvid [-f fps] [-n] [-s 25M] [-r 0|90|180|270] [-R 1080p] files...
-#   -f, --fps N       max fps (default 30, never upsamples)
-#   -n, --no-audio    drop audio
-#   -s, --split SIZE  split output into parts <= SIZE (e.g. 25M, 500K, 1.5G; base 1000)
-#   -r, --rotate DEG  rotate clockwise: 0 (default), 90, 180, 270
-#   -R, --res RES     max resolution: 4k, 2k, 1080p, 720p, 480p or a number (short side; never upscales)
+# Compress video(s) to HEVC, GPU (VideoToolbox) when available. See `compressvid -h`.
 function compressvid() {
 	local fps=30 rotate=0 split= noaudio=0 max=0 res= f ext out r src size dur seg base p big
 	local -a files venc vf args aargs hw
@@ -207,7 +201,36 @@ function compressvid() {
 			-s|--split) split=$2; shift 2 ;;
 			-r|--rotate) rotate=$2; shift 2 ;;
 			-R|--res) res=${2:l}; shift 2 ;;
-			-h|--help) print "Usage: compressvid [-f fps] [-n|--no-audio] [-s maxsize] [-r 0|90|180|270] [-R 4k|2k|1080p|720p|480p] files..."; return ;;
+			-h|--help) cat <<'HELP'
+compressvid - compress videos to HEVC (H.265), using the GPU when available
+
+Usage:
+  compressvid [options] <file>...
+
+  Output is written next to each source as <name>_processed.<ext>.
+  mov, mp4, m4v and mkv keep their extension; other formats become .mp4.
+  Files already named *_processed* are skipped. Options can go anywhere.
+
+Options:
+  -f, --fps N          Max frame rate (default: 30). Never raises it.
+  -R, --res RES        Max resolution: 4k, 2k, 1080p, 720p, 480p or a number.
+                       Caps the short side, so portrait works too. Never upscales.
+  -r, --rotate DEG     Rotate clockwise: 0 (default), 90, 180, 270.
+  -n, --no-audio       Remove the audio track (default: AAC 128k).
+  -s, --split SIZE     Split into parts no bigger than SIZE (K, M, G; base 1000),
+                       e.g. 25M -> <name>_processed_part00.<ext>, _part01, ...
+  -h, --help           Show this help.
+
+Examples:
+  compressvid IMG_1830.MOV
+  compressvid IMG_*.MOV *.mp4
+  compressvid -R 1080p -f 60 clip.mov
+  compressvid -s 25M -n -r 90 clip.mov
+
+Encoder: hevc_videotoolbox (q 55) on macOS, else libx265 (crf 26).
+Keeps HDR and metadata. Needs ffmpeg and ffprobe.
+HELP
+				return ;;
 			-*) print -u2 "Unknown option: $1"; return 1 ;;
 			*) files+=("$1"); shift ;;
 		esac
