@@ -50,6 +50,7 @@ persistent-workspaces = ["1", "2", "3", "4", "9"]
     alt-enter = 'new-window-or-open Terminal'
     alt-b = 'new-window-or-open Safari'
     alt-e = 'new-window-or-open Finder'
+    alt-shift-p = 'pin-app'  # Option+Shift+P: always open the focused app in this workspace (again to unpin)
 
     alt-v = 'layout floating tiling'
     alt-f = 'fullscreen'
