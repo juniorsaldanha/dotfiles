@@ -133,3 +133,16 @@ function setup() {
 export DOTNET_ROOT="/opt/homebrew/opt/dotnet/libexec"
 export ASDF_DATA_DIR="$HOME/.asdf"
 export PATH="$ASDF_DATA_DIR/shims:$PATH"
+
+# Turn the weekly cargo-sweep job (removes Rust build output unused for 14 days) on or off.
+# usage: cargo_sweep_job on|off|status
+function cargo_sweep_job() {
+	local label=local.cargo-sweep domain="gui/$(id -u)"
+	local plist="$HOME/Library/LaunchAgents/$label.plist"
+	case "$1" in
+		on)  launchctl enable "$domain/$label"; launchctl bootstrap "$domain" "$plist" 2>/dev/null; echo "cargo-sweep job enabled" ;;
+		off) launchctl disable "$domain/$label"; launchctl bootout "$domain/$label" 2>/dev/null; echo "cargo-sweep job disabled" ;;
+		status) launchctl print-disabled "$domain" | grep -q "\"$label\" => disabled" && echo disabled || echo enabled ;;
+		*) echo "usage: cargo_sweep_job on|off|status"; return 1 ;;
+	esac
+}
