@@ -135,6 +135,20 @@
               "size": {
                 "px": 118
               }
+            },
+            {
+              "id": "tasks-toggle",
+              "type": "block",
+              "size": {
+                "px": 82
+              },
+              "window_drag": true,
+              "content": {
+                "mod": "tasks",
+                "props": {
+                  "role": "toggle"
+                }
+              }
             }
           ]
         },
@@ -220,6 +234,25 @@
                   "type": "block",
                   "content": {
                     "mod": "skillshare"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "tasks-panel",
+              "type": "column",
+              "hidden": true,
+              "size": {
+                "px": 380
+              },
+              "min": 300,
+              "max": 800,
+              "children": [
+                {
+                  "id": "tasks",
+                  "type": "block",
+                  "content": {
+                    "mod": "tasks"
                   }
                 }
               ]
